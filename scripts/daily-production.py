@@ -27,16 +27,16 @@ from datetime import datetime
 from pathlib import Path
 
 # Import our tools
-script_dir = Path(__file__).parent
-sys.path.insert(0, str(script_dir))
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root / "src"))
 
-from generate_scene import SceneGenerator, WorldState
-from generate_world import WorldGenerator
-from relationship_signals import NarrativeConverter, RelationshipSignalExtractor
+from simulacrum.generation.scenes import SceneGenerator, WorldState
+from simulacrum.generation.world import WorldGenerator
+from simulacrum.generation.signals import NarrativeConverter, RelationshipSignalExtractor
 
 # Import series-specific signal filtering
 try:
-    from series_signal_filters import get_series_context, get_signals_for_series
+    from simulacrum.generation.filters import get_series_context, get_signals_for_series
 except ImportError:
     # Graceful fallback if filter module not available
     get_signals_for_series = None
@@ -47,9 +47,7 @@ except ImportError:
 # Configuration
 # =============================================================================
 
-SERIES_REGISTRY = (
-    Path.home() / "devvyn-meta-project" / "data" / "simulacrum-series.json"
-)
+SERIES_REGISTRY = project_root / "data" / "simulacrum-series.json"
 ARTIST_NAME = "Simulacrum Stories"
 GENRE = "Audio Drama"
 
@@ -288,7 +286,7 @@ class EpisodeProducer:
         subprocess.run(
             [
                 sys.executable,
-                str(script_dir.parent / "doc-to-audio.py"),
+                str(project_root / "scripts" / "doc-to-audio.py"),
                 "--input",
                 str(scene_file),
                 "--output",

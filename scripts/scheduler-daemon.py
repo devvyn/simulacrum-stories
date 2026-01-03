@@ -27,16 +27,21 @@ import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
-# Add parent directory to path for imports (scripts dir)
-scripts_dir = Path(__file__).parent.parent
-sys.path.insert(0, str(scripts_dir))
+# Add parent directory to path for imports
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root / "src"))
+sys.path.insert(0, str(project_root / "scripts"))
 
-# Import budget manager from scripts/
-from audio_budget_manager import AudioBudgetManager
+# Import budget manager
+from simulacrum.audio.budget import AudioBudgetManager
 
-# Import production tools from current dir (narrative-tools/)
-sys.path.insert(0, str(Path(__file__).parent))
-from daily_production import EpisodeProducer, SeriesManager
+# Import production tools
+import importlib.util
+spec = importlib.util.spec_from_file_location("daily_production", project_root / "scripts" / "daily-production.py")
+daily_production = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(daily_production)
+EpisodeProducer = daily_production.EpisodeProducer
+SeriesManager = daily_production.SeriesManager
 
 # =============================================================================
 # Configuration
