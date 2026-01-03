@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Project data (not in git)
+data/
+output/
+*.db
+*.sqlite
+
+# Environment and secrets
+.env
+.env.local
+*.key
+secrets/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
