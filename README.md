@@ -8,7 +8,7 @@ Simulacrum generates dramatic audio stories with:
 - **Multi-voice narration** using ElevenLabs API
 - **Emotional depth** from real relationship signal extraction
 - **Procedural worlds** with consistent characters and arcs
-- **Daily automation** producing new episodes on schedule
+- **Budget-conscious production** with manual episode generation
 - **Podcast delivery** via RSS feeds
 
 Currently producing two series:
@@ -26,13 +26,15 @@ uv sync
 export ANTHROPIC_API_KEY=$(~/devvyn-meta-project/scripts/anthropic-key-manager.sh get)
 export ELEVEN_LABS_API_KEY=$(~/devvyn-meta-project/scripts/elevenlabs-key-manager.sh get)
 
-# Generate single episode
+# Generate single episode (dry run - no API calls)
 uv run python scripts/daily-production.py --series saltmere --dry-run
 
-# Check production status
-./scripts/status.sh
+# Generate actual episode (uses ElevenLabs credits)
+uv run python scripts/daily-production.py --series millbrook
 
-# Start daily automation (see docs/DEPLOYMENT.md)
+# Check budget status
+uv run python -c "from simulacrum.audio.budget import AudioBudgetManager; \
+  bm = AudioBudgetManager(); print(bm.status_report())"
 ```
 
 ## Project Structure
@@ -63,9 +65,9 @@ simulacrum-stories/
 - Relationship signal extraction from real communication patterns
 - Template-based scene generation with emotional calibration
 - Multi-voice TTS with character consistency
-- Budget tracking and provider management
+- Budget tracking and provider management (ElevenLabs Creator plan)
 - RSS feed generation for podcast platforms
-- Automated daily production
+- Manual production workflow for budget control
 
 ### Planned (see docs/enhancement-roadmap.md)
 - Writer's room multi-agent collaboration
@@ -114,23 +116,33 @@ uv run ruff format src/
 
 ## Production Status
 
-**Current Output:**
-- Saltmere Chronicles: 7 episodes (23 minutes total)
-- Millbrook Chronicles: 9 episodes (35 minutes total)
+**Current Series:**
+- Saltmere Chronicles: Episodes 1-8 (coastal family drama, 1970s)
+- Millbrook Chronicles: Episodes 1-9 (rust belt mystery, 1980s)
 
 **Budget Status:**
-- Provider: ElevenLabs v3 Alpha (multi-voice)
-- Monthly: 140,013 / 150,000 chars remaining (93%)
-- Daily limit: 10,000 chars
+- Provider: ElevenLabs Creator Plan (100,000 chars/month)
+- Annual subscription: Prepaid
+- Current usage: Check with budget manager (see Quick Start)
+- Cost per episode: ~$1.47 (amortized)
 
-**Automation:**
-- Schedule: 6:00 AM & 7:30 AM daily
-- Target: 2 episodes/day
-- Last run: Check `scripts/status.sh`
+**Production Approach:**
+- Manual episode generation for budget control
+- Automated LaunchAgent disabled (was consuming budget unconsciously)
+- Strategic production: 14-16 episodes/month sustainable
+- Annotated archive strategy for early experimental episodes
+
+## Production Philosophy
+
+This project takes a **budget-conscious, quality-focused** approach:
+- Manual episode generation allows strategic use of API credits
+- Early episodes (E01-E09) archived as developmental work with POV annotations
+- Fresh narrative restart at E10+ with refined storytelling
+- Transparent about creative process and growth
 
 ## License
 
-Private project - not for distribution
+MIT License - Open source for the community
 
 ## Related Projects
 
