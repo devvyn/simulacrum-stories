@@ -1,15 +1,24 @@
-# Audio Storytelling - Future Enhancement Directions
+# Audio Storytelling - Enhancement Roadmap
 
-## Context
-Current system (Saltmere/Millbrook Chronicles) uses:
-- Relationship signal extraction from real communication patterns
-- Template-based scene generation
-- Single-pass narrative generation
-- Fixed emotional calibration
+## Current Capabilities (Implemented)
 
-## Enhancement Opportunities for Next Session
+**Core Production:**
+- ✅ Relationship signal extraction from real communication patterns
+- ✅ Template-based scene generation
+- ✅ **Multi-pass narrative generation** (4-pass pipeline: plot → emotional → dialogue → polish)
+- ✅ **Cost tracking** with per-episode expense monitoring
+- ✅ Budget management (ElevenLabs Creator plan integration)
+- ✅ Multi-voice TTS with character consistency
+- ✅ RSS feed generation for podcast platforms
 
-### 1. Writer's Room Dynamics
+**Production Features:**
+- Manual episode generation for budget control
+- Dry-run mode for testing without API costs
+- Annotated archive strategy for quality improvement
+
+## Future Enhancements
+
+### 1. Writer's Room Dynamics (Planned)
 **Concept:** Multi-agent collaborative story development
 
 **Potential Implementation:**
@@ -30,14 +39,14 @@ Current system (Saltmere/Millbrook Chronicles) uses:
 - Iterative refinement passes before audio generation
 - Quality gates between stages
 
-### 2. Emotional Modeling Enhancements
+### 2. Emotional Modeling Enhancements (Planned)
 
 **Current State:**
-- Static relationship hints from signal extraction
-- Single emotional tone per scene
-- Pre-defined character personalities
+- Relationship hints from signal extraction (implemented)
+- Emotional calibration in multipass generation (implemented)
+- Template-based character personalities (implemented)
 
-**Advanced Emotional Modeling:**
+**Future Advanced Emotional Modeling:**
 
 **A. Dynamic Emotional States**
 - Track character emotional trajectories across episodes
@@ -71,24 +80,21 @@ class CharacterEmotionalState:
 - Model what characters know vs. suspect vs. don't know (dramatic irony)
 - Relationship "temperature" that affects every interaction
 
-### 3. Multi-Pass Narrative Generation
+### 3. Multi-Pass Generation Enhancements (Partially Implemented)
 
-**Current:** Single LLM call generates entire scene
+**✅ Currently Implemented:** 4-pass generation pipeline
+1. **Plot pass:** Scene outline, structure, POV decisions
+2. **Emotional pass:** Tension curve, relationship dynamics
+3. **Dialogue pass:** Character voices with prose quality
+4. **Polish pass:** Audio flow optimization
 
-**Enhanced Pipeline:**
-1. **Plot pass:** Generate scene outline, beats, key moments
-2. **Emotional calibration pass:** Adjust tension curve, pacing
-3. **Dialogue pass:** Generate character speech with voice consistency
-4. **Continuity pass:** Insert callbacks, foreshadowing, world details
-5. **Polish pass:** Final refinement for audio flow
+**Future Enhancements:**
+- Continuity pass: Cross-episode callbacks, foreshadowing
+- Quality metrics: Automated validation between passes
+- Caching: Reuse plot/structure across regenerations
+- Iterative refinement: Multi-round improvement cycles
 
-**Benefits:**
-- Each pass optimized for specific quality dimension
-- Easier to debug/improve specific aspects
-- Can cache and reuse certain passes
-- Quality gates between stages
-
-### 4. Adaptive Storytelling Based on Output Quality
+### 4. Adaptive Storytelling Based on Output Quality (Planned)
 
 **Feedback Loops:**
 - Analyze generated audio for pacing issues (silence detection, speech rate)
@@ -102,48 +108,67 @@ class CharacterEmotionalState:
 - If continuity gaps → surface knowledge base for references
 - If pacing slow → tighten dialogue, add urgency
 
-### 5. Integration with Existing Infrastructure
+### 5. Integration with Existing Infrastructure (Ongoing)
 
-**Leverage Current Capabilities:**
-- Relationship signal extractor (already working well)
-- Budget tracking system
+**✅ Currently Working:**
+- Relationship signal extractor
+- Budget tracking system (ElevenLabs Creator plan)
 - Multi-voice audio generation (ElevenLabs)
-- Bridge for agent coordination
+- Cost tracking per episode
+- Multi-pass generation pipeline
 
-**New Components Needed:**
+**Future Components:**
 - Persistent story state database (character states, plot threads, world facts)
 - Quality metrics pipeline (analyze generated content)
 - Writer's room coordination protocol (bridge messages + shared state)
-- Emotional model data structures
+- Dynamic emotional state tracking across episodes
 
-### 6. Incremental Implementation Path
+### 6. Implementation Status & Next Steps
 
-**Phase 1: Emotional State Tracking (Low-hanging fruit)**
-- Create simple JSON state file per series
+**✅ Phase 1 Complete: Core Infrastructure**
+- Multi-pass generation implemented (4 passes)
+- Cost tracking implemented
+- Budget management with Creator plan
+- Manual production workflow established
+- Annotated archive strategy for quality improvement
+
+**🚧 Phase 2 In Progress: Production Refinement**
+- Multipass generation available but not yet default
+- Episode length optimization (targeting 15-20 min)
+- Narrative restart strategy (E10+ fresh start)
+- Quality-focused production over quantity
+
+**📋 Phase 3 Planned: Emotional State Tracking**
+- Create JSON state file per series
 - Track character stress, relationships, secrets across episodes
-- Inject into existing generation prompts
+- Inject into multipass generation prompts
+- Cross-episode continuity tracking
 
-**Phase 2: Multi-Pass Generation (Medium complexity)**
-- Split current monolithic prompt into 3 passes: plot → dialogue → polish
-- Each pass gets context from previous
-- Verify quality improvement vs. cost
-
-**Phase 3: Writer's Room Lite (Higher complexity)**
-- Add ONE specialized agent (e.g., continuity editor)
+**🔮 Phase 4 Future: Writer's Room & Adaptive Systems**
+- Add specialized agents (continuity editor, tension calibrator)
 - Test collaboration via bridge
-- Measure quality delta
+- Adaptive feedback loops based on output quality
+- Full dynamic emotional modeling
 
-**Phase 4: Full Dynamic System (Future)**
-- Complete writer's room with 4-5 specialized agents
-- Adaptive feedback loops
-- Sophisticated emotional modeling
+## Current Focus (January 2026)
 
-## Questions for Next Session
+**Immediate Priority:**
+1. Execute annotated archive strategy (E09.5 recap + E10 fresh start)
+2. Establish sustainable production rhythm (14-16 episodes/month)
+3. Integrate multipass generation into daily workflow
+4. Monitor cost per episode and quality metrics
 
-1. **Scope:** Start with emotional state tracking or multi-pass generation?
-2. **Cost:** How much additional LLM budget for quality improvement?
-3. **Quality metrics:** How do we measure if enhancements are working?
-4. **Series strategy:** Apply to both series or experiment with one?
+**Next Quarter Goals:**
+1. Implement emotional state tracking (JSON per series)
+2. Test multipass generation as default mode
+3. Build 45-50 episode library across both series
+4. Explore revenue/sponsorship options
+
+**Questions for Future Planning:**
+1. **Quality vs. Cost:** Is multipass worth the extra LLM tokens?
+2. **State Tracking:** Start with simple JSON or design full database?
+3. **Metrics:** How do we measure episode quality objectively?
+4. **Monetization:** What's the path to sustainability post-Creator plan?
 
 ## Reference Documents
 

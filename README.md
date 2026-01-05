@@ -71,10 +71,10 @@ simulacrum-stories/
 
 ### Planned (see docs/enhancement-roadmap.md)
 - Writer's room multi-agent collaboration
-- Dynamic emotional modeling
-- Multi-pass narrative generation
-- Adaptive storytelling with quality feedback
-- Persistent story state tracking
+- Dynamic emotional state tracking across episodes
+- Adaptive storytelling with quality feedback loops
+- Persistent story state database
+- Enhanced continuity tracking with callbacks
 
 ## Documentation
 
