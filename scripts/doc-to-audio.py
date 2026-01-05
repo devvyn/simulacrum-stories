@@ -1001,7 +1001,9 @@ class MultiVoiceTTS:
 
         # Generate audio for each segment, tracking voices
         temp_files_with_voices = []  # List of (voice, Path) tuples
-        temp_dir = Path(output_path).parent / "temp_segments"
+        # Use unique temp directory per chunk to avoid conflicts
+        output_stem = Path(output_path).stem
+        temp_dir = Path(output_path).parent / f"temp_segments_{output_stem}"
         temp_dir.mkdir(exist_ok=True)
 
         try:
@@ -1043,12 +1045,10 @@ class MultiVoiceTTS:
                 self._stitch_audio(files_only, output_path)
 
         finally:
-            # Cleanup temp files
-            for _, temp_file in temp_files_with_voices:
-                if temp_file.exists():
-                    temp_file.unlink()
-            if temp_dir.exists() and not any(temp_dir.iterdir()):
-                temp_dir.rmdir()
+            # Cleanup temp directory completely
+            import shutil
+            if temp_dir.exists():
+                shutil.rmtree(temp_dir)
 
     def _stitch_audio(self, input_files: list[Path], output_path: str) -> None:
         """Stitch audio segments together with silence between"""
@@ -1252,7 +1252,19 @@ class DocToAudioConverter:
     ):
         self.console = Console() if HAS_RICH else None
         self.cleaner = MarkdownCleaner(multi_voice=multi_voice, narrative=narrative)
-        self.chunker = ChunkManager(max_chunk_size=5000)
+
+        # Set chunk size based on provider limits
+        # macOS: no limit (use very large chunks)
+        # OpenAI: 4096 char limit
+        # ElevenLabs: ~2500 char limit (varies by plan)
+        chunk_sizes = {
+            "macos": 100000,  # No practical limit for macOS TTS
+            "openai": 4000,   # Stay under 4096 limit
+            "elevenlabs": 2400  # Conservative for ElevenLabs
+        }
+        max_chunk = chunk_sizes.get(provider, 50000)
+        self.chunker = ChunkManager(max_chunk_size=max_chunk)
+
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.multi_voice = multi_voice
@@ -1575,8 +1587,8 @@ def main() -> None:
     parser.add_argument(
         "--crossfade",
         type=float,
-        default=0.5,
-        help="Crossfade duration in seconds (default: 0.5). Only with --advanced-mixing.",
+        default=0.2,
+        help="Crossfade duration in seconds (default: 0.2, subtle). Only with --advanced-mixing. NOTE: Crossfading only applies to background music fades, NOT voice transitions (voices use 2.5s pauses).",
     )
 
     parser.add_argument(

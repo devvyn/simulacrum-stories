@@ -1,5 +1,5 @@
 {
-  "active_provider": "elevenlabs_v3_alpha",
+  "active_provider": "elevenlabs_v3_alpha_creator",
   "budgets": {
     "elevenlabs_starter": {
       "monthly_limit": 30000,
@@ -13,11 +13,22 @@
       "cost_per_month": 11.0,
       "description": "ElevenLabs Creator Plan"
     },
-    "elevenlabs_v3_alpha": {
-      "monthly_limit": 150000,
-      "daily_limit": 10000,
+    "elevenlabs_v3_alpha_creator": {
+      "monthly_limit": 100000,
+      "daily_limit": null,
+      "cost_per_month": 22.0,
+      "overage_rate": 0.30,
+      "discount_expires": "2025-06-30",
+      "credits_per_char": 1,
+      "description": "ElevenLabs Creator Plan with V3 Alpha (80% discount until June 30, 2025)"
+    },
+    "elevenlabs_v3_alpha_starter": {
+      "monthly_limit": 30000,
+      "daily_limit": null,
       "cost_per_month": 5.0,
-      "description": "ElevenLabs V3 Alpha (80% discount until June 2025)"
+      "discount_expires": "2025-06-30",
+      "credits_per_char": 1,
+      "description": "ElevenLabs Starter Plan with V3 Alpha (80% discount until June 30, 2025)"
     },
     "openai_tts": {
       "monthly_limit": 1000000,
@@ -33,17 +44,17 @@
     }
   },
   "usage": {
-    "elevenlabs_v3_alpha": {
-      "provider": "elevenlabs_v3_alpha",
+    "elevenlabs_v3_alpha_creator": {
+      "provider": "elevenlabs_v3_alpha_creator",
       "month": "2026-01",
-      "monthly_used": 9987,
-      "daily_used": 9987,
-      "last_reset_date": "2026-01-01",
+      "monthly_used": 0,
+      "daily_used": 0,
+      "last_reset_date": "2026-01-04",
       "history": [
         {
-          "date": "2026-01-01T10:45:40.252272",
-          "chars": 41,
-          "doc": ""
+          "date": "2026-01-04T00:00:00.000000",
+          "chars": 0,
+          "doc": "Reset for Creator plan - cleared test data"
         },
         {
           "date": "2026-01-01T10:45:42.002923",

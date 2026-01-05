@@ -34,6 +34,22 @@ from simulacrum.generation.scenes import SceneGenerator, WorldState
 from simulacrum.generation.world import WorldGenerator
 from simulacrum.generation.signals import NarrativeConverter, RelationshipSignalExtractor
 
+# Import multi-pass generator
+try:
+    from simulacrum.generation.multipass import MultiPassSceneGenerator
+    HAS_MULTIPASS = True
+except ImportError:
+    HAS_MULTIPASS = False
+    MultiPassSceneGenerator = None
+
+# Import cost tracking
+try:
+    from simulacrum.cost_tracker import CostCalculator
+    HAS_COST_TRACKING = True
+except ImportError:
+    HAS_COST_TRACKING = False
+    CostCalculator = None
+
 # Import series-specific signal filtering
 try:
     from simulacrum.generation.filters import get_series_context, get_signals_for_series
@@ -179,9 +195,18 @@ class EpisodeProducer:
         return contexts[state.episode_count % len(contexts)]
 
     def produce_episode(
-        self, state: SeriesState, output_dir: Path, use_real_signals: bool = True
+        self, state: SeriesState, output_dir: Path, use_real_signals: bool = True,
+        use_multipass: bool = True, provider: str = "macos"
     ) -> Path:
-        """Produce a complete episode"""
+        """Produce a complete episode
+
+        Args:
+            state: Series state
+            output_dir: Output directory for episode files
+            use_real_signals: Extract relationship signals from iMessage
+            use_multipass: Use multi-pass generation for professional quality
+            provider: TTS provider (macos, openai, elevenlabs)
+        """
 
         # Load world
         with open(state.world_file) as f:
@@ -214,34 +239,73 @@ class EpisodeProducer:
             except Exception as e:
                 print(f"  Warning: Could not extract signals: {e}", file=sys.stderr)
 
-        # Determine POV and template
-        pov = self.get_next_pov(state)
-        template = self.get_next_template(state)
-
-        # Enhance context with relationship patterns if available
-        base_context = self.generate_episode_context(state, pov)
-        if relationship_context and relationship_context["signals"]:
-            # Inject a relationship pattern hint into the context
-            signal_hint = relationship_context["signals"][0]  # Use first signal
-            context = f"{base_context}. Emotional dynamics: {signal_hint.get('suggested_dynamic', {}).get('warmth', 'complex')} warmth, {signal_hint.get('suggested_dynamic', {}).get('power_balance', 'shifting')} power dynamic"
-        else:
-            context = base_context
-
         episode_num = state.episode_count + 1
-        print(
-            f"  Episode {episode_num}: POV={pov}, Template={template}", file=sys.stderr
-        )
 
-        # Generate scene (use extended templates if supported)
-        scene = self.scene_gen.generate(
-            world=world,
-            template=template,
-            pov_character=pov,
-            context=context,
-            emotional_tone="dramatic" if episode_num % 3 == 0 else "tense",
-            ending_type="cliffhanger" if episode_num % 2 == 1 else "revelation",
-            use_extended=True,  # Enable extended templates for 15-25 min episodes
-        )
+        # Generate scene with multi-pass or fallback to single-pass
+        if use_multipass and HAS_MULTIPASS:
+            # Multi-pass generation with dynamic POV
+            template = self.get_next_template(state)
+
+            # Get a suggested POV for context generation
+            # (multipass will decide actual POV structure)
+            suggested_pov = self.get_next_pov(state)
+            base_context = self.generate_episode_context(state, suggested_pov)
+
+            print(
+                f"  Episode {episode_num}: Multi-pass generation (template suggestion: {template})",
+                file=sys.stderr,
+            )
+
+            multipass_gen = MultiPassSceneGenerator()
+            scene, metadata = multipass_gen.generate_episode(
+                world=world,
+                template_suggestion=template,
+                context=base_context,
+                relationship_context=relationship_context,
+                target_words=2500,
+            )
+
+            # Extract POV info from metadata
+            pov_structure = metadata['pov_structure']
+            pov_characters = metadata['pov_characters']
+            primary_pov = pov_characters[0] if pov_characters else suggested_pov
+
+            print(f"  Generated {pov_structure} POV episode", file=sys.stderr)
+            print(f"  POV characters: {', '.join(pov_characters)}", file=sys.stderr)
+
+        else:
+            # Fallback to single-pass
+            pov = self.get_next_pov(state)
+            template = self.get_next_template(state)
+
+            # Enhance context with relationship patterns if available
+            base_context = self.generate_episode_context(state, pov)
+            if relationship_context and relationship_context["signals"]:
+                # Inject a relationship pattern hint into the context
+                signal_hint = relationship_context["signals"][0]  # Use first signal
+                context = f"{base_context}. Emotional dynamics: {signal_hint.get('suggested_dynamic', {}).get('warmth', 'complex')} warmth, {signal_hint.get('suggested_dynamic', {}).get('power_balance', 'shifting')} power dynamic"
+            else:
+                context = base_context
+
+            print(
+                f"  Episode {episode_num}: POV={pov}, Template={template}", file=sys.stderr
+            )
+
+            # Generate scene (use extended templates if supported)
+            scene = self.scene_gen.generate(
+                world=world,
+                template=template,
+                pov_character=pov,
+                context=context,
+                emotional_tone="dramatic" if episode_num % 3 == 0 else "tense",
+                ending_type="cliffhanger" if episode_num % 2 == 1 else "revelation",
+                use_extended=True,  # Enable extended templates for 15-25 min episodes
+            )
+
+            primary_pov = pov
+            pov_structure = "single"
+            pov_characters = [pov]
+            metadata = {}
 
         # Extract title from scene (first # heading)
         title = "Untitled Episode"
@@ -254,7 +318,21 @@ class EpisodeProducer:
         scene_file = output_dir / f"E{episode_num:02d}-scene.md"
         scene_file.write_text(scene)
 
+        # Calculate production costs
+        cost_info = None
+        if HAS_COST_TRACKING and metadata.get('total_tokens'):
+            calculator = CostCalculator()
+            cost_info = calculator.calculate(
+                input_tokens=metadata['total_tokens']['input'],
+                output_tokens=metadata['total_tokens']['output'],
+                characters=len(scene),  # Scene character count for TTS
+                tts_provider=provider
+            )
+            print(f"  💰 Cost: {cost_info}", file=sys.stderr)
+
         # Generate audio
+        # Note: Advanced mixing disabled for macOS provider due to ffmpeg compatibility issues
+        use_mixing = use_multipass and provider != "macos"
         audio_file = self._generate_audio(
             scene_file=scene_file,
             output_dir=output_dir,
@@ -262,10 +340,29 @@ class EpisodeProducer:
             episode_num=episode_num,
             title=title,
             arc=state.current_arc,
-            pov=pov,
+            pov=primary_pov,
+            world=world,
+            use_advanced_mixing=use_mixing,
+            provider=provider,
+            cost_info=cost_info,
         )
 
         return audio_file
+
+    def _select_narrator_voice(self, pov_name: str, world: WorldState, provider: str) -> str:
+        """Select narrator voice based on POV character gender and provider"""
+        pov_char = next((c for c in world.characters if c.name == pov_name), None)
+        is_female = pov_char and pov_char.gender == "female"
+
+        # Provider-specific voice mapping
+        if provider == "elevenlabs":
+            return "Sarah" if is_female else "George"
+        elif provider == "openai":
+            return "nova" if is_female else "fable"  # nova=warm female, fable=narrator male
+        elif provider == "macos":
+            return "Serena" if is_female else "Jamie"  # Serena=UK female, Jamie=UK male
+        else:
+            return "Jamie"  # Default fallback
 
     def _generate_audio(
         self,
@@ -276,6 +373,10 @@ class EpisodeProducer:
         title: str,
         arc: str,
         pov: str,
+        world: WorldState,
+        use_advanced_mixing: bool = False,
+        provider: str = "macos",
+        cost_info=None,
     ) -> Path:
         """Generate audio with proper metadata, artwork, and lyrics"""
 
@@ -283,23 +384,34 @@ class EpisodeProducer:
         temp_dir = output_dir / "temp"
         temp_dir.mkdir(exist_ok=True)
 
-        subprocess.run(
-            [
-                sys.executable,
-                str(project_root / "scripts" / "doc-to-audio.py"),
-                "--input",
-                str(scene_file),
-                "--output",
-                str(temp_dir),
-                "--provider",
-                "elevenlabs",
-                "--multi-voice",
-                "--narrator",
-                "George",  # Will be overridden based on POV gender
-            ],
-            capture_output=True,
-            check=True,
-        )
+        # Select narrator voice based on POV gender and provider
+        narrator_voice = self._select_narrator_voice(pov, world, provider)
+
+        # Build doc-to-audio command with optional advanced mixing
+        doc_to_audio_cmd = [
+            sys.executable,
+            str(project_root / "scripts" / "doc-to-audio.py"),
+            "--input",
+            str(scene_file),
+            "--output",
+            str(temp_dir),
+            "--provider",
+            provider,
+            "--multi-voice",
+            "--narrator",
+            narrator_voice,
+            "--narrative",  # Strip metadata for cleaner audio
+        ]
+
+        # Add advanced mixing if enabled
+        if use_advanced_mixing:
+            doc_to_audio_cmd.extend([
+                "--advanced-mixing",
+                "--crossfade", "0.2",  # Subtle crossfade for music fades only
+                # Note: normalization is enabled by default with --advanced-mixing
+            ])
+
+        subprocess.run(doc_to_audio_cmd, capture_output=True, check=True)
 
         # Find generated file
         raw_audio = list(temp_dir.glob("*.mp3"))[0]
@@ -384,16 +496,24 @@ class EpisodeProducer:
                 f"comment=POV: {pov}",
                 "-metadata",
                 f"lyrics={lyrics[:3000]}",  # Truncate if too long
-                str(final_path),
             ]
         )
+
+        # Add cost information to metadata
+        if cost_info:
+            cmd.extend([
+                "-metadata",
+                f"copyright=Production Cost: ${cost_info.total_cost_usd:.4f} (LLM: ${cost_info.llm_cost_usd:.4f}, TTS: ${cost_info.tts_cost_usd:.4f})",
+            ])
+
+        cmd.append(str(final_path))
 
         subprocess.run(cmd, capture_output=True, check=True)
 
         # Cleanup temp
-        for f in temp_dir.glob("*"):
-            f.unlink()
-        temp_dir.rmdir()
+        import shutil
+        if temp_dir.exists():
+            shutil.rmtree(temp_dir)
 
         return final_path
 
@@ -515,6 +635,12 @@ def main():
         "--use-real-signals", action="store_true", help="Use real relationship signals"
     )
     parser.add_argument(
+        "--provider",
+        choices=["macos", "openai", "elevenlabs"],
+        default="macos",
+        help="TTS provider: macos (free, testing), openai ($11/mo, good quality), elevenlabs (premium, $22+/mo). Default: macos",
+    )
+    parser.add_argument(
         "--output",
         "-o",
         default=str(Path.home() / "Music" / "Simulacrum-Stories"),
@@ -625,7 +751,7 @@ def main():
         album_dir.mkdir(parents=True, exist_ok=True)
 
         producer = EpisodeProducer(output_base)
-        audio_file = producer.produce_episode(state, album_dir)
+        audio_file = producer.produce_episode(state, album_dir, provider=args.provider)
 
         manager.update_episode_count(state.name.lower())
 
@@ -646,7 +772,7 @@ def main():
             album_dir = output_base / f"{state.name} Chronicles"
             album_dir.mkdir(parents=True, exist_ok=True)
 
-            audio_file = producer.produce_episode(state, album_dir)
+            audio_file = producer.produce_episode(state, album_dir, provider=args.provider)
             manager.update_episode_count(state.name.lower())
 
             print(f"  ✅ {audio_file.name}", file=sys.stderr)
