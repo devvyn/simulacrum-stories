@@ -29,8 +29,9 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import Literal
 
-# Budget configuration file
-BUDGET_CONFIG = Path.home() / "devvyn-meta-project" / "config" / "audio-budget.json"
+# Budget configuration files
+BUDGET_CONFIG = Path(__file__).parent.parent.parent.parent / "config" / "audio-budget.json"
+USAGE_STATE = Path(__file__).parent.parent.parent.parent / "data" / "budget-usage.json"
 
 # Default budget limits (characters per month)
 # Note: Prices shown in USD. For CAD multiply by ~1.35-1.40 (exchange rate varies)
@@ -97,41 +98,59 @@ class QueuedJob:
 class AudioBudgetManager:
     """Manage audio generation budgets and quotas"""
 
-    def __init__(self, config_path: Path = BUDGET_CONFIG):
+    def __init__(self, config_path: Path = BUDGET_CONFIG, usage_path: Path = USAGE_STATE):
         self.config_path = config_path
+        self.usage_path = usage_path
         self.config_path.parent.mkdir(parents=True, exist_ok=True)
+        self.usage_path.parent.mkdir(parents=True, exist_ok=True)
         self.load_or_create_config()
 
     def load_or_create_config(self):
         """Load existing config or create new one"""
+        # Load config (budgets and provider settings)
         if self.config_path.exists():
             with open(self.config_path) as f:
-                data = json.load(f)
-            self.active_provider = data.get("active_provider", "macos_native")
-            self.budgets = data.get("budgets", DEFAULT_BUDGETS)
-            self.usage = {
-                k: UsageTracker(**v) for k, v in data.get("usage", {}).items()
-            }
-            self.queue = [QueuedJob(**j) for j in data.get("queue", [])]
+                config_data = json.load(f)
+            self.active_provider = config_data.get("active_provider", "macos_native")
+            self.budgets = config_data.get("budgets", DEFAULT_BUDGETS)
         else:
             # Create default config
             self.active_provider = "macos_native"
             self.budgets = DEFAULT_BUDGETS
-            self.usage = {}
-            self.queue = []
             self.save_config()
 
+        # Load usage state (separate file, not in git)
+        if self.usage_path.exists():
+            with open(self.usage_path) as f:
+                usage_data = json.load(f)
+            self.usage = {
+                k: UsageTracker(**v) for k, v in usage_data.get("usage", {}).items()
+            }
+            self.queue = [QueuedJob(**j) for j in usage_data.get("queue", [])]
+        else:
+            # Create empty usage state
+            self.usage = {}
+            self.queue = []
+            self.save_usage()
+
     def save_config(self):
-        """Save current state to JSON"""
-        data = {
+        """Save configuration (budgets and provider settings)"""
+        config_data = {
             "active_provider": self.active_provider,
             "budgets": self.budgets,
+        }
+        with open(self.config_path, "w") as f:
+            json.dump(config_data, f, indent=2)
+
+    def save_usage(self):
+        """Save usage state (separate from config)"""
+        usage_data = {
             "usage": {k: asdict(v) for k, v in self.usage.items()},
             "queue": [asdict(j) for j in self.queue],
             "last_updated": datetime.now().isoformat(),
         }
-        with open(self.config_path, "w") as f:
-            json.dump(data, f, indent=2)
+        with open(self.usage_path, "w") as f:
+            json.dump(usage_data, f, indent=2)
 
     def get_usage(self, provider: str) -> UsageTracker:
         """Get or create usage tracker for provider"""
@@ -178,8 +197,8 @@ class AudioBudgetManager:
             remaining = monthly_limit - tracker.monthly_used
             return False, f"Monthly limit exceeded. Remaining: {remaining:,} chars"
 
-        # Check daily limit
-        if tracker.daily_used + chars > daily_limit:
+        # Check daily limit (if it exists)
+        if daily_limit is not None and tracker.daily_used + chars > daily_limit:
             remaining = daily_limit - tracker.daily_used
             return False, f"Daily limit exceeded. Remaining: {remaining:,} chars"
 
@@ -201,7 +220,7 @@ class AudioBudgetManager:
             }
         )
 
-        self.save_config()
+        self.save_usage()
 
     def add_to_queue(
         self, doc_path: str, provider: str, priority: str, estimated_chars: int
@@ -217,7 +236,7 @@ class AudioBudgetManager:
             status="queued",
         )
         self.queue.append(job)
-        self.save_config()
+        self.save_usage()
         return job.job_id
 
     def process_queue(self, dry_run: bool = False) -> list[QueuedJob]:
@@ -244,7 +263,7 @@ class AudioBudgetManager:
                 break  # Stop processing if we hit limits
 
         if not dry_run:
-            self.save_config()
+            self.save_usage()
 
         return processed
 
@@ -282,16 +301,20 @@ class AudioBudgetManager:
             lines.append("")
 
             # Daily usage
-            daily_pct = (tracker.daily_used / budget["daily_limit"]) * 100
-            daily_bar = self._progress_bar(tracker.daily_used, budget["daily_limit"])
-            lines.append(f"☀️  Daily Usage ({tracker.last_reset_date}):")
-            lines.append(f"  {daily_bar} {daily_pct:.1f}%")
-            lines.append(
-                f"  Used: {tracker.daily_used:,} / {budget['daily_limit']:,} chars"
-            )
-            lines.append(
-                f"  Remaining: {budget['daily_limit'] - tracker.daily_used:,} chars"
-            )
+            if budget["daily_limit"] is not None:
+                daily_pct = (tracker.daily_used / budget["daily_limit"]) * 100
+                daily_bar = self._progress_bar(tracker.daily_used, budget["daily_limit"])
+                lines.append(f"☀️  Daily Usage ({tracker.last_reset_date}):")
+                lines.append(f"  {daily_bar} {daily_pct:.1f}%")
+                lines.append(
+                    f"  Used: {tracker.daily_used:,} / {budget['daily_limit']:,} chars"
+                )
+                lines.append(
+                    f"  Remaining: {budget['daily_limit'] - tracker.daily_used:,} chars"
+                )
+            else:
+                lines.append(f"☀️  Daily Usage ({tracker.last_reset_date}):")
+                lines.append(f"  No daily limit - {tracker.daily_used:,} chars used today")
 
         # Queue status
         lines.append("")
@@ -407,7 +430,7 @@ def main():
         for tracker in manager.usage.values():
             tracker.monthly_used = 0
             tracker.month = date.today().strftime("%Y-%m")
-        manager.save_config()
+        manager.save_usage()
         print("✅ Monthly counters reset")
 
     elif command == "set-provider":

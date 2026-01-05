@@ -15,6 +15,9 @@ output/
 *.db
 *.sqlite
 
+# Budget usage state (user-specific, not shared)
+data/budget-usage.json
+
 # Environment and secrets
 .env
 .env.local
