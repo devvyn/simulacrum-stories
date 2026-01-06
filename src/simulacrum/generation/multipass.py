@@ -33,6 +33,10 @@ from typing import Literal
 
 from .scenes import Character, WorldState
 
+# Model configuration: Haiku for planning passes, Sonnet for creative passes
+MODEL_HAIKU = "claude-haiku-4-20250514"
+MODEL_SONNET = "claude-sonnet-4-20250514"
+
 # Try to import extended templates
 try:
     from .templates import EXTENDED_TEMPLATES
@@ -173,9 +177,16 @@ class QualityValidator:
 
 
 class MultiPassSceneGenerator:
-    """Generate scenes using 4-pass pipeline with dynamic POV"""
+    """Generate scenes using 4-pass pipeline with dynamic POV
 
-    def __init__(self, api_key: str | None = None):
+    Model selection:
+    - Planning passes (plot, emotional): Haiku for cost efficiency
+    - Creative passes (dialogue, polish): Sonnet for literary quality
+
+    Override with use_sonnet_only=True for maximum quality (2x cost).
+    """
+
+    def __init__(self, api_key: str | None = None, use_sonnet_only: bool = False):
         self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
         if not self.api_key:
             self.api_key = self._get_api_key_from_keychain()
@@ -185,6 +196,10 @@ class MultiPassSceneGenerator:
 
         self.client = anthropic.Anthropic(api_key=self.api_key)
         self.validator = QualityValidator()
+
+        # Model selection: Haiku for planning, Sonnet for creative (unless override)
+        self.model_planning = MODEL_SONNET if use_sonnet_only else MODEL_HAIKU
+        self.model_creative = MODEL_SONNET
 
     def _get_api_key_from_keychain(self) -> str | None:
         """Try to get API key from macOS keychain"""
@@ -228,6 +243,12 @@ class MultiPassSceneGenerator:
         """
 
         pass_results = []
+
+        # Log model configuration
+        if self.model_planning == self.model_creative:
+            print(f"  Models: All passes using {self.model_creative}", file=sys.stderr)
+        else:
+            print(f"  Models: Planning={self.model_planning.split('-')[1]}, Creative={self.model_creative.split('-')[1]}", file=sys.stderr)
 
         # Pass 1: Plot
         print("  Pass 1/4: Generating plot outline with POV decision...", file=sys.stderr)
@@ -437,9 +458,9 @@ JUSTIFICATION: [Why this POV structure serves the story]
 
 BEGIN OUTLINE:"""
 
-        # Call Claude
+        # Call Claude (Haiku for structural planning, or Sonnet if use_sonnet_only)
         response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=self.model_planning,
             max_tokens=1000,  # Plot outline doesn't need to be huge
             messages=[{"role": "user", "content": prompt}],
         )
@@ -516,9 +537,9 @@ Output: Structured emotional roadmap with tension scores, character states, tone
 
 BEGIN EMOTIONAL ROADMAP:"""
 
-        # Call Claude
+        # Call Claude (Haiku for emotional mapping, or Sonnet if use_sonnet_only)
         response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=self.model_planning,
             max_tokens=1200,  # Emotional roadmap needs detail
             messages=[{"role": "user", "content": prompt}],
         )
@@ -628,9 +649,9 @@ Follow emotional roadmap's tension curve precisely.
 
 BEGIN SCENE:"""
 
-        # Call Claude with higher max_tokens for the full scene
+        # Call Claude (Sonnet for literary quality)
         response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=self.model_creative,
             max_tokens=6000,  # Allow for full 2500-3000 word scene with voice tags
             messages=[{"role": "user", "content": prompt}],
         )
@@ -694,9 +715,9 @@ Output: Polished scene ready for doc-to-audio.py
 
 BEGIN POLISHED SCENE:"""
 
-        # Call Claude
+        # Call Claude (Sonnet for quality refinement)
         response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=self.model_creative,
             max_tokens=8000,  # Ensure complete scene with all polish additions
             messages=[{"role": "user", "content": prompt}],
         )

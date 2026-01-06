@@ -48,3 +48,6 @@ htmlcov/
 dist/
 build/
 *.egg-info/
+
+# Archive audio files (keep metadata only)
+archive/**/*.mp3

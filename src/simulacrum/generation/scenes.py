@@ -32,6 +32,10 @@ try:
 except ImportError:
     HAS_ANTHROPIC = False
 
+# Model configuration
+MODEL_SONNET = "claude-sonnet-4-20250514"
+MODEL_HAIKU = "claude-haiku-4-20250514"
+
 
 # =============================================================================
 # Data Structures
@@ -339,7 +343,7 @@ class SceneGenerator:
         # Call Claude with higher max_tokens for extended scenes (2250-3750 words)
         # User priority: max audio budget > optimize LLM token usage
         response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=MODEL_SONNET,
             max_tokens=5000,  # Allows for 3000+ word scenes (increased from 2000)
             messages=[{"role": "user", "content": prompt}],
         )

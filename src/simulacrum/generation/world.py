@@ -30,6 +30,9 @@ try:
 except ImportError:
     HAS_ANTHROPIC = False
 
+# Model configuration - Sonnet for reliable JSON structure
+MODEL_SONNET = "claude-sonnet-4-20250514"
+
 
 # =============================================================================
 # Data Structures
@@ -193,7 +196,7 @@ class WorldGenerator:
         )
 
         response = self.client.messages.create(
-            model="claude-sonnet-4-20250514",
+            model=MODEL_SONNET,
             max_tokens=8000,
             messages=[{"role": "user", "content": prompt}],
         )

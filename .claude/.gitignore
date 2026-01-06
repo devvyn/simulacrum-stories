@@ -1,0 +1,5 @@
+# Claude Code session data
+*
+# But include commands (skills)
+!commands/
+!commands/**

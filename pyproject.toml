@@ -3,7 +3,7 @@ name = "simulacrum-stories"
 version = "0.1.0"
 description = "AI-powered audio storytelling with multi-voice narration and emotional modeling"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.14"
 dependencies = [
     "anthropic>=0.40.0",
     "elevenlabs>=1.0.0",
