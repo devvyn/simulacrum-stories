@@ -27,7 +27,6 @@ from typing import assert_never
 
 from simulacrum.types import (
     SceneTemplate,
-    EndingType,
     is_character_dict,
     is_world_state_dict,
 )
