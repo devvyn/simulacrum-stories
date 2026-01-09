@@ -23,6 +23,14 @@ import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import assert_never
+
+from simulacrum.types import (
+    SceneTemplate,
+    EndingType,
+    is_character_dict,
+    is_world_state_dict,
+)
 
 # Anthropic API
 try:
@@ -77,9 +85,15 @@ class WorldState:
 
     @classmethod
     def from_json(cls, data: dict) -> "WorldState":
-        """Load from JSON data"""
+        """Load from JSON data with type validation."""
+        # Validate structure at boundary
+        if not is_world_state_dict(data):
+            raise ValueError("Invalid world state JSON structure")
+
         characters = []
         for char_data in data.get("characters", []):
+            if not is_character_dict(char_data):
+                raise ValueError(f"Invalid character data: {char_data}")
             characters.append(
                 Character(
                     name=char_data["name"],
@@ -89,7 +103,7 @@ class WorldState:
                     knowledge=char_data.get("knowledge", []),
                     voice_characteristics=char_data.get("voice_characteristics", ""),
                     gender=char_data.get("gender", "unknown"),
-                    age=char_data.get("age", "middle"),
+                    age=str(char_data.get("age", "middle")),
                 )
             )
 
@@ -165,6 +179,27 @@ try:
 except ImportError:
     HAS_EXTENDED = False
     EXTENDED_TEMPLATES = {}
+
+def get_template_text(template: SceneTemplate) -> str:
+    """
+    Get template text with exhaustive matching.
+
+    Uses assert_never to ensure all SceneTemplate values are handled.
+    If a new template is added to the Literal type but not here,
+    the type checker will report an error.
+    """
+    match template:
+        case "confrontation":
+            return SCENE_TEMPLATES["confrontation"]
+        case "discovery":
+            return SCENE_TEMPLATES["discovery"]
+        case "group_discussion":
+            return SCENE_TEMPLATES["group_discussion"]
+        case "revelation":
+            return SCENE_TEMPLATES["revelation"]
+        case _:
+            assert_never(template)
+
 
 SCENE_TEMPLATES = {
     "confrontation": """

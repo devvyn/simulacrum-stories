@@ -23,6 +23,13 @@ import sys
 from dataclasses import asdict, dataclass, field
 from datetime import datetime
 
+from simulacrum.types import (
+    is_character_dict,
+    is_event_dict,
+    is_secret_dict,
+    is_location_dict,
+)
+
 try:
     import anthropic
 
@@ -355,58 +362,74 @@ Return ONLY valid JSON in this exact structure:
 Generate a rich, dramatically interesting world with complex character relationships and secrets that could fuel multiple story arcs."""
 
     def _parse_world(self, data: dict) -> World:
-        """Parse JSON data into World object"""
+        """Parse JSON data into World object with type validation."""
 
         town = data.get("town", {})
 
-        characters = [
-            Character(
-                name=c["name"],
-                age=c.get("age", 40),
-                gender=c.get("gender", "unknown"),
-                role=c.get("role", "supporting"),
-                occupation=c.get("occupation", "unknown"),
-                personality=c.get("personality", []),
-                secrets=c.get("secrets", []),
-                knowledge=c.get("knowledge", []),
-                relationships=c.get("relationships", {}),
-                voice_characteristics=c.get("voice_characteristics", ""),
-                backstory=c.get("backstory", ""),
+        # Parse characters with validation
+        characters = []
+        for c in data.get("characters", []):
+            if not is_character_dict(c):
+                raise ValueError(f"Invalid character data from API: {c}")
+            characters.append(
+                Character(
+                    name=c["name"],
+                    age=c.get("age", 40),
+                    gender=c.get("gender", "unknown"),
+                    role=c.get("role", "supporting"),
+                    occupation=c.get("occupation", "unknown"),
+                    personality=c.get("personality", []),
+                    secrets=c.get("secrets", []),
+                    knowledge=c.get("knowledge", []),
+                    relationships=c.get("relationships", {}),
+                    voice_characteristics=c.get("voice_characteristics", ""),
+                    backstory=c.get("backstory", ""),
+                )
             )
-            for c in data.get("characters", [])
-        ]
 
-        events = [
-            Event(
-                date=e.get("date", "unknown"),
-                description=e["description"],
-                participants=e.get("participants", []),
-                witnesses=e.get("witnesses", []),
-                significance=e.get("significance", "medium"),
-                consequences=e.get("consequences", []),
+        # Parse events with validation
+        events = []
+        for e in data.get("events", []):
+            if not is_event_dict(e):
+                raise ValueError(f"Invalid event data from API: {e}")
+            events.append(
+                Event(
+                    date=e.get("date", "unknown"),
+                    description=e["description"],
+                    participants=e.get("participants", []),
+                    witnesses=e.get("witnesses", []),
+                    significance=e.get("significance", "medium"),
+                    consequences=e.get("consequences", []),
+                )
             )
-            for e in data.get("events", [])
-        ]
 
-        secrets = [
-            Secret(
-                description=s["description"],
-                known_by=s.get("known_by", []),
-                consequences_if_revealed=s.get("consequences_if_revealed", ""),
-                dramatic_potential=s.get("dramatic_potential", ""),
+        # Parse secrets with validation
+        secrets = []
+        for s in data.get("secrets", []):
+            if not is_secret_dict(s):
+                raise ValueError(f"Invalid secret data from API: {s}")
+            secrets.append(
+                Secret(
+                    description=s["description"],
+                    known_by=s.get("known_by", []),
+                    consequences_if_revealed=s.get("consequences_if_revealed", ""),
+                    dramatic_potential=s.get("dramatic_potential", ""),
+                )
             )
-            for s in data.get("secrets", [])
-        ]
 
-        locations = [
-            Location(
-                name=l["name"],
-                description=l.get("description", ""),
-                atmosphere=l.get("atmosphere", ""),
-                associated_characters=l.get("associated_characters", []),
+        # Parse locations with validation
+        locations = []
+        for loc in data.get("locations", []):
+            if not is_location_dict(loc):
+                raise ValueError(f"Invalid location data from API: {loc}")
+            locations.append(
+                Location(
+                    name=loc["name"],
+                    description=loc.get("description", ""),
+                    atmosphere=loc.get("atmosphere", ""),
+                    associated_characters=loc.get("associated_characters", []),
+                )
             )
-            for l in data.get("locations", [])
-        ]
 
         return World(
             name=town.get("name", "Unknown Town"),
