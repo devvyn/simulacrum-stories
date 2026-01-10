@@ -4,7 +4,7 @@
 
 **What**: AI-powered audio storytelling system with multi-voice narration
 **Purpose**: Generate daily dramatic audio episodes with emotional depth
-**Series**: Saltmere Chronicles (1970s coastal), Millbrook Chronicles (1980s rust belt)
+**Series**: Saltmere Chronicles (contemporary, Pacific Northwest coastal), Millbrook Chronicles (1980s rust belt)
 
 ## Key Constraints
 

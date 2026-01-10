@@ -1,0 +1,136 @@
+# Vignette B: Eleanor's Diary, 1962
+
+*Excerpts from the private journal of Eleanor Cross*
+*Discovered in her effects after her death*
+
+---
+
+**June 8, 1962**
+
+The researcher came to see me today. Dr. Helen Liu. Young, perhaps thirty, with the kind of earnest intensity that reminds me of the women I knew in college—the ones who believed education would change everything, that knowledge was power, that the world could be improved by sufficient application of good intentions.
+
+She has been here for three months, taking samples, asking questions, building her case. She thinks I don't know what she's found. She thinks her discretion has protected her.
+
+I have known since the second week.
+
+Robert tells me she has been thorough. Meticulous. She has documentation we didn't know existed—shipping manifests from the early years, before we learned to be careful. She has testimony from fishermen who should have known better than to talk. She has enough, Robert says, to bring federal investigators. Enough to destroy everything we've built.
+
+I asked her to tea. She accepted. We sat in the parlor and discussed the weather, the declining fish populations, the challenges of conducting research in a small community. She is intelligent and careful and genuinely curious about the world. Under other circumstances, I think I would have liked her.
+
+I told her I knew why she was really here. She had the grace not to pretend otherwise.
+
+She wants me to help her expose the operation. She believes—she actually believes—that I will choose truth over the survival of my town, my family, my life's work. She looks at me and sees a woman who might be persuaded, who might have a conscience buried somewhere beneath the pragmatism.
+
+She is wrong about that. But I did not tell her so. I told her I would consider her proposal, that we would speak again next week.
+
+I need time. Time to think, time to plan, time to determine whether there is any way to resolve this that does not require what I fear it will require.
+
+---
+
+**June 11, 1962**
+
+I have spent three days considering alternatives.
+
+*Pay her off.* She is an academic; she has no money. But she is also an idealist, and idealists cannot be bought. They can only be broken or buried.
+
+*Discredit her.* Her research is solid, her documentation extensive. Attacking her credentials would only draw attention, invite scrutiny, accelerate the very exposure she threatens.
+
+*Negotiate.* Offer her partial disclosure—the industrial waste, perhaps, but not the military contracts. Let her have a victory small enough to satisfy her conscience, large enough to justify abandoning the rest. But she would not accept partial truth. I saw it in her eyes. She is the kind of person who believes in wholes, in completeness, in knowing everything or nothing.
+
+*Wait.* Perhaps she will make a mistake. Perhaps she will tell the wrong person, trust the wrong ally, create an opportunity for intervention that does not require direct action. But she is careful, and time is not on our side. Every day she remains here is another day for the evidence to spread, the testimony to multiply, the truth to find its way into hands we cannot control.
+
+There is one more alternative. I have not written it down because writing makes things real, and I am not yet ready for this to be real.
+
+But I know what it is. I have known since she first sat in my parlor, sipping tea, believing she could appeal to my better nature.
+
+I do not have a better nature. I have only the nature that has kept this town alive for twenty years, that has made the hard choices others were too weak or too principled to make. I have only the nature that understands what survival costs.
+
+---
+
+**June 13, 1962**
+
+I met with her again today. I told her I had considered her proposal and wished to discuss terms.
+
+She was hopeful. I could see it in the way she held herself, the slight relaxation of her shoulders, the brightness that came into her eyes. She thought she had won. She thought her arguments had convinced me, that truth and justice and the right thing to do had finally penetrated my calculations.
+
+I let her think that. I asked questions—about her timeline, her plans for publication, who else knew what she knew. I was thorough. She was trusting. The combination gave me everything I needed.
+
+She has told only one person: a librarian named Edith Pemberton, who helped her locate documents. The documentation itself is in her room at the boarding house, in a locked case she believes is secure. She plans to mail copies to her university next week, along with a letter to the federal authorities.
+
+I thanked her for her candor. I told her I would need a few more days to prepare my own statement, to gather the records that would corroborate her findings. She was pleased. Grateful, even. She shook my hand as she left.
+
+I watched her walk to her car, this bright young woman who believes the world can be made better by telling the truth. I watched her drive away into the evening, toward a life she thinks she will continue living.
+
+I have made my decision. I have spoken to Robert. It will happen in three days, at night, in a way that will look like an accident.
+
+I am not sorry. I wish I were—it would be easier, somehow, to feel the weight of this choice pressing on my conscience. But I feel only clarity. Only the cold arithmetic of survival, the calculation I have made a hundred times before in smaller ways.
+
+Her truth would destroy this town. My lie will save it.
+
+I know which I choose.
+
+---
+
+**June 16, 1962**
+
+It is done.
+
+Robert tells me it was quick. Professional. She did not suffer more than necessary. Her boat was found this morning, drifting past the point. The search will continue for a few days, for appearances, but nothing will be found. Site 7 is deep, and the currents do not surrender what they are given.
+
+I have sent someone to collect her documentation. The librarian will be watched but not touched—she is local, she can be managed with the usual methods. Fear is sufficient for most people. Only the idealists require more.
+
+I should feel something. Grief, perhaps, or guilt, or the particular horror of having ordered another person's death. I search for these emotions the way one searches for a misplaced item, certain it must be somewhere, unable to locate it.
+
+I find nothing. Only the satisfaction of a problem solved, a threat neutralized, the continuation of everything I have built.
+
+Perhaps the feeling will come later. Perhaps I am simply numb, the enormity of the act too large to process in the immediate aftermath. Perhaps I will wake in the night, years from now, and finally understand what I have done.
+
+Or perhaps this is simply who I am. Who I have always been. The woman who makes the choices others cannot, who carries the weight others refuse, who does what must be done regardless of cost.
+
+I saved this town today. I saved every fisherman and shopkeeper and child who depends on the money that flows through the operation I manage. I saved my husband's legacy and my family's future and the survival of a community that would have been destroyed by this young woman's truth.
+
+That is what I tell myself. That is what I will continue to tell myself, for as long as I live.
+
+It may even be true.
+
+---
+
+**June 20, 1962**
+
+The search has been called off. Dr. Helen Liu is officially presumed drowned. Accidental death, the report will say. Tragic loss of a promising young scientist.
+
+Her university sent a letter of condolence. Her family—a sister in San Francisco, parents deceased—has been notified. There will be no investigation. There never is.
+
+I attended the memorial service this afternoon, a small gathering at the church. I wore black and spoke softly and accepted condolences from people who had no idea what they were really mourning.
+
+I was the last person to see her alive, I told them. We had tea. She spoke of her research, her hopes, her plans for the future. Such a shame. Such a waste.
+
+Edith Pemberton watched me from across the room. She knows something. Not everything—not the truth of what happened—but something. I could see it in her eyes, the particular quality of hatred that comes from suspicion without proof.
+
+Let her suspect. Let her keep her copies and her doubts and her private theories. As long as she is afraid, she will be silent. And she will be afraid. Everyone in this town is afraid. That is what keeps us safe.
+
+I went home afterward and sat in the parlor where Helen Liu had taken tea with me, twice, believing she could change my mind. I sat in the chair she had sat in and looked at the window she had looked through and thought about the woman she had been.
+
+She was brave. I can acknowledge that now, in the privacy of my own thoughts. She was braver than almost anyone I have known—brave enough to pursue truth into dangerous territory, brave enough to believe it mattered.
+
+She was wrong, of course. Truth does not protect you from people like me. Truth is just another weapon, and weapons can be turned aside, neutralized, buried at the bottom of the bay.
+
+But she was brave. And I will remember that, even as I forget everything else about her.
+
+---
+
+*End of Vignette B*
+
+---
+
+**Editorial Notes:**
+
+- Word count: ~1,600
+- Eleanor's interiority: calculation, not cruelty
+- "I do not have a better nature" = self-knowledge without remorse
+- The diary format allows access to private thoughts
+- Helen Liu humanized through Eleanor's grudging respect
+- "It may even be true" = the one crack in Eleanor's certainty
+- Edith watching from across the room = foreshadowing
+- Complements Eleanor's later surrender (the weight finally became too heavy)
+
