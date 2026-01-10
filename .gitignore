@@ -51,3 +51,6 @@ build/
 
 # Archive audio files (keep metadata only)
 archive/**/*.mp3
+
+# Local Netlify folder
+.netlify
