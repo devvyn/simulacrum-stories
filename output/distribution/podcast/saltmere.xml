@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>The Saltmere Chronicles</title>
+    <link>https://saltmere-chronicles.netlify.app</link>
+    <language>en-us</language>
+    <description>A marine biologist investigates unexplained fish die-offs in a remote coastal town, uncovering secrets the community has buried for fifty years. A serialized audio drama.</description>
+    <itunes:author>Simulacrum Stories</itunes:author>
+    <itunes:category text="Fiction">
+        <itunes:category text="Drama"/>
+    </itunes:category>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:image href="https://saltmere-chronicles.netlify.app/images/saltmere-cover.jpg"/>
+    <atom:link href="https://saltmere-chronicles.netlify.app/feeds/saltmere.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+        <title>Chapter 1: The Research Station</title>
+        <description>Marine biologist Sarah Chen arrives at the remote Saltmere research station to study unexplained fish die-offs.</description>
+        <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles-chapter-01.mp3" length="15122433" type="audio/mpeg"/>
+        <guid isPermaLink="false">saltmere-ch01</guid>
+        <pubDate>Thu, 01 Jan 2026 06:00:00 +0000</pubDate>
+        <itunes:duration>00:10:30</itunes:duration>
+        <itunes:episode>1</itunes:episode>
+        <itunes:episodeType>full</itunes:episodeType>
+    </item>
+    <item>
+        <title>Chapter 2: The Harbor Master</title>
+        <description>Sarah meets Margaret Holloway, the harbor master with a guarded demeanor and knowledge of the bay&#x27;s secrets.</description>
+        <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles-chapter-02.mp3" length="15331203" type="audio/mpeg"/>
+        <guid isPermaLink="false">saltmere-ch02</guid>
+        <pubDate>Thu, 08 Jan 2026 06:00:00 +0000</pubDate>
+        <itunes:duration>00:10:38</itunes:duration>
+        <itunes:episode>2</itunes:episode>
+        <itunes:episodeType>full</itunes:episodeType>
+    </item>
+    <item>
+        <title>Chapter 3: First Samples</title>
+        <description>Initial water samples reveal troubling anomalies that don&#x27;t match any known contamination patterns.</description>
+        <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles-chapter-03.mp3" length="17228947" type="audio/mpeg"/>
+        <guid isPermaLink="false">saltmere-ch03</guid>
+        <pubDate>Thu, 15 Jan 2026 06:00:00 +0000</pubDate>
+        <itunes:duration>00:11:57</itunes:duration>
+        <itunes:episode>3</itunes:episode>
+        <itunes:episodeType>full</itunes:episodeType>
+    </item>
+    <item>
+        <title>Chapter 4: The Librarian&#x27;s Archive</title>
+        <description>In the town archives, Sarah discovers records of similar incidents stretching back fifty years.</description>
+        <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles-chapter-04.mp3" length="17911683" type="audio/mpeg"/>
+        <guid isPermaLink="false">saltmere-ch04</guid>
+        <pubDate>Thu, 22 Jan 2026 06:00:00 +0000</pubDate>
+        <itunes:duration>00:12:26</itunes:duration>
+        <itunes:episode>4</itunes:episode>
+        <itunes:episodeType>full</itunes:episodeType>
+    </item>
+    <item>
+        <title>Chapter 5: The Waterfront Discovery</title>
+        <description>A chance encounter on the waterfront leads Sarah to an old fisherman who remembers what others have forgotten.</description>
+        <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles-chapter-05.mp3" length="15759403" type="audio/mpeg"/>
+        <guid isPermaLink="false">saltmere-ch05</guid>
+        <pubDate>Thu, 29 Jan 2026 06:00:00 +0000</pubDate>
+        <itunes:duration>00:10:56</itunes:duration>
+        <itunes:episode>5</itunes:episode>
+        <itunes:episodeType>full</itunes:episodeType>
+    </item>
+    <item>
+        <title>Chapter 6: The Weight of Truth</title>
+        <description>Thomas Breck shares his burden of silence and the night that changed Saltmere forever.</description>
+        <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles-chapter-06.mp3" length="16842753" type="audio/mpeg"/>
+        <guid isPermaLink="false">saltmere-ch06</guid>
+        <pubDate>Thu, 05 Feb 2026 06:00:00 +0000</pubDate>
+        <itunes:duration>00:11:41</itunes:duration>
+        <itunes:episode>6</itunes:episode>
+        <itunes:episodeType>full</itunes:episodeType>
+    </item>
+    <item>
+        <title>Chapter 7: Eleanor&#x27;s Warning</title>
+        <description>The town matriarch Eleanor Cross makes her position clear: some truths are meant to stay buried.</description>
+        <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles-chapter-07.mp3" length="17963092" type="audio/mpeg"/>
+        <guid isPermaLink="false">saltmere-ch07</guid>
+        <pubDate>Thu, 12 Feb 2026 06:00:00 +0000</pubDate>
+        <itunes:duration>00:12:28</itunes:duration>
+        <itunes:episode>7</itunes:episode>
+        <itunes:episodeType>full</itunes:episodeType>
+    </item>
+</channel>
+</rss>

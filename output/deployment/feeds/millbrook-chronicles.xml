@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<rss xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:ns1="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Millbrook Chronicles</title>
+    <description>An AI-generated audio drama series. 9 episodes.</description>
+    <language>en-us</language>
+    <link>https://luminous-selkie-098a98.netlify.app</link>
+    <generator>Simulacrum Podcast Generator</generator>
+    <lastBuildDate>Thu, 01 Jan 2026 12:37:29 +0000</lastBuildDate>
+    <ns0:link href="https://luminous-selkie-098a98.netlify.app/feeds/millbrook-chronicles.xml" rel="self" type="application/rss+xml"/>
+    <ns1:author>Simulacrum Stories</ns1:author>
+    <ns1:summary>An AI-generated audio drama series. 9 episodes.</ns1:summary>
+    <ns1:explicit>no</ns1:explicit>
+    <ns1:type>serial</ns1:type>
+    <image>
+      <url>https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/cover.jpg</url>
+      <title>Millbrook Chronicles</title>
+      <link>https://luminous-selkie-098a98.netlify.app</link>
+    </image>
+    <ns1:image href="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/cover.jpg"/>
+    <ns1:category text="Fiction">
+      <ns1:category text="Drama"/>
+    </ns1:category>
+    <ns1:owner>
+      <ns1:name>Simulacrum Stories</ns1:name>
+      <ns1:email>simulacrum@localhost</ns1:email>
+    </ns1:owner>
+    <item>
+      <title>The Weight of Truth</title>
+      <description>POV: Jack Morrison</description>
+      <pubDate>Thu, 01 Jan 2026 10:53:15 +0000</pubDate>
+      <guid>b3e6297615b35e18</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E09%20-%20The%20Weight%20of%20Truth.mp3" length="3686247" type="audio/mpeg"/>
+      <ns1:title>The Weight of Truth</ns1:title>
+      <ns1:summary>POV: Jack Morrison</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>9</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>2:31</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Secrets</title>
+      <description>POV: Old Pete Anderson</description>
+      <pubDate>Thu, 01 Jan 2026 10:49:26 +0000</pubDate>
+      <guid>4d3b3679db119dd1</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E08%20-%20The%20Weight%20of%20Secrets.mp3" length="1047089" type="audio/mpeg"/>
+      <ns1:title>The Weight of Secrets</ns1:title>
+      <ns1:summary>POV: Old Pete Anderson</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>8</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>0:42</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Truth</title>
+      <description>POV: Margaret Holloway</description>
+      <pubDate>Wed, 31 Dec 2025 23:02:21 +0000</pubDate>
+      <guid>0a6ddd3951a30a4f</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E07%20-%20The%20Weight%20of%20Truth.mp3" length="1759952" type="audio/mpeg"/>
+      <ns1:title>The Weight of Truth</ns1:title>
+      <ns1:summary>POV: Margaret Holloway</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>7</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>1:11</ns1:duration>
+    </item>
+    <item>
+      <title>The Visitor's Questions</title>
+      <description>POV: Sheriff Frank Donovan</description>
+      <pubDate>Wed, 31 Dec 2025 22:41:59 +0000</pubDate>
+      <guid>3968150dab0c895e</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E06%20-%20The%20Visitor%27s%20Questions.mp3" length="3737059" type="audio/mpeg"/>
+      <ns1:title>The Visitor's Questions</ns1:title>
+      <ns1:summary>POV: Sheriff Frank Donovan</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>6</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>2:33</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Truth</title>
+      <description>POV: Jack Morrison</description>
+      <pubDate>Wed, 31 Dec 2025 22:28:22 +0000</pubDate>
+      <guid>c5380587ed226d98</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E05%20-%20The%20Weight%20of%20Truth.mp3" length="2540878" type="audio/mpeg"/>
+      <ns1:title>The Weight of Truth</ns1:title>
+      <ns1:summary>POV: Jack Morrison</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>5</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>1:44</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Truth</title>
+      <description>POV: Old Pete Anderson</description>
+      <pubDate>Tue, 23 Dec 2025 20:01:37 +0000</pubDate>
+      <guid>d0c281e9b1cd9894</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E03%20-%20The%20Weight%20of%20Truth.mp3" length="5443825" type="audio/mpeg"/>
+      <ns1:title>The Weight of Truth</ns1:title>
+      <ns1:summary>POV: Old Pete Anderson</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>3</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>3:45</ns1:duration>
+    </item>
+    <item>
+      <title>Crossed Wires</title>
+      <description>POV: Margaret Holloway</description>
+      <pubDate>Tue, 23 Dec 2025 20:01:37 +0000</pubDate>
+      <guid>55dfeeec17b3770e</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E02%20-%20Crossed%20Wires.mp3" length="4023802" type="audio/mpeg"/>
+      <ns1:title>Crossed Wires</ns1:title>
+      <ns1:summary>POV: Margaret Holloway</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>2</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>2:46</ns1:duration>
+    </item>
+    <item>
+      <title>The Pattern Emerges</title>
+      <description>POV: Sheriff Frank Donovan</description>
+      <pubDate>Tue, 23 Dec 2025 20:01:37 +0000</pubDate>
+      <guid>cd1d6de5c5af9ea0</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E01%20-%20The%20Pattern%20Emerges.mp3" length="5454487" type="audio/mpeg"/>
+      <ns1:title>The Pattern Emerges</ns1:title>
+      <ns1:summary>POV: Sheriff Frank Donovan</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>1</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>3:45</ns1:duration>
+    </item>
+    <item>
+      <title>The Truth About Fire (Prologue)</title>
+      <description>An episode of Simulacrum Stories audio drama.</description>
+      <pubDate>Tue, 23 Dec 2025 20:01:37 +0000</pubDate>
+      <guid>469404415e260334</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/millbrook-chronicles/E00%20-%20The%20Truth%20About%20Fire%20%28Prologue%29.mp3" length="4255703" type="audio/mpeg"/>
+      <ns1:title>The Truth About Fire (Prologue)</ns1:title>
+      <ns1:summary>An episode of Simulacrum Stories audio drama.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>0</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>2:56</ns1:duration>
+    </item>
+  </channel>
+</rss>

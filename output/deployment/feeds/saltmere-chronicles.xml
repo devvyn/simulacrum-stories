@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<rss xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:ns1="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>Saltmere Chronicles</title>
+    <description>An AI-generated audio drama series. 7 episodes.</description>
+    <language>en-us</language>
+    <link>https://luminous-selkie-098a98.netlify.app</link>
+    <generator>Simulacrum Podcast Generator</generator>
+    <lastBuildDate>Thu, 01 Jan 2026 12:37:26 +0000</lastBuildDate>
+    <ns0:link href="https://luminous-selkie-098a98.netlify.app/feeds/saltmere-chronicles.xml" rel="self" type="application/rss+xml"/>
+    <ns1:author>Simulacrum Stories</ns1:author>
+    <ns1:summary>An AI-generated audio drama series. 7 episodes.</ns1:summary>
+    <ns1:explicit>no</ns1:explicit>
+    <ns1:type>serial</ns1:type>
+    <image>
+      <url>https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/cover.jpg</url>
+      <title>Saltmere Chronicles</title>
+      <link>https://luminous-selkie-098a98.netlify.app</link>
+    </image>
+    <ns1:image href="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/cover.jpg"/>
+    <ns1:category text="Fiction">
+      <ns1:category text="Drama"/>
+    </ns1:category>
+    <ns1:owner>
+      <ns1:name>Simulacrum Stories</ns1:name>
+      <ns1:email>simulacrum@localhost</ns1:email>
+    </ns1:owner>
+    <item>
+      <title>The Weight of Truth</title>
+      <description>POV: Margaret Holloway</description>
+      <pubDate>Wed, 31 Dec 2025 23:05:23 +0000</pubDate>
+      <guid>17e52426fe447801</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/E07%20-%20The%20Weight%20of%20Truth.mp3" length="2985335" type="audio/mpeg"/>
+      <ns1:title>The Weight of Truth</ns1:title>
+      <ns1:summary>POV: Margaret Holloway</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>7</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>2:02</ns1:duration>
+    </item>
+    <item>
+      <title>The Visitor at the Docks</title>
+      <description>POV: Sarah Chen</description>
+      <pubDate>Wed, 31 Dec 2025 22:59:53 +0000</pubDate>
+      <guid>c6cfaa618c4e5aef</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/E06%20-%20The%20Visitor%20at%20the%20Docks.mp3" length="2802776" type="audio/mpeg"/>
+      <ns1:title>The Visitor at the Docks</ns1:title>
+      <ns1:summary>POV: Sarah Chen</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>6</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>1:55</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Secrets</title>
+      <description>POV: Eleanor Cross</description>
+      <pubDate>Wed, 31 Dec 2025 22:38:36 +0000</pubDate>
+      <guid>cb62015408cdfa40</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/E05%20-%20The%20Weight%20of%20Secrets.mp3" length="1464124" type="audio/mpeg"/>
+      <ns1:title>The Weight of Secrets</ns1:title>
+      <ns1:summary>POV: Eleanor Cross</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>5</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>0:59</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Nets</title>
+      <description>POV: Thomas Breck</description>
+      <pubDate>Wed, 31 Dec 2025 22:23:45 +0000</pubDate>
+      <guid>6de556a3e4f8d63f</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/E04%20-%20The%20Weight%20of%20Nets.mp3" length="2287607" type="audio/mpeg"/>
+      <ns1:title>The Weight of Nets</ns1:title>
+      <ns1:summary>POV: Thomas Breck</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>4</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>1:33</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Old Sins</title>
+      <description>POV: Margaret Holloway</description>
+      <pubDate>Wed, 24 Dec 2025 12:34:34 +0000</pubDate>
+      <guid>7538b8ef518ff09c</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/E03%20-%20The%20Weight%20of%20Old%20Sins.mp3" length="5106538" type="audio/mpeg"/>
+      <ns1:title>The Weight of Old Sins</ns1:title>
+      <ns1:summary>POV: Margaret Holloway</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>3</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>3:31</ns1:duration>
+    </item>
+    <item>
+      <title>The Waterfront Discovery</title>
+      <description>POV: Sarah Chen</description>
+      <pubDate>Wed, 24 Dec 2025 12:27:34 +0000</pubDate>
+      <guid>b35d99bc5c21fbd1</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/E02%20-%20The%20Waterfront%20Discovery.mp3" length="3949204" type="audio/mpeg"/>
+      <ns1:title>The Waterfront Discovery</ns1:title>
+      <ns1:summary>POV: Sarah Chen</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>2</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>2:43</ns1:duration>
+    </item>
+    <item>
+      <title>The Weight of Watching</title>
+      <description>Generated from iMessage relationship signals</description>
+      <pubDate>Tue, 23 Dec 2025 20:01:37 +0000</pubDate>
+      <guid>f184888260d977f6</guid>
+      <enclosure url="https://luminous-selkie-098a98.netlify.app/audio/saltmere-chronicles/E01%20-%20The%20Weight%20of%20Watching.mp3" length="6195626" type="audio/mpeg"/>
+      <ns1:title>The Weight of Watching</ns1:title>
+      <ns1:summary>Generated from iMessage relationship signals</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>1</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>4:16</ns1:duration>
+    </item>
+  </channel>
+</rss>

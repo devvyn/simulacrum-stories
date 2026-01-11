@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(~/devvyn-meta-project/scripts/audio-budget-manager.py status)",
+      "Bash(~/devvyn-meta-project/scripts/narrative-tools/simulacrum-status.sh:*)",
+      "Bash(~/devvyn-meta-project/scripts/audio_budget_manager.py:*)",
+      "Bash(tee:*)",
+      "Bash(say:*)",
+      "Bash(do echo \"=== $ep ===\")",
+      "Bash(lsof:*)",
+      "Bash(aws:*)",
+      "Bash(aws configure:*)",
+      "Bash(netlify:*)",
+      "Bash(./publish-podcasts.sh)",
+      "Bash(./publish-podcasts.sh:*)",
+      "Bash(~/.zshrc)",
+      "Bash(curl:*)",
+      "Bash(npm --version:*)",
+      "Bash(npm install:*)",
+      "Bash(timeout 30 netlify deploy:*)",
+      "WebFetch(domain:podba.se)",
+      "Bash(while read f)",
+      "Bash(do printf \"%-80s \" \"$f\")",
+      "Bash(~/devvyn-meta-project/scripts/aws-podcast-optimize.sh)",
+      "Bash(xmllint:*)",
+      "Bash(while read file)",
+      "Bash(do if [[ \"$file\" == *.mp3 ]])",
+      "Bash(then aws s3api put-object-acl --bucket devvyn.ca --key \"podcast/audio/millbrook-chronicles/$file\" --acl public-read --profile devvyn)",
+      "Bash(do aws s3api put-object-acl:*)"
+    ]
+  }
+}
