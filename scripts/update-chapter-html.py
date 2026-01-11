@@ -8,7 +8,8 @@ import re
 SITE_DIR = Path(__file__).parent.parent / "site"
 READ_DIR = SITE_DIR / "read"
 
-# CSS link to add before </head>
+# Links to add before </head>
+FAVICON_LINK = '    <link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
 CSS_LINK = '    <link rel="stylesheet" href="/css/chapter-player.css">\n'
 
 # JS script to add before </body>
@@ -29,6 +30,11 @@ def update_chapter_file(filepath: Path) -> bool:
     """Update a single chapter HTML file."""
     content = filepath.read_text()
     modified = False
+
+    # Add favicon link if not present
+    if '/favicon.svg' not in content:
+        content = content.replace('</head>', FAVICON_LINK + '</head>')
+        modified = True
 
     # Add CSS link if not present
     if '/css/chapter-player.css' not in content:

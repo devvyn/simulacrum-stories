@@ -528,33 +528,34 @@
 
   // Initialize chapter feedback forms
   function initFeedbackForms() {
-    const feedbackForms = document.querySelectorAll('.chapter-feedback form');
+    const feedbackDivs = document.querySelectorAll('.chapter-feedback');
 
-    feedbackForms.forEach(form => {
-      // Intercept button clicks directly since they're submit buttons
-      form.querySelectorAll('button[type="submit"]').forEach(btn => {
-        btn.addEventListener('click', async (e) => {
+    feedbackDivs.forEach(feedbackDiv => {
+      // Handle both old (type=submit) and new (type=button) button formats
+      feedbackDiv.querySelectorAll('button[type="submit"], button[type="button"], button[data-response]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
 
-          const formData = new FormData(form);
-          formData.set('response', btn.value); // Capture which button was clicked
-          const feedbackDiv = form.closest('.chapter-feedback');
+          const response = btn.dataset.response || btn.value || btn.textContent;
+          const form = feedbackDiv.querySelector('form');
+          const chapter = form ? form.querySelector('[name="chapter"]')?.value : '?';
+          const noteEl = feedbackDiv.querySelector('textarea[name="note"]');
+          const note = noteEl ? noteEl.value : '';
 
-          // Store feedback locally (Netlify forms need git-based deploy)
+          // Store feedback locally
           const feedback = {
-            chapter: formData.get('chapter'),
-            response: btn.value,
-            note: formData.get('note') || '',
+            chapter: chapter,
+            response: response,
+            note: note,
             timestamp: new Date().toISOString()
           };
 
-          // Save to localStorage
           const stored = JSON.parse(localStorage.getItem('saltmere-feedback') || '[]');
           stored.push(feedback);
           localStorage.setItem('saltmere-feedback', JSON.stringify(stored));
 
-          // Replace form with thank you message
+          // Replace with thank you message
           feedbackDiv.innerHTML = `
             <p class="feedback-thanks">Thank you for sharing.</p>
           `;

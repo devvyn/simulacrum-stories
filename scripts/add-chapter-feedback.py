@@ -75,7 +75,7 @@ def generate_feedback_html(chapter_num: int) -> str:
 
     prompt = FEEDBACK_PROMPTS[chapter_num]
     options_html = "\n                        ".join([
-        f'<button type="submit" name="response" value="{val}">{label}</button>'
+        f'<button type="button" data-response="{val}">{label}</button>'
         for val, label in prompt["options"]
     ])
 
