@@ -1,0 +1,607 @@
+/**
+ * Saltmere Chronicles - Chapter Audio Player Styles
+ */
+
+/* Player Container */
+#chapter-player-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.chapter-player {
+  background: linear-gradient(to top, #1a2a3a, #2a3a4a);
+  border-top: 2px solid #8b7355;
+  padding: 12px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-family: Georgia, serif;
+  color: #f5f5f5;
+  transition: transform 0.3s ease;
+}
+
+.chapter-player.minimized {
+  transform: translateY(calc(100% - 40px));
+}
+
+.chapter-player.minimized .player-controls,
+.chapter-player.minimized .player-info {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Player Info */
+.player-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.player-title {
+  font-weight: bold;
+  font-size: 14px;
+  color: #f5f5f5;
+}
+
+.player-time {
+  font-size: 12px;
+  color: #a0a0a0;
+  font-family: system-ui, sans-serif;
+}
+
+/* Controls */
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.player-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.player-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.player-btn:active {
+  transform: scale(0.95);
+}
+
+.play-pause {
+  width: 48px;
+  height: 48px;
+  font-size: 18px;
+}
+
+.skip-back, .skip-forward {
+  font-size: 11px;
+  font-family: system-ui, sans-serif;
+}
+
+/* Progress Bar */
+.progress-bar {
+  flex: 1;
+  min-width: 100px;
+  max-width: 400px;
+  height: 8px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #8b7355;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.progress-bar::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #8b7355;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+/* Speed Control */
+.speed-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+}
+
+.speed-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Sections Dropdown */
+.player-sections {
+  position: relative;
+}
+
+.sections-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+}
+
+.sections-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.toggle-icon {
+  margin-left: 4px;
+  font-size: 10px;
+}
+
+.sections-list {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: #2a3a4a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  list-style: none;
+  padding: 4px 0;
+  margin: 0 0 8px 0;
+  min-width: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.sections-list li button {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.sections-list li button:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Download Button */
+.download-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.download-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Read-Along Button */
+.read-along-btn {
+  background: rgba(139, 115, 85, 0.2);
+  border: 1px solid rgba(139, 115, 85, 0.5);
+  color: #d4c4a8;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.read-along-btn:hover {
+  background: rgba(139, 115, 85, 0.4);
+}
+
+.read-along-btn.active {
+  background: #8b7355;
+  color: #fff;
+  border-color: #8b7355;
+}
+
+/* Report Issue Button */
+.report-issue-btn {
+  background: rgba(255, 100, 100, 0.1);
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  color: #ffcccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 11px;
+}
+
+.report-issue-btn:hover {
+  background: rgba(255, 100, 100, 0.2);
+}
+
+/* Report Issue Modal */
+.report-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.report-modal {
+  background: #1a2a3a;
+  border: 2px solid #8b7355;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  color: #f5f5f5;
+}
+
+.report-modal h3 {
+  margin: 0 0 16px 0;
+  font-family: Georgia, serif;
+}
+
+.report-modal p {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin: 0 0 16px 0;
+}
+
+.report-modal .timestamp-display {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: monospace;
+  margin-bottom: 16px;
+}
+
+.report-modal textarea {
+  width: 100%;
+  min-height: 80px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #f5f5f5;
+  padding: 8px;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  margin-bottom: 16px;
+}
+
+.report-modal textarea::placeholder {
+  color: #808080;
+}
+
+.report-modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.report-modal-buttons button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.report-modal-buttons .cancel-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #a0a0a0;
+}
+
+.report-modal-buttons .submit-btn {
+  background: #8b7355;
+  border: none;
+  color: #fff;
+}
+
+.report-modal-buttons .submit-btn:hover {
+  background: #9c8466;
+}
+
+/* Minimize Button */
+.player-minimize {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #a0a0a0;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.player-minimize:hover {
+  color: #f5f5f5;
+}
+
+/* Modality Header */
+.chapter-modalities {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.chapter-modalities .mode {
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.chapter-modalities .mode.active {
+  background: #8b7355;
+  color: #fff;
+  border: none;
+}
+
+.chapter-modalities button.mode {
+  background: rgba(139, 115, 85, 0.2);
+  border: 1px solid #8b7355;
+  color: #8b7355;
+}
+
+.chapter-modalities button.mode:hover {
+  background: rgba(139, 115, 85, 0.4);
+}
+
+.chapter-modalities .mode-pending {
+  background: rgba(255, 255, 255, 0.1);
+  color: #808080;
+  font-style: italic;
+}
+
+.chapter-modalities .mode-download {
+  background: transparent;
+  border: 1px solid rgba(139, 115, 85, 0.5);
+  color: #8b7355;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.chapter-modalities .mode-download:hover {
+  background: rgba(139, 115, 85, 0.2);
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .chapter-player {
+    padding: 10px 12px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .player-info {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .player-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .progress-bar {
+    order: -1;
+    width: 100%;
+    max-width: none;
+  }
+
+  .download-btn, .report-issue-btn {
+    display: none;
+  }
+
+  .chapter-modalities {
+    flex-direction: column;
+  }
+
+  .chapter-modalities .mode,
+  .chapter-modalities .mode-download {
+    text-align: center;
+  }
+}
+
+/* Leave space for player on chapter pages */
+body.has-audio-player {
+  padding-bottom: 100px;
+}
+
+@media (max-width: 600px) {
+  body.has-audio-player {
+    padding-bottom: 140px;
+  }
+}
+
+/* Read-Along Highlighting */
+.read-along-highlight {
+  background: linear-gradient(
+    to bottom,
+    rgba(139, 115, 85, 0.1) 0%,
+    rgba(139, 115, 85, 0.2) 50%,
+    rgba(139, 115, 85, 0.1) 100%
+  );
+  border-left: 3px solid #8b7355;
+  padding-left: 12px;
+  margin-left: -15px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+body.read-along-active .chapter-content p,
+body.read-along-active article p {
+  transition: opacity 0.3s ease;
+}
+
+body.read-along-active .chapter-content p:not(.read-along-highlight),
+body.read-along-active article p:not(.read-along-highlight) {
+  opacity: 0.5;
+}
+
+/* Issue Type Select in Modal */
+.issue-type-select {
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #f5f5f5;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.issue-type-select:focus {
+  outline: 2px solid #8b7355;
+  outline-offset: 2px;
+}
+
+.issue-type-select option {
+  background: #2a3a4a;
+  color: #f5f5f5;
+}
+
+/* Screen Reader Only (accessibility) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Chapter Feedback Form */
+.chapter-feedback {
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  background: rgba(139, 115, 85, 0.1);
+  border: 1px solid rgba(139, 115, 85, 0.3);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.feedback-prompt {
+  font-style: italic;
+  font-size: 1.1em;
+  margin-bottom: 1.25rem;
+  color: #d4c4a8;
+}
+
+.feedback-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.feedback-options button {
+  background: rgba(139, 115, 85, 0.2);
+  border: 1px solid rgba(139, 115, 85, 0.5);
+  color: #f5f5f5;
+  padding: 0.5rem 1.25rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-size: 0.95rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.feedback-options button:hover {
+  background: rgba(139, 115, 85, 0.4);
+}
+
+.feedback-options button:active {
+  transform: scale(0.97);
+}
+
+.chapter-feedback textarea {
+  width: 100%;
+  max-width: 400px;
+  min-height: 60px;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #f5f5f5;
+  font-family: Georgia, serif;
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.chapter-feedback textarea::placeholder {
+  color: #808080;
+  font-style: italic;
+}
+
+.chapter-feedback textarea:focus {
+  outline: 2px solid #8b7355;
+  outline-offset: 2px;
+}
+
+/* Feedback submission success state */
+.chapter-feedback.submitted {
+  background: rgba(100, 150, 100, 0.1);
+  border-color: rgba(100, 150, 100, 0.3);
+}
+
+.chapter-feedback.submitted::after {
+  content: "Thank you for sharing.";
+  display: block;
+  margin-top: 1rem;
+  color: #a8c4a8;
+  font-style: italic;
+}

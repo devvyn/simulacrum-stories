@@ -451,19 +451,30 @@
     <section id="listen">
         <h2>Listen Now</h2>
         <div class="player-embed">
-            <!-- Embed player here when ready -->
-            <p>[Audio player: Chapter 1 preview]</p>
+            <audio controls style="width: 100%; margin-bottom: 1rem;">
+                <source src="/audio/saltmere-chronicles/01%20-%20The%20Research%20Station.mp3" type="audio/mpeg">
+            </audio>
+            <p>Chapter 1: The Research Station (20:23)</p>
         </div>
         <p>
-            The complete audiobook is available free on all podcast platforms.
-            Narrated by George (British voice for literary distance), with the full
-            cast appearing in character dialogue.
+            The complete audiobook is available free. 2 hours 37 minutes across 7 chapters.
+            Narrated with full atmospheric sound design—ambient harbor audio, original music,
+            and section breaks that let the story breathe.
         </p>
         <div class="podcast-links">
-            <a href="#" class="podcast-link">Apple Podcasts</a>
-            <a href="#" class="podcast-link">Spotify</a>
-            <a href="#" class="podcast-link">RSS Feed</a>
-            <a href="#" class="podcast-link">Download All</a>
+            <a href="/feeds/saltmere-chronicles.xml" class="podcast-link">RSS Feed</a>
+            <a href="/audio/saltmere-chronicles/The%20Saltmere%20Chronicles.m4b" class="podcast-link">Download Audiobook (M4B)</a>
+        </div>
+
+        <h3 style="margin-top: 2rem; font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase;">Individual Chapters</h3>
+        <div style="margin-top: 1rem; font-size: 0.9rem; line-height: 2;">
+            <a href="/audio/saltmere-chronicles/01%20-%20The%20Research%20Station.mp3" style="color: var(--salt-white);">01. The Research Station</a> (20:23)<br>
+            <a href="/audio/saltmere-chronicles/02%20-%20The%20Harbor%20Master.mp3" style="color: var(--salt-white);">02. The Harbor Master</a> (20:45)<br>
+            <a href="/audio/saltmere-chronicles/03%20-%20First%20Samples.mp3" style="color: var(--salt-white);">03. First Samples</a> (23:33)<br>
+            <a href="/audio/saltmere-chronicles/04%20-%20The%20Librarian's%20Archive.mp3" style="color: var(--salt-white);">04. The Librarian's Archive</a> (24:17)<br>
+            <a href="/audio/saltmere-chronicles/05%20-%20The%20Waterfront%20Discovery.mp3" style="color: var(--salt-white);">05. The Waterfront Discovery</a> (21:21)<br>
+            <a href="/audio/saltmere-chronicles/06%20-%20The%20Weight%20of%20Truth.mp3" style="color: var(--salt-white);">06. The Weight of Truth</a> (22:51)<br>
+            <a href="/audio/saltmere-chronicles/07%20-%20Eleanor's%20Warning.mp3" style="color: var(--salt-white);">07. Eleanor's Warning</a> (24:19)<br>
         </div>
     </section>
 
@@ -574,5 +585,16 @@
             });
         });
     </script>
+
+    <!-- Hidden Netlify Forms (for JS-based submissions) -->
+    <form name="audio-issue-report" netlify netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="audio-issue-report">
+        <input type="text" name="bot-field">
+        <input type="text" name="chapter">
+        <input type="text" name="timestamp">
+        <input type="text" name="timestamp-display">
+        <input type="text" name="issue-type">
+        <textarea name="description"></textarea>
+    </form>
 </body>
 </html>

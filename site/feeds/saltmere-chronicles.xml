@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<rss xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:ns1="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
+  <channel>
+    <title>The Saltmere Chronicles</title>
+    <description>A marine biologist returns to the town where her grandmother vanished fifty years ago. What she finds in the water is poison. What she finds in the town is silence. A 12-chapter literary mystery about generational secrets, environmental crime, and the weight of complicity.</description>
+    <language>en-us</language>
+    <link>https://saltmere-chronicles.netlify.app</link>
+    <generator>Simulacrum Podcast Generator</generator>
+    <lastBuildDate>Sun, 11 Jan 2026 06:03:06 +0000</lastBuildDate>
+    <ns0:link href="https://saltmere-chronicles.netlify.app/feeds/saltmere-chronicles.xml" rel="self" type="application/rss+xml"/>
+    <ns1:author>Simulacrum Stories</ns1:author>
+    <ns1:summary>A marine biologist returns to the town where her grandmother vanished fifty years ago. What she finds in the water is poison. What she finds in the town is silence. A 12-chapter literary mystery about generational secrets, environmental crime, and the weight of complicity.</ns1:summary>
+    <ns1:explicit>no</ns1:explicit>
+    <ns1:type>serial</ns1:type>
+    <image>
+      <url>https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/cover.jpg</url>
+      <title>The Saltmere Chronicles</title>
+      <link>https://saltmere-chronicles.netlify.app</link>
+    </image>
+    <ns1:image href="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/cover.jpg"/>
+    <ns1:category text="Fiction">
+      <ns1:category text="Drama"/>
+    </ns1:category>
+    <ns1:owner>
+      <ns1:name>Simulacrum Stories</ns1:name>
+      <ns1:email>podcast@simulacrum.stories</ns1:email>
+    </ns1:owner>
+    <item>
+      <title>Chapter 7: Eleanor's Warning</title>
+      <description>A summons to tea. A philosophy of necessary evil. A line drawn.</description>
+      <pubDate>Sun, 11 Jan 2026 06:03:06 +0000</pubDate>
+      <guid>3edec762c5185b62</guid>
+      <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/07%20-%20Eleanor's%20Warning.mp3" length="35048174" type="audio/mpeg"/>
+      <ns1:title>Chapter 7: Eleanor's Warning</ns1:title>
+      <ns1:summary>A summons to tea. A philosophy of necessary evil. A line drawn.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>07</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>24:19</ns1:duration>
+    </item>
+    <item>
+      <title>Chapter 6: The Weight of Truth</title>
+      <description>Margaret makes a choice, and Sarah discovers what it costs.</description>
+      <pubDate>Sat, 10 Jan 2026 06:03:06 +0000</pubDate>
+      <guid>9ae3be5583393a41</guid>
+      <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/06%20-%20The%20Weight%20of%20Truth.mp3" length="32939440" type="audio/mpeg"/>
+      <ns1:title>Chapter 6: The Weight of Truth</ns1:title>
+      <ns1:summary>Margaret makes a choice, and Sarah discovers what it costs.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>06</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>22:51</ns1:duration>
+    </item>
+    <item>
+      <title>Chapter 5: The Waterfront Discovery</title>
+      <description>Thomas finds something in the harbor that changes everything.</description>
+      <pubDate>Fri, 09 Jan 2026 06:03:06 +0000</pubDate>
+      <guid>fe29c2621c385d9f</guid>
+      <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/05%20-%20The%20Waterfront%20Discovery.mp3" length="30775989" type="audio/mpeg"/>
+      <ns1:title>Chapter 5: The Waterfront Discovery</ns1:title>
+      <ns1:summary>Thomas finds something in the harbor that changes everything.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>05</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>21:21</ns1:duration>
+    </item>
+    <item>
+      <title>Chapter 4: The Librarian's Archive</title>
+      <description>Edith Pemberton has kept copies for fifty years, waiting for someone brave enough to use them.</description>
+      <pubDate>Thu, 08 Jan 2026 06:03:06 +0000</pubDate>
+      <guid>35b8e541ae0057d7</guid>
+      <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/04%20-%20The%20Librarian's%20Archive.mp3" length="34998644" type="audio/mpeg"/>
+      <ns1:title>Chapter 4: The Librarian's Archive</ns1:title>
+      <ns1:summary>Edith Pemberton has kept copies for fifty years, waiting for someone brave enough to use them.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>04</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>24:17</ns1:duration>
+    </item>
+    <item>
+      <title>Chapter 3: First Samples</title>
+      <description>Out on the water with Thomas Breck, Sarah begins to understand what Saltmere is hiding.</description>
+      <pubDate>Wed, 07 Jan 2026 06:03:06 +0000</pubDate>
+      <guid>974b6cd0f3597090</guid>
+      <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/03%20-%20First%20Samples.mp3" length="33962986" type="audio/mpeg"/>
+      <ns1:title>Chapter 3: First Samples</ns1:title>
+      <ns1:summary>Out on the water with Thomas Breck, Sarah begins to understand what Saltmere is hiding.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>03</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>23:33</ns1:duration>
+    </item>
+    <item>
+      <title>Chapter 2: The Harbor Master</title>
+      <description>Sarah meets Margaret Holloway and receives her first warning from Eleanor Cross.</description>
+      <pubDate>Tue, 06 Jan 2026 06:03:06 +0000</pubDate>
+      <guid>e4c28feeaab7014b</guid>
+      <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/02%20-%20The%20Harbor%20Master.mp3" length="29914862" type="audio/mpeg"/>
+      <ns1:title>Chapter 2: The Harbor Master</ns1:title>
+      <ns1:summary>Sarah meets Margaret Holloway and receives her first warning from Eleanor Cross.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>02</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>20:45</ns1:duration>
+    </item>
+    <item>
+      <title>Chapter 1: The Research Station</title>
+      <description>A marine biologist arrives at a remote research station on the Pacific Northwest coast.</description>
+      <pubDate>Mon, 05 Jan 2026 06:03:06 +0000</pubDate>
+      <guid>e0b9685cf5969e5a</guid>
+      <enclosure url="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/01%20-%20The%20Research%20Station.mp3" length="29394737" type="audio/mpeg"/>
+      <ns1:title>Chapter 1: The Research Station</ns1:title>
+      <ns1:summary>A marine biologist arrives at a remote research station on the Pacific Northwest coast.</ns1:summary>
+      <ns1:episodeType>full</ns1:episodeType>
+      <ns1:episode>01</ns1:episode>
+      <ns1:season>1</ns1:season>
+      <ns1:explicit>no</ns1:explicit>
+      <ns1:duration>20:23</ns1:duration>
+    </item>
+  </channel>
+</rss>

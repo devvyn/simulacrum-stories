@@ -148,6 +148,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/css/chapter-player.css">
 </head>
 <body>
     <header>
@@ -235,5 +236,16 @@
     <footer>
         The Saltmere Chronicles
     </footer>
+    <!-- Netlify Forms (for audio issue reports) -->
+    <form name="audio-issue-report" netlify netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="audio-issue-report">
+        <input type="text" name="bot-field">
+        <input type="text" name="chapter">
+        <input type="text" name="timestamp">
+        <input type="text" name="timestamp-display">
+        <input type="text" name="issue-type">
+        <textarea name="description"></textarea>
+    </form>
+    <script src="/js/chapter-player.js"></script>
 </body>
 </html>

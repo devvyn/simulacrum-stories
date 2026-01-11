@@ -1,0 +1,143 @@
+{
+  "chapter-01-the-research-station": {
+    "audio": "/audio/saltmere-chronicles-chapter-01.mp3",
+    "title": "The Research Station",
+    "duration": 630,
+    "duration_display": "10:30",
+    "sections": [
+      {
+        "timestamp": 189,
+        "label": "Sarah settles in"
+      },
+      {
+        "timestamp": 353,
+        "label": "Town exploration"
+      },
+      {
+        "timestamp": 476,
+        "label": "Evening encounter"
+      }
+    ]
+  },
+  "chapter-02-the-harbor-master": {
+    "audio": "/audio/saltmere-chronicles-chapter-02.mp3",
+    "title": "The Harbor Master",
+    "duration": 638,
+    "duration_display": "10:38",
+    "sections": [
+      {
+        "timestamp": 328,
+        "label": "Harbor office"
+      },
+      {
+        "timestamp": 405,
+        "label": "Margaret's warning"
+      },
+      {
+        "timestamp": 438,
+        "label": "Departure"
+      }
+    ]
+  },
+  "chapter-03-first-samples": {
+    "audio": "/audio/saltmere-chronicles-chapter-03.mp3",
+    "title": "First Samples",
+    "duration": 717,
+    "duration_display": "11:57",
+    "sections": [
+      {
+        "timestamp": 40,
+        "label": "Morning routine"
+      },
+      {
+        "timestamp": 538,
+        "label": "Sample analysis"
+      }
+    ]
+  },
+  "chapter-04-the-librarians-archive": {
+    "audio": "/audio/saltmere-chronicles-chapter-04.mp3",
+    "title": "The Librarian's Archive",
+    "duration": 746,
+    "duration_display": "12:26",
+    "sections": [
+      {
+        "timestamp": 180,
+        "label": "Archive search"
+      },
+      {
+        "timestamp": 183,
+        "label": "Edith appears"
+      },
+      {
+        "timestamp": 725,
+        "label": "The files"
+      }
+    ]
+  },
+  "chapter-05-the-waterfront-discovery": {
+    "audio": "/audio/saltmere-chronicles-chapter-05.mp3",
+    "title": "The Waterfront Discovery",
+    "duration": 656,
+    "duration_display": "10:56",
+    "sections": [
+      {
+        "timestamp": 143,
+        "label": "Waterfront walk"
+      },
+      {
+        "timestamp": 156,
+        "label": "Discovery"
+      },
+      {
+        "timestamp": 543,
+        "label": "Return"
+      }
+    ]
+  },
+  "chapter-06-the-weight-of-truth": {
+    "audio": "/audio/saltmere-chronicles-chapter-06.mp3",
+    "title": "The Weight of Truth",
+    "duration": 701,
+    "duration_display": "11:41",
+    "sections": [
+      {
+        "timestamp": 195,
+        "label": "Thomas speaks"
+      },
+      {
+        "timestamp": 326,
+        "label": "The weight"
+      },
+      {
+        "timestamp": 681,
+        "label": "Decision"
+      }
+    ]
+  },
+  "chapter-07-eleanors-warning": {
+    "audio": "/audio/saltmere-chronicles-chapter-07.mp3",
+    "title": "Eleanor's Warning",
+    "duration": 748,
+    "duration_display": "12:28",
+    "sections": [
+      {
+        "timestamp": 49,
+        "label": "Morning tension"
+      },
+      {
+        "timestamp": 102,
+        "label": "Town drive"
+      },
+      {
+        "timestamp": 730,
+        "label": "Eleanor's words"
+      }
+    ]
+  },
+  "chapter-08-the-old-cannery": null,
+  "chapter-09-the-reckoning": null,
+  "chapter-10-what-rises": null,
+  "chapter-11-what-surfaces": null,
+  "chapter-12-the-tide-goes-out": null
+}

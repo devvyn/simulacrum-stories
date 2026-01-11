@@ -148,6 +148,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="/css/chapter-player.css">
 </head>
 <body>
     <header>
@@ -233,6 +234,21 @@
             <hr>
             <p><em>End of Chapter 6</em></p>
             <hr>
+            <div class="chapter-feedback">
+                <p class="feedback-prompt">The weight of truth settles. Did you see it coming?</p>
+                <form name="feedback-ch06" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="feedback-ch06">
+                    <input type="hidden" name="bot-field">
+                    <input type="hidden" name="chapter" value="6">
+                    <div class="feedback-options">
+                        <button type="submit" name="response" value="yes">Yes, the signs were there</button>
+                        <button type="submit" name="response" value="no">No, I was surprised</button>
+                        <button type="submit" name="response" value="suspected">I suspected something different</button>
+                    </div>
+                    <textarea name="note" placeholder="What stayed with you? (optional)"></textarea>
+                </form>
+            </div>
+
         </div>
 
         <div class="navigation">
@@ -244,5 +260,16 @@
     <footer>
         The Saltmere Chronicles
     </footer>
+    <!-- Netlify Forms (for audio issue reports) -->
+    <form name="audio-issue-report" netlify netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="audio-issue-report">
+        <input type="text" name="bot-field">
+        <input type="text" name="chapter">
+        <input type="text" name="timestamp">
+        <input type="text" name="timestamp-display">
+        <input type="text" name="issue-type">
+        <textarea name="description"></textarea>
+    </form>
+    <script src="/js/chapter-player.js"></script>
 </body>
 </html>
