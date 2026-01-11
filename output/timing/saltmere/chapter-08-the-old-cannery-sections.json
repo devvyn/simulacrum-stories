@@ -1,0 +1,35 @@
+{
+  "file": "chapter-08-the-old-cannery.md",
+  "chapter": "08",
+  "title": "The Old Cannery",
+  "total_lines": 161,
+  "total_words": 2210,
+  "section_count": 3,
+  "separator_count": 2,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 44,
+      "word_count": 637,
+      "text_preview": "Chapter 8: The Old Cannery Thomas found her on the dock at midnight, sitting on a coil of rope with ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 46,
+      "end_line": 72,
+      "word_count": 439,
+      "text_preview": "The cannery loomed against the sky like a beached ship, its smokestacks cold and silent, its windows...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 74,
+      "end_line": 160,
+      "word_count": 1134,
+      "text_preview": "The basement was concrete and steel, newer construction than the building above\u2014probably added decad...",
+      "expected_pause_after": false
+    }
+  ]
+}

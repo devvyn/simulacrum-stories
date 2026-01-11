@@ -1,0 +1,35 @@
+{
+  "file": "chapter-02-the-harbor-master.md",
+  "chapter": "02",
+  "title": "The Harbor Master",
+  "total_lines": 133,
+  "total_words": 1675,
+  "section_count": 3,
+  "separator_count": 2,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 58,
+      "word_count": 801,
+      "text_preview": "Chapter 2: The Harbor Master The harbor office occupied the ground floor of a building that had been...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 60,
+      "end_line": 74,
+      "word_count": 228,
+      "text_preview": "The permits were approved by noon, stamped and signed with Margaret's efficient signature, accompani...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 76,
+      "end_line": 132,
+      "word_count": 646,
+      "text_preview": "The walk back to the research station took her past the general store, and this time the black sedan...",
+      "expected_pause_after": false
+    }
+  ]
+}

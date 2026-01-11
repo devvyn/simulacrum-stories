@@ -1,0 +1,43 @@
+{
+  "file": "chapter-01-the-research-station.md",
+  "chapter": "01",
+  "title": "The Research Station",
+  "total_lines": 103,
+  "total_words": 1737,
+  "section_count": 4,
+  "separator_count": 3,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 16,
+      "word_count": 469,
+      "text_preview": "Chapter 1: The Research Station The fog came in like a slow exhalation, the kind that didn't lift so...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 18,
+      "end_line": 50,
+      "word_count": 463,
+      "text_preview": "The knock came at eleven, when the fog had thinned enough to reveal the outline of the dock and the ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 52,
+      "end_line": 68,
+      "word_count": 334,
+      "text_preview": "She spent the afternoon unpacking her equipment: the portable spectrometer, the sample containers, t...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 4,
+      "start_line": 70,
+      "end_line": 102,
+      "word_count": 471,
+      "text_preview": "At six o'clock, hunger drove her out of the station and down the gravel road toward the center of to...",
+      "expected_pause_after": false
+    }
+  ]
+}

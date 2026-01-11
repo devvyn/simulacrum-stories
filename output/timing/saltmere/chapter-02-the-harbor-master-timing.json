@@ -1,0 +1,86 @@
+{
+  "file": "chapter-02-the-harbor-master",
+  "chapter": "02",
+  "title": "The Harbor Master",
+  "total_duration": 604.7,
+  "word_count": 1675,
+  "section_count": 3,
+  "section_break_summary": {
+    "expected": 2,
+    "detected_pauses": 2,
+    "adequate_pauses": 0,
+    "missing_or_insufficient": 2
+  },
+  "sections": [
+    {
+      "id": 1,
+      "manuscript_start_line": 1,
+      "manuscript_end_line": 58,
+      "word_count": 801,
+      "audio_start_time": 0.0,
+      "audio_end_time_estimate": 298.6,
+      "audio_end_time_actual": 286.54,
+      "match_score": 0.69,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.9,
+      "pause_adequate": false
+    },
+    {
+      "id": 2,
+      "manuscript_start_line": 60,
+      "manuscript_end_line": 74,
+      "word_count": 228,
+      "audio_start_time": 15.14,
+      "audio_end_time_estimate": 100.14,
+      "audio_end_time_actual": 86.22,
+      "match_score": 0.35,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 1.0,
+      "pause_adequate": false
+    },
+    {
+      "id": 3,
+      "manuscript_start_line": 76,
+      "manuscript_end_line": 132,
+      "word_count": 646,
+      "audio_start_time": 11.52,
+      "audio_end_time_estimate": 252.34,
+      "audio_end_time_actual": 252.34,
+      "match_score": 0.44,
+      "expected_pause_after": false,
+      "pause_detected": false,
+      "pause_duration": null,
+      "pause_adequate": false
+    }
+  ],
+  "issues": [
+    {
+      "section": 1,
+      "issue": "insufficient_pause",
+      "timestamp": 285.6,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.90s"
+    },
+    {
+      "section": 2,
+      "issue": "low_match_score",
+      "score": 0.35,
+      "expected_words": "the permits were approved by noon stamped and signed with"
+    },
+    {
+      "section": 2,
+      "issue": "insufficient_pause",
+      "timestamp": 85.2,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "1.00s"
+    },
+    {
+      "section": 3,
+      "issue": "low_match_score",
+      "score": 0.44,
+      "expected_words": "the walk back to the research station took her past"
+    }
+  ]
+}

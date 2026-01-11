@@ -1,0 +1,35 @@
+{
+  "file": "chapter-11-what-surfaces.md",
+  "chapter": "11",
+  "title": "What Surfaces",
+  "total_lines": 111,
+  "total_words": 1508,
+  "section_count": 3,
+  "separator_count": 2,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 26,
+      "word_count": 429,
+      "text_preview": "Chapter 11: What Surfaces They found the bodies in April, when the water warmed enough for the dive ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 28,
+      "end_line": 59,
+      "word_count": 499,
+      "text_preview": "Sarah took the box to the dock. She sat on the same coil of rope where Thomas had found her, where s...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 61,
+      "end_line": 110,
+      "word_count": 580,
+      "text_preview": "Sarah read the letter three times. The first time, she couldn't feel anything\u2014the words passed throu...",
+      "expected_pause_after": false
+    }
+  ]
+}

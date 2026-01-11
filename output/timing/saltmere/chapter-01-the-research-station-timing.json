@@ -1,0 +1,113 @@
+{
+  "file": "chapter-01-the-research-station",
+  "chapter": "01",
+  "title": "The Research Station",
+  "total_duration": 595.6,
+  "word_count": 1737,
+  "section_count": 4,
+  "section_break_summary": {
+    "expected": 3,
+    "detected_pauses": 3,
+    "adequate_pauses": 0,
+    "missing_or_insufficient": 3
+  },
+  "sections": [
+    {
+      "id": 1,
+      "manuscript_start_line": 1,
+      "manuscript_end_line": 16,
+      "word_count": 469,
+      "audio_start_time": 0.0,
+      "audio_end_time_estimate": 165.38,
+      "audio_end_time_actual": 175.06,
+      "match_score": 0.66,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.94,
+      "pause_adequate": false
+    },
+    {
+      "id": 2,
+      "manuscript_start_line": 18,
+      "manuscript_end_line": 50,
+      "word_count": 463,
+      "audio_start_time": 20.98,
+      "audio_end_time_estimate": 184.24,
+      "audio_end_time_actual": 175.06,
+      "match_score": 0.44,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.94,
+      "pause_adequate": false
+    },
+    {
+      "id": 3,
+      "manuscript_start_line": 52,
+      "manuscript_end_line": 68,
+      "word_count": 334,
+      "audio_start_time": 11.1,
+      "audio_end_time_estimate": 128.88,
+      "audio_end_time_actual": 128.86,
+      "match_score": 0.33,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 1.02,
+      "pause_adequate": false
+    },
+    {
+      "id": 4,
+      "manuscript_start_line": 70,
+      "manuscript_end_line": 102,
+      "word_count": 471,
+      "audio_start_time": 2.74,
+      "audio_end_time_estimate": 168.83,
+      "audio_end_time_actual": 168.83,
+      "match_score": 0.4,
+      "expected_pause_after": false,
+      "pause_detected": false,
+      "pause_duration": null,
+      "pause_adequate": false
+    }
+  ],
+  "issues": [
+    {
+      "section": 1,
+      "issue": "insufficient_pause",
+      "timestamp": 174.1,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.94s"
+    },
+    {
+      "section": 2,
+      "issue": "low_match_score",
+      "score": 0.44,
+      "expected_words": "the knock came at eleven when the fog had thinned"
+    },
+    {
+      "section": 2,
+      "issue": "insufficient_pause",
+      "timestamp": 174.1,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.94s"
+    },
+    {
+      "section": 3,
+      "issue": "low_match_score",
+      "score": 0.33,
+      "expected_words": "she spent the afternoon unpacking her equipment the portable spectrometer"
+    },
+    {
+      "section": 3,
+      "issue": "insufficient_pause",
+      "timestamp": 127.8,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "1.02s"
+    },
+    {
+      "section": 4,
+      "issue": "low_match_score",
+      "score": 0.4,
+      "expected_words": "at six o'clock hunger drove her out of the station"
+    }
+  ]
+}

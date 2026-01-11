@@ -1,0 +1,35 @@
+{
+  "file": "chapter-03-first-samples.md",
+  "chapter": "03",
+  "title": "First Samples",
+  "total_lines": 139,
+  "total_words": 1928,
+  "section_count": 3,
+  "separator_count": 2,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 42,
+      "word_count": 632,
+      "text_preview": "Chapter 3: First Samples Thomas Breck's boat was called Nothing Personal, which Sarah suspected was ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 44,
+      "end_line": 96,
+      "word_count": 767,
+      "text_preview": "The channel was a natural trench in the bay floor, a scar left by some ancient geological violence t...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 98,
+      "end_line": 138,
+      "word_count": 529,
+      "text_preview": "They spent three more hours on the water, working methodically through Sarah's sample sites. She col...",
+      "expected_pause_after": false
+    }
+  ]
+}

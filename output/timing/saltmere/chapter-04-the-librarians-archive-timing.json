@@ -1,0 +1,86 @@
+{
+  "file": "chapter-04-the-librarians-archive",
+  "chapter": "04",
+  "title": "The Librarians Archive",
+  "total_duration": 712.0,
+  "word_count": 1911,
+  "section_count": 3,
+  "section_break_summary": {
+    "expected": 2,
+    "detected_pauses": 2,
+    "adequate_pauses": 0,
+    "missing_or_insufficient": 2
+  },
+  "sections": [
+    {
+      "id": 1,
+      "manuscript_start_line": 1,
+      "manuscript_end_line": 48,
+      "word_count": 813,
+      "audio_start_time": 0.0,
+      "audio_end_time_estimate": 309.86,
+      "audio_end_time_actual": 301.56,
+      "match_score": 0.68,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.9,
+      "pause_adequate": false
+    },
+    {
+      "id": 2,
+      "manuscript_start_line": 50,
+      "manuscript_end_line": 88,
+      "word_count": 550,
+      "audio_start_time": 0.18,
+      "audio_end_time_estimate": 209.8,
+      "audio_end_time_actual": 187.44,
+      "match_score": 0.45,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.88,
+      "pause_adequate": false
+    },
+    {
+      "id": 3,
+      "manuscript_start_line": 90,
+      "manuscript_end_line": 149,
+      "word_count": 548,
+      "audio_start_time": 2.44,
+      "audio_end_time_estimate": 211.3,
+      "audio_end_time_actual": 211.3,
+      "match_score": 0.32,
+      "expected_pause_after": false,
+      "pause_detected": false,
+      "pause_duration": null,
+      "pause_adequate": false
+    }
+  ],
+  "issues": [
+    {
+      "section": 1,
+      "issue": "insufficient_pause",
+      "timestamp": 300.7,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.90s"
+    },
+    {
+      "section": 2,
+      "issue": "low_match_score",
+      "score": 0.45,
+      "expected_words": "edith led sarah to the back room a space that"
+    },
+    {
+      "section": 2,
+      "issue": "insufficient_pause",
+      "timestamp": 186.6,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.88s"
+    },
+    {
+      "section": 3,
+      "issue": "low_match_score",
+      "score": 0.32,
+      "expected_words": "sarah spent three hours in the back room photographing documents"
+    }
+  ]
+}

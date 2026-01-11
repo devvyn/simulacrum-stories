@@ -1,0 +1,113 @@
+{
+  "file": "chapter-05-the-waterfront-discovery",
+  "chapter": "05",
+  "title": "The Waterfront Discovery",
+  "total_duration": 622.6,
+  "word_count": 1820,
+  "section_count": 4,
+  "section_break_summary": {
+    "expected": 3,
+    "detected_pauses": 3,
+    "adequate_pauses": 0,
+    "missing_or_insufficient": 3
+  },
+  "sections": [
+    {
+      "id": 1,
+      "manuscript_start_line": 1,
+      "manuscript_end_line": 24,
+      "word_count": 385,
+      "audio_start_time": 0.0,
+      "audio_end_time_estimate": 135.82,
+      "audio_end_time_actual": 132.76,
+      "match_score": 0.67,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 1.12,
+      "pause_adequate": false
+    },
+    {
+      "id": 2,
+      "manuscript_start_line": 26,
+      "manuscript_end_line": 74,
+      "word_count": 789,
+      "audio_start_time": 4.56,
+      "audio_end_time_estimate": 282.9,
+      "audio_end_time_actual": 270.94,
+      "match_score": 0.36,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.9,
+      "pause_adequate": false
+    },
+    {
+      "id": 3,
+      "manuscript_start_line": 76,
+      "manuscript_end_line": 96,
+      "word_count": 305,
+      "audio_start_time": 0.64,
+      "audio_end_time_estimate": 108.24,
+      "audio_end_time_actual": 132.76,
+      "match_score": 0.4,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 1.12,
+      "pause_adequate": false
+    },
+    {
+      "id": 4,
+      "manuscript_start_line": 98,
+      "manuscript_end_line": 134,
+      "word_count": 341,
+      "audio_start_time": 1.68,
+      "audio_end_time_estimate": 121.97,
+      "audio_end_time_actual": 121.97,
+      "match_score": 0.35,
+      "expected_pause_after": false,
+      "pause_detected": false,
+      "pause_duration": null,
+      "pause_adequate": false
+    }
+  ],
+  "issues": [
+    {
+      "section": 1,
+      "issue": "insufficient_pause",
+      "timestamp": 131.6,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "1.12s"
+    },
+    {
+      "section": 2,
+      "issue": "low_match_score",
+      "score": 0.36,
+      "expected_words": "sarah chen was at the research station when he arrived"
+    },
+    {
+      "section": 2,
+      "issue": "insufficient_pause",
+      "timestamp": 270.0,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.90s"
+    },
+    {
+      "section": 3,
+      "issue": "low_match_score",
+      "score": 0.4,
+      "expected_words": "they talked for two hours thomas telling her everything he'd"
+    },
+    {
+      "section": 3,
+      "issue": "insufficient_pause",
+      "timestamp": 131.6,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "1.12s"
+    },
+    {
+      "section": 4,
+      "issue": "low_match_score",
+      "score": 0.35,
+      "expected_words": "sarah walked him to his truck as the afternoon light"
+    }
+  ]
+}

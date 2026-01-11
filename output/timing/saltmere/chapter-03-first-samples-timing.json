@@ -1,0 +1,86 @@
+{
+  "file": "chapter-03-first-samples",
+  "chapter": "03",
+  "title": "First Samples",
+  "total_duration": 689.4,
+  "word_count": 1928,
+  "section_count": 3,
+  "section_break_summary": {
+    "expected": 2,
+    "detected_pauses": 2,
+    "adequate_pauses": 0,
+    "missing_or_insufficient": 2
+  },
+  "sections": [
+    {
+      "id": 1,
+      "manuscript_start_line": 1,
+      "manuscript_end_line": 42,
+      "word_count": 632,
+      "audio_start_time": 0.0,
+      "audio_end_time_estimate": 235.13,
+      "audio_end_time_actual": 259.12,
+      "match_score": 0.73,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.94,
+      "pause_adequate": false
+    },
+    {
+      "id": 2,
+      "manuscript_start_line": 44,
+      "manuscript_end_line": 96,
+      "word_count": 767,
+      "audio_start_time": 4.02,
+      "audio_end_time_estimate": 289.37,
+      "audio_end_time_actual": 295.2,
+      "match_score": 0.38,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 1.0,
+      "pause_adequate": false
+    },
+    {
+      "id": 3,
+      "manuscript_start_line": 98,
+      "manuscript_end_line": 138,
+      "word_count": 529,
+      "audio_start_time": 3.78,
+      "audio_end_time_estimate": 200.59,
+      "audio_end_time_actual": 200.59,
+      "match_score": 0.35,
+      "expected_pause_after": false,
+      "pause_detected": false,
+      "pause_duration": null,
+      "pause_adequate": false
+    }
+  ],
+  "issues": [
+    {
+      "section": 1,
+      "issue": "insufficient_pause",
+      "timestamp": 258.2,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.94s"
+    },
+    {
+      "section": 2,
+      "issue": "low_match_score",
+      "score": 0.38,
+      "expected_words": "the channel was a natural trench in the bay floor"
+    },
+    {
+      "section": 2,
+      "issue": "insufficient_pause",
+      "timestamp": 294.2,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "1.00s"
+    },
+    {
+      "section": 3,
+      "issue": "low_match_score",
+      "score": 0.35,
+      "expected_words": "they spent three more hours on the water working methodically"
+    }
+  ]
+}

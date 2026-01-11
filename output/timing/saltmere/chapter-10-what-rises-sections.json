@@ -1,0 +1,27 @@
+{
+  "file": "chapter-10-what-rises.md",
+  "chapter": "10",
+  "title": "What Rises",
+  "total_lines": 110,
+  "total_words": 1699,
+  "section_count": 2,
+  "separator_count": 1,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 62,
+      "word_count": 1006,
+      "text_preview": "Chapter 10: What Rises Eleanor Cross died on a Tuesday, three weeks after the investigation began. S...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 64,
+      "end_line": 109,
+      "word_count": 693,
+      "text_preview": "The investigation expanded through the winter. Federal agents traced the paper trail from Saltmere t...",
+      "expected_pause_after": false
+    }
+  ]
+}

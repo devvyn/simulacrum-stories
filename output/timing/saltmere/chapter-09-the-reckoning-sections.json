@@ -1,0 +1,43 @@
+{
+  "file": "chapter-09-the-reckoning.md",
+  "chapter": "09",
+  "title": "The Reckoning",
+  "total_lines": 152,
+  "total_words": 1948,
+  "section_count": 4,
+  "separator_count": 3,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 26,
+      "word_count": 313,
+      "text_preview": "Chapter 9: The Reckoning They worked through the night. Thomas carried boxes while Sarah photographe...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 28,
+      "end_line": 50,
+      "word_count": 339,
+      "text_preview": "The full scope of the operation became clear over the following days. The Saltmere Cannery had proce...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 52,
+      "end_line": 90,
+      "word_count": 774,
+      "text_preview": "On the fourth day, the federal investigators arrived. Sarah had made calls on the second day, once s...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 4,
+      "start_line": 92,
+      "end_line": 151,
+      "word_count": 522,
+      "text_preview": "Thomas found Sarah on the dock that evening, the same spot where he'd found her after the research s...",
+      "expected_pause_after": false
+    }
+  ]
+}

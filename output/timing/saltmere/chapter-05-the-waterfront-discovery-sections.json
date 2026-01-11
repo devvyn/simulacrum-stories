@@ -1,0 +1,43 @@
+{
+  "file": "chapter-05-the-waterfront-discovery.md",
+  "chapter": "05",
+  "title": "The Waterfront Discovery",
+  "total_lines": 135,
+  "total_words": 1820,
+  "section_count": 4,
+  "separator_count": 3,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 24,
+      "word_count": 385,
+      "text_preview": "Chapter 5: The Waterfront Discovery Thomas Breck had pulled strange things from his nets before. In ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 26,
+      "end_line": 74,
+      "word_count": 789,
+      "text_preview": "Sarah Chen was at the research station when he arrived, bent over her sample equipment, making notes...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 76,
+      "end_line": 96,
+      "word_count": 305,
+      "text_preview": "They talked for two hours, Thomas telling her everything he'd never told anyone: the shapes on the s...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 4,
+      "start_line": 98,
+      "end_line": 134,
+      "word_count": 341,
+      "text_preview": "Sarah walked him to his truck as the afternoon light began to fade. The fog was creeping back in, so...",
+      "expected_pause_after": false
+    }
+  ]
+}

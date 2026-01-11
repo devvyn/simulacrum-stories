@@ -11,9 +11,22 @@ env/
 
 # Project data (not in git)
 data/
-output/
 *.db
 *.sqlite
+
+# === AUDIO ARTIFACTS ===
+# Derived/regenerable (ignored - can rebuild from paid sources + scripts)
+output/audio/saltmere-enhanced/
+site/audio/
+
+# Paid artifacts tracked via Git LFS (DO NOT IGNORE):
+# - output/audio/saltmere/*.mp3      (ElevenLabs TTS - $$$)
+# - output/audio/bumpers/*.wav       (ElevenLabs TTS - $$$)
+# - output/audio/bumpers-with-titles/*.wav
+
+# Other output directories (regenerable)
+output/timing/samples/
+output/*.log
 
 # Budget usage state (user-specific, not shared)
 data/budget-usage.json

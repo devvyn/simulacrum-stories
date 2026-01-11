@@ -1,0 +1,35 @@
+{
+  "file": "chapter-12-the-tide-goes-out.md",
+  "chapter": "12",
+  "title": "The Tide Goes Out",
+  "total_lines": 133,
+  "total_words": 1886,
+  "section_count": 3,
+  "separator_count": 2,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 46,
+      "word_count": 808,
+      "text_preview": "Chapter 12: The Tide Goes Out Three months later, the fog lifted. Not permanently\u2014fog was part of Sa...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 48,
+      "end_line": 74,
+      "word_count": 546,
+      "text_preview": "The memorial was dedicated on the anniversary of Helen Liu's death\u2014June 16th, fifty-one years after ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 76,
+      "end_line": 132,
+      "word_count": 532,
+      "text_preview": "After the ceremony, after the reporters had gone and the officials had returned to their offices and...",
+      "expected_pause_after": false
+    }
+  ]
+}

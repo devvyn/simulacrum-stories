@@ -1,0 +1,119 @@
+{
+  "files_processed": 14,
+  "total_separators": 32,
+  "total_words": 25140,
+  "chapters": [
+    {
+      "file": "chapter-01-the-research-station.md",
+      "chapter": "01",
+      "title": "The Research Station",
+      "sections": 4,
+      "separators": 3,
+      "words": 1737
+    },
+    {
+      "file": "chapter-02-the-harbor-master.md",
+      "chapter": "02",
+      "title": "The Harbor Master",
+      "sections": 3,
+      "separators": 2,
+      "words": 1675
+    },
+    {
+      "file": "chapter-03-first-samples.md",
+      "chapter": "03",
+      "title": "First Samples",
+      "sections": 3,
+      "separators": 2,
+      "words": 1928
+    },
+    {
+      "file": "chapter-04-the-librarians-archive.md",
+      "chapter": "04",
+      "title": "The Librarians Archive",
+      "sections": 3,
+      "separators": 2,
+      "words": 1911
+    },
+    {
+      "file": "chapter-05-the-waterfront-discovery.md",
+      "chapter": "05",
+      "title": "The Waterfront Discovery",
+      "sections": 4,
+      "separators": 3,
+      "words": 1820
+    },
+    {
+      "file": "chapter-06-the-weight-of-truth.md",
+      "chapter": "06",
+      "title": "The Weight Of Truth",
+      "sections": 3,
+      "separators": 2,
+      "words": 1860
+    },
+    {
+      "file": "chapter-07-eleanors-warning.md",
+      "chapter": "07",
+      "title": "Eleanors Warning",
+      "sections": 2,
+      "separators": 1,
+      "words": 2047
+    },
+    {
+      "file": "chapter-08-the-old-cannery.md",
+      "chapter": "08",
+      "title": "The Old Cannery",
+      "sections": 3,
+      "separators": 2,
+      "words": 2210
+    },
+    {
+      "file": "chapter-09-the-reckoning.md",
+      "chapter": "09",
+      "title": "The Reckoning",
+      "sections": 4,
+      "separators": 3,
+      "words": 1948
+    },
+    {
+      "file": "chapter-10-what-rises.md",
+      "chapter": "10",
+      "title": "What Rises",
+      "sections": 2,
+      "separators": 1,
+      "words": 1699
+    },
+    {
+      "file": "chapter-11-what-surfaces.md",
+      "chapter": "11",
+      "title": "What Surfaces",
+      "sections": 3,
+      "separators": 2,
+      "words": 1508
+    },
+    {
+      "file": "chapter-12-the-tide-goes-out.md",
+      "chapter": "12",
+      "title": "The Tide Goes Out",
+      "sections": 3,
+      "separators": 2,
+      "words": 1886
+    },
+    {
+      "file": "vignette-a-thomas-and-the-nets.md",
+      "chapter": "vignette-a",
+      "title": "Thomas And The Nets",
+      "sections": 3,
+      "separators": 2,
+      "words": 1223
+    },
+    {
+      "file": "vignette-b-eleanors-diary.md",
+      "chapter": "vignette-b",
+      "title": "Eleanors Diary",
+      "sections": 6,
+      "separators": 5,
+      "words": 1688
+    }
+  ]
+}

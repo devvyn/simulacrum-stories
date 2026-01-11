@@ -1,0 +1,35 @@
+{
+  "file": "chapter-06-the-weight-of-truth.md",
+  "chapter": "06",
+  "title": "The Weight Of Truth",
+  "total_lines": 147,
+  "total_words": 1860,
+  "section_count": 3,
+  "separator_count": 2,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 36,
+      "word_count": 470,
+      "text_preview": "Chapter 6: The Weight of Truth Margaret Holloway was at the harbor office when Sarah arrived, standi...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 38,
+      "end_line": 98,
+      "word_count": 951,
+      "text_preview": "\"My father was a good man.\" Margaret sat across from Sarah at the small table in the back of the off...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 100,
+      "end_line": 146,
+      "word_count": 439,
+      "text_preview": "Sarah spent the afternoon at the research station, organizing her evidence, preparing for what was c...",
+      "expected_pause_after": false
+    }
+  ]
+}

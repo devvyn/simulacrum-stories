@@ -1,0 +1,86 @@
+{
+  "file": "chapter-06-the-weight-of-truth",
+  "chapter": "06",
+  "title": "The Weight Of Truth",
+  "total_duration": 667.8,
+  "word_count": 1860,
+  "section_count": 3,
+  "section_break_summary": {
+    "expected": 2,
+    "detected_pauses": 2,
+    "adequate_pauses": 0,
+    "missing_or_insufficient": 2
+  },
+  "sections": [
+    {
+      "id": 1,
+      "manuscript_start_line": 1,
+      "manuscript_end_line": 36,
+      "word_count": 470,
+      "audio_start_time": 0.0,
+      "audio_end_time_estimate": 173.59,
+      "audio_end_time_actual": 182.2,
+      "match_score": 0.69,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 0.88,
+      "pause_adequate": false
+    },
+    {
+      "id": 2,
+      "manuscript_start_line": 38,
+      "manuscript_end_line": 98,
+      "word_count": 951,
+      "audio_start_time": 0.86,
+      "audio_end_time_estimate": 352.1,
+      "audio_end_time_actual": 328.92,
+      "match_score": 0.45,
+      "expected_pause_after": true,
+      "pause_detected": true,
+      "pause_duration": 1.14,
+      "pause_adequate": false
+    },
+    {
+      "id": 3,
+      "manuscript_start_line": 100,
+      "manuscript_end_line": 146,
+      "word_count": 439,
+      "audio_start_time": 0.0,
+      "audio_end_time_estimate": 162.14,
+      "audio_end_time_actual": 162.14,
+      "match_score": 0.43,
+      "expected_pause_after": false,
+      "pause_detected": false,
+      "pause_duration": null,
+      "pause_adequate": false
+    }
+  ],
+  "issues": [
+    {
+      "section": 1,
+      "issue": "insufficient_pause",
+      "timestamp": 181.3,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "0.88s"
+    },
+    {
+      "section": 2,
+      "issue": "low_match_score",
+      "score": 0.45,
+      "expected_words": "my father was a good man margaret sat across from"
+    },
+    {
+      "section": 2,
+      "issue": "insufficient_pause",
+      "timestamp": 327.8,
+      "expected_pause": ">=1.5s",
+      "actual_pause": "1.14s"
+    },
+    {
+      "section": 3,
+      "issue": "low_match_score",
+      "score": 0.43,
+      "expected_words": "sarah spent the afternoon at the research station organizing her"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "file": "vignette-b-eleanors-diary.md",
+  "chapter": "vignette-b",
+  "title": "Eleanors Diary",
+  "total_lines": 137,
+  "total_words": 1688,
+  "section_count": 6,
+  "separator_count": 5,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 5,
+      "word_count": 20,
+      "text_preview": "Vignette B: Eleanor's Diary, 1962 Excerpts from the private journal of Eleanor Cross Discovered in h...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 7,
+      "end_line": 27,
+      "word_count": 320,
+      "text_preview": "June 8, 1962 The researcher came to see me today. Dr. Helen Liu. Young, perhaps thirty, with the kin...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 29,
+      "end_line": 47,
+      "word_count": 291,
+      "text_preview": "June 11, 1962 I have spent three days considering alternatives. Pay her off. She is an academic; she...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 4,
+      "start_line": 49,
+      "end_line": 71,
+      "word_count": 332,
+      "text_preview": "June 13, 1962 I met with her again today. I told her I had considered her proposal and wished to dis...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 5,
+      "start_line": 73,
+      "end_line": 95,
+      "word_count": 309,
+      "text_preview": "June 16, 1962 It is done. Robert tells me it was quick. Professional. She did not suffer more than n...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 6,
+      "start_line": 97,
+      "end_line": 136,
+      "word_count": 416,
+      "text_preview": "June 20, 1962 The search has been called off. Dr. Helen Liu is officially presumed drowned. Accident...",
+      "expected_pause_after": false
+    }
+  ]
+}

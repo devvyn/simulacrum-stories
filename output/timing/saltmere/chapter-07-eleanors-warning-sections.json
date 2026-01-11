@@ -1,0 +1,27 @@
+{
+  "file": "chapter-07-eleanors-warning.md",
+  "chapter": "07",
+  "title": "Eleanors Warning",
+  "total_lines": 141,
+  "total_words": 2047,
+  "section_count": 2,
+  "separator_count": 1,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 24,
+      "word_count": 239,
+      "text_preview": "Chapter 7: Eleanor's Warning The invitation arrived the next morning, slipped under the research sta...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 26,
+      "end_line": 140,
+      "word_count": 1808,
+      "text_preview": "The general store looked different in daylight than it had through fog and windshield glass. A two-s...",
+      "expected_pause_after": false
+    }
+  ]
+}

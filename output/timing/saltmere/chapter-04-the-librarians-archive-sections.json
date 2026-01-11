@@ -1,0 +1,35 @@
+{
+  "file": "chapter-04-the-librarians-archive.md",
+  "chapter": "04",
+  "title": "The Librarians Archive",
+  "total_lines": 150,
+  "total_words": 1911,
+  "section_count": 3,
+  "separator_count": 2,
+  "sections": [
+    {
+      "id": 1,
+      "start_line": 1,
+      "end_line": 48,
+      "word_count": 813,
+      "text_preview": "Chapter 4: The Librarian's Archive The Saltmere Public Library occupied half of a building that had ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 2,
+      "start_line": 50,
+      "end_line": 88,
+      "word_count": 550,
+      "text_preview": "Edith led Sarah to the back room\u2014a space that had once been a storage closet, now lined with filing ...",
+      "expected_pause_after": true
+    },
+    {
+      "id": 3,
+      "start_line": 90,
+      "end_line": 149,
+      "word_count": 548,
+      "text_preview": "Sarah spent three hours in the back room, photographing documents with her phone, taking notes, buil...",
+      "expected_pause_after": false
+    }
+  ]
+}
