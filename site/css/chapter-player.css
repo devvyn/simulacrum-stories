@@ -366,6 +366,13 @@
   gap: 12px;
   margin-top: 12px;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.mode-label {
+  font-size: 13px;
+  color: #a0a0a0;
+  font-style: italic;
 }
 
 .chapter-modalities .mode {
@@ -476,11 +483,13 @@ body.has-audio-player {
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
+body.read-along-active .content p,
 body.read-along-active .chapter-content p,
 body.read-along-active article p {
   transition: opacity 0.3s ease;
 }
 
+body.read-along-active .content p:not(.read-along-highlight),
 body.read-along-active .chapter-content p:not(.read-along-highlight),
 body.read-along-active article p:not(.read-along-highlight) {
   opacity: 0.5;
@@ -598,10 +607,9 @@ body.read-along-active article p:not(.read-along-highlight) {
   border-color: rgba(100, 150, 100, 0.3);
 }
 
-.chapter-feedback.submitted::after {
-  content: "Thank you for sharing.";
-  display: block;
-  margin-top: 1rem;
+.feedback-thanks {
   color: #a8c4a8;
   font-style: italic;
+  margin: 0;
+  padding: 0.5rem 0;
 }

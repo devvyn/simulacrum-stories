@@ -98,9 +98,6 @@
             <button class="speed-btn" aria-label="Playback speed">1x</button>
           </div>
           ${sectionsHTML}
-          <a href="${chapterData.audio}" download class="download-btn" aria-label="Download audio">
-            ↓
-          </a>
           <button class="read-along-btn" aria-label="Toggle read-along mode">
             Follow Text
           </button>
@@ -229,11 +226,10 @@
         sectionsToggle.querySelector('.toggle-icon').textContent = expanded ? '▼' : '▲';
       });
 
-      // Section jump buttons
+      // Section jump buttons - don't auto-play, just seek
       sectionsList.querySelectorAll('button[data-time]').forEach(btn => {
         btn.addEventListener('click', () => {
           audio.currentTime = parseInt(btn.dataset.time, 10);
-          if (audio.paused) audio.play();
           sectionsList.hidden = true;
           sectionsToggle.setAttribute('aria-expanded', 'false');
           sectionsToggle.querySelector('.toggle-icon').textContent = '▼';
@@ -300,7 +296,7 @@
   // Initialize read-along by finding section elements in the page
   function initReadAlong(chapterData) {
     // Find all paragraph and section elements in the chapter content
-    const content = document.querySelector('.chapter-content, article, main');
+    const content = document.querySelector('.content, .chapter-content, article, main');
     if (!content) return;
 
     // Get section timestamps from manifest
@@ -506,9 +502,10 @@
 
     if (chapterData) {
       modalityDiv.innerHTML = `
-        <span class="mode active">Read</span>
-        <button class="mode" id="listen-mode-btn">Listen (${chapterData.duration_display})</button>
-        <a href="${chapterData.audio}" download class="mode-download">Download MP3</a>
+        <span class="mode-label">Available:</span>
+        <span class="mode active">Text</span>
+        <button class="mode" id="listen-mode-btn">▶ Play Audio (${chapterData.duration_display})</button>
+        <a href="${chapterData.audio}" download class="mode-download">⬇ Download MP3</a>
       `;
 
       // Listen button scrolls to player and starts playback
@@ -520,18 +517,60 @@
       });
     } else {
       modalityDiv.innerHTML = `
-        <span class="mode active">Read</span>
-        <span class="mode-pending">Audio in production</span>
+        <span class="mode-label">Available:</span>
+        <span class="mode active">Text</span>
+        <span class="mode-pending">Audio coming soon</span>
       `;
     }
 
     chapterHeader.appendChild(modalityDiv);
   }
 
+  // Initialize chapter feedback forms
+  function initFeedbackForms() {
+    const feedbackForms = document.querySelectorAll('.chapter-feedback form');
+
+    feedbackForms.forEach(form => {
+      // Intercept button clicks directly since they're submit buttons
+      form.querySelectorAll('button[type="submit"]').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          const formData = new FormData(form);
+          formData.set('response', btn.value); // Capture which button was clicked
+          const feedbackDiv = form.closest('.chapter-feedback');
+
+          // Store feedback locally (Netlify forms need git-based deploy)
+          const feedback = {
+            chapter: formData.get('chapter'),
+            response: btn.value,
+            note: formData.get('note') || '',
+            timestamp: new Date().toISOString()
+          };
+
+          // Save to localStorage
+          const stored = JSON.parse(localStorage.getItem('saltmere-feedback') || '[]');
+          stored.push(feedback);
+          localStorage.setItem('saltmere-feedback', JSON.stringify(stored));
+
+          // Replace form with thank you message
+          feedbackDiv.innerHTML = `
+            <p class="feedback-thanks">Thank you for sharing.</p>
+          `;
+          feedbackDiv.classList.add('submitted');
+        });
+      });
+    });
+  }
+
   // Main initialization
   async function init() {
     const chapterKey = getChapterKey();
     if (!chapterKey) return; // Not on a chapter page
+
+    // Initialize feedback forms (always, doesn't depend on audio)
+    initFeedbackForms();
 
     try {
       // Load manifest

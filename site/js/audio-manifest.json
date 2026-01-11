@@ -4,17 +4,18 @@
     "title": "The Research Station",
     "duration": 630,
     "duration_display": "10:30",
+    "intro_offset": 15,
     "sections": [
       {
-        "timestamp": 189,
+        "timestamp": 204,
         "label": "Sarah settles in"
       },
       {
-        "timestamp": 353,
+        "timestamp": 373,
         "label": "Town exploration"
       },
       {
-        "timestamp": 476,
+        "timestamp": 501,
         "label": "Evening encounter"
       }
     ]
@@ -24,17 +25,18 @@
     "title": "The Harbor Master",
     "duration": 638,
     "duration_display": "10:38",
+    "intro_offset": 15,
     "sections": [
       {
-        "timestamp": 328,
+        "timestamp": 343,
         "label": "Harbor office"
       },
       {
-        "timestamp": 405,
+        "timestamp": 425,
         "label": "Margaret's warning"
       },
       {
-        "timestamp": 438,
+        "timestamp": 463,
         "label": "Departure"
       }
     ]
@@ -44,13 +46,14 @@
     "title": "First Samples",
     "duration": 717,
     "duration_display": "11:57",
+    "intro_offset": 15,
     "sections": [
       {
-        "timestamp": 40,
+        "timestamp": 55,
         "label": "Morning routine"
       },
       {
-        "timestamp": 538,
+        "timestamp": 558,
         "label": "Sample analysis"
       }
     ]
@@ -60,17 +63,18 @@
     "title": "The Librarian's Archive",
     "duration": 746,
     "duration_display": "12:26",
+    "intro_offset": 15,
     "sections": [
       {
-        "timestamp": 180,
+        "timestamp": 200,
         "label": "Archive search"
       },
       {
-        "timestamp": 183,
+        "timestamp": 208,
         "label": "Edith appears"
       },
       {
-        "timestamp": 725,
+        "timestamp": 755,
         "label": "The files"
       }
     ]
@@ -80,17 +84,18 @@
     "title": "The Waterfront Discovery",
     "duration": 656,
     "duration_display": "10:56",
+    "intro_offset": 15,
     "sections": [
       {
-        "timestamp": 143,
+        "timestamp": 163,
         "label": "Waterfront walk"
       },
       {
-        "timestamp": 156,
+        "timestamp": 181,
         "label": "Discovery"
       },
       {
-        "timestamp": 543,
+        "timestamp": 578,
         "label": "Return"
       }
     ]
@@ -100,17 +105,18 @@
     "title": "The Weight of Truth",
     "duration": 701,
     "duration_display": "11:41",
+    "intro_offset": 15,
     "sections": [
       {
-        "timestamp": 195,
+        "timestamp": 220,
         "label": "Thomas speaks"
       },
       {
-        "timestamp": 326,
+        "timestamp": 356,
         "label": "The weight"
       },
       {
-        "timestamp": 681,
+        "timestamp": 716,
         "label": "Decision"
       }
     ]
@@ -120,17 +126,18 @@
     "title": "Eleanor's Warning",
     "duration": 748,
     "duration_display": "12:28",
+    "intro_offset": 15,
     "sections": [
       {
-        "timestamp": 49,
+        "timestamp": 64,
         "label": "Morning tension"
       },
       {
-        "timestamp": 102,
+        "timestamp": 122,
         "label": "Town drive"
       },
       {
-        "timestamp": 730,
+        "timestamp": 765,
         "label": "Eleanor's words"
       }
     ]

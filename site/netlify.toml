@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+
+# Enable form detection
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = false
