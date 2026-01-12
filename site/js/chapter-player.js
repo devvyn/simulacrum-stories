@@ -459,100 +459,102 @@
 
   // Show report issue modal
   function showReportModal(chapterTitle, timestamp) {
-    // Create modal if it doesn't exist
+    // Modal HTML template (reset each time to handle post-submission state)
+    const modalHTML = `
+      <div class="report-modal" role="dialog" aria-labelledby="report-modal-title">
+        <h3 id="report-modal-title">Report Audio Issue</h3>
+        <p>Help us improve the audio quality by reporting any issues you notice.</p>
+        <div class="timestamp-display">
+          <strong>Chapter:</strong> <span class="report-chapter"></span><br>
+          <strong>Timestamp:</strong> <span class="report-timestamp"></span>
+        </div>
+        <label for="report-issue-type" class="sr-only">Issue Type</label>
+        <select id="report-issue-type" class="issue-type-select">
+          <option value="">Select issue type...</option>
+          <option value="cut-off">Word cut off or clipped</option>
+          <option value="wrong-word">Wrong word or mispronunciation</option>
+          <option value="timing">Timing/pacing issue</option>
+          <option value="audio-quality">Audio quality problem</option>
+          <option value="other">Other</option>
+        </select>
+        <textarea placeholder="Describe the issue (e.g., 'The word Sarah is clipped at the beginning')"></textarea>
+        <div class="report-modal-buttons">
+          <button class="cancel-btn">Cancel</button>
+          <button class="submit-btn">Submit Report</button>
+        </div>
+      </div>
+    `;
+
+    // Create overlay if it doesn't exist
     let modal = document.querySelector('.report-modal-overlay');
     if (!modal) {
       modal = document.createElement('div');
       modal.className = 'report-modal-overlay';
-      modal.innerHTML = `
-        <div class="report-modal" role="dialog" aria-labelledby="report-modal-title">
-          <h3 id="report-modal-title">Report Audio Issue</h3>
-          <p>Help us improve the audio quality by reporting any issues you notice.</p>
-          <div class="timestamp-display">
-            <strong>Chapter:</strong> <span class="report-chapter"></span><br>
-            <strong>Timestamp:</strong> <span class="report-timestamp"></span>
-          </div>
-          <label for="report-issue-type" class="sr-only">Issue Type</label>
-          <select id="report-issue-type" class="issue-type-select">
-            <option value="">Select issue type...</option>
-            <option value="cut-off">Word cut off or clipped</option>
-            <option value="wrong-word">Wrong word or mispronunciation</option>
-            <option value="timing">Timing/pacing issue</option>
-            <option value="audio-quality">Audio quality problem</option>
-            <option value="other">Other</option>
-          </select>
-          <textarea placeholder="Describe the issue (e.g., 'The word Sarah is clipped at the beginning')"></textarea>
-          <div class="report-modal-buttons">
-            <button class="cancel-btn">Cancel</button>
-            <button class="submit-btn">Submit Report</button>
-          </div>
-        </div>
-      `;
       document.body.appendChild(modal);
+
+      // Single delegated event handler (doesn't accumulate)
+      modal.addEventListener('click', (e) => {
+        // Close on overlay click
+        if (e.target === modal) {
+          modal.hidden = true;
+          return;
+        }
+
+        // Cancel/Close button
+        if (e.target.matches('.cancel-btn')) {
+          modal.hidden = true;
+          return;
+        }
+
+        // Submit button
+        if (e.target.matches('.submit-btn')) {
+          const issueType = modal.querySelector('select').value;
+          const description = modal.querySelector('textarea').value;
+
+          if (!issueType) {
+            alert('Please select an issue type.');
+            return;
+          }
+
+          // Submit to Netlify Forms
+          const formData = new FormData();
+          formData.append('form-name', 'audio-issue-report');
+          formData.append('chapter', modal.dataset.chapter);
+          formData.append('timestamp', modal.dataset.timestamp);
+          formData.append('timestamp-display', formatTime(parseFloat(modal.dataset.timestamp)));
+          formData.append('issue-type', issueType);
+          formData.append('description', description);
+
+          fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString()
+          })
+          .then(() => {
+            modal.querySelector('.report-modal').innerHTML = `
+              <h3>Thank You!</h3>
+              <p>Your report has been submitted. We appreciate your help improving the audio quality.</p>
+              <div class="report-modal-buttons">
+                <button class="cancel-btn">Close</button>
+              </div>
+            `;
+          })
+          .catch(() => {
+            alert('Failed to submit report. Please try again.');
+          });
+        }
+      });
     }
 
-    // Update modal content
+    // Always reset modal content (handles post-submission state)
+    modal.innerHTML = modalHTML;
     modal.querySelector('.report-chapter').textContent = chapterTitle;
     modal.querySelector('.report-timestamp').textContent = formatTime(timestamp);
-    modal.querySelector('textarea').value = '';
-    modal.querySelector('select').value = '';
     modal.hidden = false;
 
-    // Store timestamp for submission
+    // Store data for submission
     modal.dataset.timestamp = timestamp;
     modal.dataset.chapter = currentChapter;
-
-    // Event listeners
-    const cancelBtn = modal.querySelector('.cancel-btn');
-    const submitBtn = modal.querySelector('.submit-btn');
-    const overlay = modal;
-
-    const closeModal = () => {
-      modal.hidden = true;
-    };
-
-    cancelBtn.onclick = closeModal;
-    overlay.onclick = (e) => {
-      if (e.target === overlay) closeModal();
-    };
-
-    submitBtn.onclick = () => {
-      const issueType = modal.querySelector('select').value;
-      const description = modal.querySelector('textarea').value;
-
-      if (!issueType) {
-        alert('Please select an issue type.');
-        return;
-      }
-
-      // Submit to Netlify Forms
-      const formData = new FormData();
-      formData.append('form-name', 'audio-issue-report');
-      formData.append('chapter', modal.dataset.chapter);
-      formData.append('timestamp', modal.dataset.timestamp);
-      formData.append('timestamp-display', formatTime(parseFloat(modal.dataset.timestamp)));
-      formData.append('issue-type', issueType);
-      formData.append('description', description);
-
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString()
-      })
-      .then(() => {
-        modal.querySelector('.report-modal').innerHTML = `
-          <h3>Thank You!</h3>
-          <p>Your report has been submitted. We appreciate your help improving the audio quality.</p>
-          <div class="report-modal-buttons">
-            <button class="cancel-btn">Close</button>
-          </div>
-        `;
-        modal.querySelector('.cancel-btn').onclick = closeModal;
-      })
-      .catch(() => {
-        alert('Failed to submit report. Please try again.');
-      });
-    };
 
     // Focus the select for accessibility
     setTimeout(() => modal.querySelector('select').focus(), 100);
