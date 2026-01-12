@@ -1,47 +1,82 @@
 /**
  * Word-Level Highlight Styles
  *
- * Subtle warmth that cools as text is read - like a sparkler's
- * afterglow fading on the wire.
+ * Two-layer visual model:
+ * 1. Line-level: warm background on current paragraph
+ * 2. Word-level: text dims as spoken (wick burning down)
  */
 
 /* Base word span styling */
 .w {
-  --heat: 0;
+  --dim: 0;  /* 0 = full brightness, 1 = read/dimmed */
   position: relative;
   display: inline;
-  border-radius: 1px;
 
-  /* Warm tint via background - visible but not distracting */
-  background-color: rgba(200, 160, 100, calc(var(--heat) * 0.12));
+  /* Text dims subtly as words are spoken */
+  opacity: calc(1 - (var(--dim) * 0.15));
 
-  /* Smooth cooling transition */
-  transition: background-color 0.3s ease-out;
+  /* Smooth dimming transition */
+  transition: opacity 0.4s ease-out;
 }
 
-/* When highlight is active, unread words have warmth */
-body.word-highlight-active .w {
-  --heat: 1;
-}
-
-/* Read words cool to default (transparent) */
-body.word-highlight-active .w.w-read {
-  --heat: 0;
-}
-
-/* Active word - the burn point */
+/* Active word - full brightness, slight emphasis */
 .w.w-active {
-  --heat: 1.5;
+  --dim: 0;
+  opacity: 1;
 }
 
-/* Transition zone - gradient cooling */
-.w.w-near {
-  /* Heat set dynamically via JS */
+/* Read words dim slightly (wick burned down) */
+body.word-highlight-active .w.w-read {
+  --dim: 1;
+}
+
+/* Line-level: paragraph containing active word gets warm glow */
+body.word-highlight-active p.line-active {
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(200, 160, 100, 0.08) 5%,
+    rgba(200, 160, 100, 0.08) 95%,
+    transparent
+  );
+  border-radius: 2px;
+  transition: background 0.5s ease-out;
+}
+
+/* Flash effect when auto-scroll brings line into view */
+body.word-highlight-active p.line-scrolled-to {
+  animation: line-flash 1.2s ease-out;
+}
+
+@keyframes line-flash {
+  0% {
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(200, 160, 100, 0.25) 5%,
+      rgba(200, 160, 100, 0.25) 95%,
+      transparent
+    );
+  }
+  100% {
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(200, 160, 100, 0.08) 5%,
+      rgba(200, 160, 100, 0.08) 95%,
+      transparent
+    );
+  }
+}
+
+/* Paragraphs transition smoothly when no longer active */
+body.word-highlight-active p {
+  transition: background 0.8s ease-out;
 }
 
 /* Clickable words - subtle hover */
 .w:hover {
-  background: rgba(200, 180, 150, 0.1);
+  opacity: 1 !important;
   cursor: pointer;
 }
 
@@ -51,33 +86,73 @@ body.word-highlight-active .w.w-read {
   outline-offset: 1px;
 }
 
+/* Follow button state animations */
+.read-along-btn {
+  transition:
+    background-color 0.3s ease,
+    transform 0.15s ease,
+    box-shadow 0.3s ease;
+}
+
+.read-along-btn:active {
+  transform: scale(0.96);
+}
+
+.read-along-btn.active {
+  box-shadow: 0 0 0 2px rgba(200, 160, 100, 0.3);
+}
+
+/* Pulse animation for state changes */
+@keyframes gentle-pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.read-along-btn.state-change {
+  animation: gentle-pulse 0.4s ease;
+}
+
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .w {
+  .w,
+  body.word-highlight-active p {
     transition: none;
+  }
+
+  .read-along-btn.state-change {
+    animation: none;
   }
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  .w {
-    /* Warmer, slightly brighter tint for dark backgrounds */
-    background-color: rgba(220, 180, 120, calc(var(--heat) * 0.15));
+  body.word-highlight-active p.line-active {
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(220, 180, 120, 0.1) 5%,
+      rgba(220, 180, 120, 0.1) 95%,
+      transparent
+    );
+  }
+
+  body.word-highlight-active .w.w-read {
+    opacity: calc(1 - (var(--dim) * 0.2));
   }
 }
 
 /* Mobile adjustments */
 @media (max-width: 600px) {
   .w {
-    /* Slightly larger touch targets */
     padding: 2px 0;
   }
 
   .w:hover {
-    background: transparent;
+    opacity: inherit;
   }
 
   .w:active {
-    background: rgba(200, 180, 150, 0.15);
+    opacity: 1 !important;
   }
 }

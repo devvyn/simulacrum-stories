@@ -269,35 +269,54 @@
       });
     }
 
-    // Read-along mode with word-level highlight
+    // Read-along / follow mode with word-level highlight
     const readAlongBtn = player.querySelector('.read-along-btn');
     if (readAlongBtn) {
-      // Try to initialize word-level highlight (requires word timing data)
-      initWordHighlight(chapterData).then(available => {
+      // Visual feedback helpers
+      function animateButton() {
+        readAlongBtn.classList.add('state-change');
+        setTimeout(() => readAlongBtn.classList.remove('state-change'), 400);
+      }
+
+      function updateButtonState(active) {
+        readAlongMode = active;
+        readAlongBtn.textContent = active ? 'Following ●' : 'Follow Text';
+        readAlongBtn.classList.toggle('active', active);
+        animateButton();
+      }
+
+      // Try to initialize word-level highlight
+      initWordHighlight(chapterData, {
+        onFollowEnabled: () => updateButtonState(true),
+        onFollowDisabled: () => updateButtonState(false)
+      }).then(available => {
         wordHighlightAvailable = available;
         if (available) {
-          readAlongBtn.title = 'Word-by-word highlight follows audio';
+          readAlongBtn.title = 'Follow text and audio together';
         } else {
-          // Fall back to section-level highlight
           initReadAlong(chapterData);
           readAlongBtn.title = 'Section-level highlight follows audio';
         }
       });
 
       readAlongBtn.addEventListener('click', () => {
-        readAlongMode = !readAlongMode;
-        readAlongBtn.textContent = readAlongMode ? 'Following ●' : 'Follow Text';
-        readAlongBtn.classList.toggle('active', readAlongMode);
+        animateButton();
 
         if (wordHighlightAvailable) {
-          // Use word-level highlight
-          if (readAlongMode) {
-            window.WordHighlight.startHighlight();
+          // Toggle word-level highlight
+          if (window.WordHighlight.isFollowActive()) {
+            window.WordHighlight.disableFollow();
           } else {
-            window.WordHighlight.stopHighlight();
+            window.WordHighlight.enableFollow();
+            // Start playing if paused
+            if (audio.paused) {
+              audio.play();
+            }
           }
         } else {
           // Fall back to section-level highlight
+          readAlongMode = !readAlongMode;
+          updateButtonState(readAlongMode);
           document.body.classList.toggle('read-along-active', readAlongMode);
           if (readAlongMode) {
             updateReadAlongHighlight();
@@ -308,7 +327,7 @@
 
         // Track usage
         if (window.saltmereTracker) {
-          window.saltmereTracker.trackAudio('follow-text-toggle', {
+          window.saltmereTracker.trackAudio('follow-toggle', {
             enabled: readAlongMode,
             mode: wordHighlightAvailable ? 'word' : 'section'
           });
@@ -325,7 +344,7 @@
   }
 
   // Initialize word-level highlight engine
-  async function initWordHighlight(chapterData) {
+  async function initWordHighlight(chapterData, callbacks = {}) {
     if (!window.WordHighlight) {
       console.log('[ChapterPlayer] WordHighlight not loaded');
       return false;
@@ -337,7 +356,8 @@
 
     const chapterNum = parseInt(match[1]);
     const options = {
-      introOffset: chapterData.intro_offset || 0
+      onFollowEnabled: callbacks.onFollowEnabled,
+      onFollowDisabled: callbacks.onFollowDisabled
     };
     return await window.WordHighlight.init(chapterNum, audio, options);
   }

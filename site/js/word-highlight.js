@@ -1,15 +1,21 @@
 /**
  * Word-Level Text Highlight Engine
  *
- * Creates a flowing, diffuse highlight that moves through text
- * in synchrony with audio playback. The text becomes the scrubber.
+ * Follow text / follow audio - synchronized reading experience.
  *
- * Features:
- * - Word-by-word highlight with warm amber glow
- * - Smooth interpolation between words using requestAnimationFrame
- * - Click-to-seek: click any word to jump audio to that timestamp
- * - Hybrid scroll: auto-scroll only when highlighted word leaves viewport
- * - Graceful fallback when timing data unavailable
+ * Visual model:
+ * - Line-level: warm background on paragraph containing active word
+ * - Word-level: text dims as spoken (wick burning down)
+ *
+ * Scroll behavior:
+ * - When paused + scroll: seek to viewport position
+ * - When playing: gentle, hesitant autoscroll (respects user)
+ * - User scroll during playback: allow, then gently correct
+ *
+ * Interactions:
+ * - Click word while paused: seek + enable follow
+ * - End of playback: gracefully disable follow
+ * - Visual feedback on state changes
  */
 
 (function() {
@@ -17,41 +23,41 @@
 
   // Configuration
   const CONFIG = {
-    glowRadius: 3,           // Number of words to glow on each side
-    glowDecay: 0.3,          // How much glow decreases per word distance
+    glowRadius: 3,           // Number of words in transition zone
+    glowDecay: 0.3,          // How much dim increases per word distance
     scrollMargin: 150,       // Pixels from edge before auto-scroll triggers
-    scrollDuration: 1400,    // Duration of scroll animation in ms
-    scrollCooldown: 2000     // Minimum ms between scroll animations
+    scrollDuration: 1600,    // Duration of scroll animation in ms
+    scrollCooldown: 2500,    // Minimum ms between scroll animations
+    scrollHesitancy: 800,    // Extra delay after user scroll before auto-correcting
+    seekDebounce: 300        // Debounce for scroll-to-seek when paused
   };
+
+  // State
+  let wordData = null;
+  let wordElements = [];
+  let audio = null;
+  let isActive = false;
+  let animationId = null;
+  let lastWordIndex = -1;
+  let currentParagraph = null;
 
   // Scroll state
   let lastScrollTime = 0;
+  let userScrollTime = 0;
+  let isUserScrolling = false;
+  let scrollSeekTimeout = null;
 
-  // State
-  let wordData = null;       // Word timing array: [[start, end, "word"], ...]
-  let wordElements = [];     // DOM span elements
-  let audio = null;          // Audio element reference
-  let isActive = false;      // Whether highlight is currently running
-  let animationId = null;    // requestAnimationFrame ID
-  let lastWordIndex = -1;    // Last highlighted word index
-  let introOffset = 0;       // Seconds of intro before narration starts
+  // Callbacks for external control
+  let onFollowEnabled = null;
+  let onFollowDisabled = null;
 
   /**
-   * Initialize the word highlight system for a chapter.
-   *
-   * @param {number} chapterNum - Chapter number (1-12)
-   * @param {HTMLAudioElement} audioElement - Audio element to sync with
-   * @param {object} options - Optional configuration
-   * @param {number} options.introOffset - Seconds of intro before narration (default: 0)
-   * @returns {Promise<boolean>} - Whether initialization succeeded
+   * Initialize the word highlight system.
    */
   async function init(chapterNum, audioElement, options = {}) {
     audio = audioElement;
-    introOffset = options.introOffset || 0;
-
-    if (introOffset > 0) {
-      console.log(`[WordHighlight] Applying intro offset: ${introOffset}s`);
-    }
+    onFollowEnabled = options.onFollowEnabled || null;
+    onFollowDisabled = options.onFollowDisabled || null;
 
     // Load word timing data
     try {
@@ -76,25 +82,22 @@
     }
     console.log(`[WordHighlight] Found ${wordElements.length} word spans`);
 
-    // Set up click-to-seek
+    // Set up interactions
     setupClickToSeek();
+    setupScrollDetection();
 
     // Set up audio event listeners
-    audio.addEventListener('play', startHighlight);
-    audio.addEventListener('pause', stopHighlight);
+    audio.addEventListener('play', onPlay);
+    audio.addEventListener('pause', onPause);
     audio.addEventListener('seeked', onSeek);
-    audio.addEventListener('ended', stopHighlight);
-
-    // Start if audio is already playing
-    if (!audio.paused) {
-      startHighlight();
-    }
+    audio.addEventListener('ended', onEnded);
 
     return true;
   }
 
   /**
    * Set up click-to-seek on all word elements.
+   * When paused, clicking enables follow mode.
    */
   function setupClickToSeek() {
     wordElements.forEach((el, index) => {
@@ -103,18 +106,23 @@
         e.preventDefault();
         e.stopPropagation();
 
-        // Get timestamp for this word (add introOffset for final audio time)
         if (wordData && index < wordData.length) {
           const [start] = wordData[index];
-          const seekTime = start + introOffset;
-          audio.currentTime = seekTime;
+          audio.currentTime = start;
+
+          // If paused, enable follow and start playing
           if (audio.paused) {
+            enableFollow();
             audio.play();
           }
 
+          // Visual feedback
+          el.classList.add('w-clicked');
+          setTimeout(() => el.classList.remove('w-clicked'), 300);
+
           // Track interaction
           if (window.saltmereTracker) {
-            window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: index, time: seekTime });
+            window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: index, time: start });
           }
         }
       });
@@ -122,59 +130,176 @@
   }
 
   /**
-   * Start the highlight animation loop.
+   * Detect user scroll to be respectful of their intent.
    */
-  function startHighlight() {
+  function setupScrollDetection() {
+    let scrollTimeout;
+
+    window.addEventListener('scroll', () => {
+      // Only track user scroll when playing
+      if (!audio.paused && isActive) {
+        userScrollTime = performance.now();
+        isUserScrolling = true;
+
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          isUserScrolling = false;
+        }, 150);
+      }
+
+      // When paused and follow is active, scroll-to-seek
+      if (audio.paused && isActive) {
+        handleScrollSeek();
+      }
+    }, { passive: true });
+  }
+
+  /**
+   * When paused and user scrolls, seek to visible text.
+   */
+  function handleScrollSeek() {
+    clearTimeout(scrollSeekTimeout);
+    scrollSeekTimeout = setTimeout(() => {
+      const visibleWord = findWordInViewport();
+      if (visibleWord !== null && wordData[visibleWord]) {
+        const [start] = wordData[visibleWord];
+        audio.currentTime = start;
+        updateHighlight(audio.currentTime, false);
+      }
+    }, CONFIG.seekDebounce);
+  }
+
+  /**
+   * Find the word closest to the viewport center.
+   */
+  function findWordInViewport() {
+    const viewportCenter = window.innerHeight * 0.4;
+    let closestWord = null;
+    let closestDistance = Infinity;
+
+    for (let i = 0; i < wordElements.length; i++) {
+      const rect = wordElements[i].getBoundingClientRect();
+      const wordCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(wordCenter - viewportCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestWord = i;
+      }
+
+      // Stop searching if we're past the viewport
+      if (rect.top > window.innerHeight) break;
+    }
+
+    return closestWord;
+  }
+
+  /**
+   * Enable follow mode.
+   */
+  function enableFollow() {
     if (isActive) return;
     isActive = true;
     document.body.classList.add('word-highlight-active');
 
-    // Immediately scroll to current position when starting
-    updateHighlight(audio.currentTime, true);
+    // Visual feedback
+    if (onFollowEnabled) onFollowEnabled();
 
-    animate();
+    // Update immediately
+    updateHighlight(audio.currentTime, true);
   }
 
   /**
-   * Stop the highlight animation loop.
+   * Disable follow mode gracefully.
    */
-  function stopHighlight() {
+  function disableFollow() {
+    if (!isActive) return;
     isActive = false;
-    document.body.classList.remove('word-highlight-active');
+
+    // Fade out line highlight
+    if (currentParagraph) {
+      currentParagraph.classList.remove('line-active');
+      currentParagraph = null;
+    }
+
+    // Keep word states but stop updating
     if (animationId) {
       cancelAnimationFrame(animationId);
       animationId = null;
     }
+
+    // Delay removing body class for graceful fade
+    setTimeout(() => {
+      if (!isActive) {
+        document.body.classList.remove('word-highlight-active');
+      }
+    }, 500);
+
+    // Visual feedback
+    if (onFollowDisabled) onFollowDisabled();
   }
 
   /**
-   * Handle audio seek events.
+   * Handle play event.
+   */
+  function onPlay() {
+    if (isActive) {
+      animate();
+    }
+  }
+
+  /**
+   * Handle pause event.
+   */
+  function onPause() {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+    // Keep isActive true so scroll-to-seek works
+  }
+
+  /**
+   * Handle seek event.
    */
   function onSeek() {
-    if (isActive) {
-      // Clear all read states on seek (user may have gone backwards)
-      wordElements.forEach(el => {
-        el.classList.remove('w-read', 'w-active', 'w-near');
-      });
-      lastWordIndex = -1;
+    // Clear all read states on seek (user may have gone backwards)
+    wordElements.forEach(el => {
+      el.classList.remove('w-read', 'w-active', 'w-near');
+    });
+    lastWordIndex = -1;
 
-      // Force immediate update on seek
+    if (isActive) {
       updateHighlight(audio.currentTime, true);
     }
   }
 
   /**
-   * Animation loop using requestAnimationFrame.
+   * Handle playback ended - gracefully disable follow.
+   */
+  function onEnded() {
+    // Mark all words as read
+    wordElements.forEach(el => {
+      el.classList.add('w-read');
+      el.classList.remove('w-active', 'w-near');
+    });
+
+    // Gracefully disable
+    disableFollow();
+  }
+
+  /**
+   * Animation loop.
    */
   function animate() {
-    if (!isActive) return;
+    if (!isActive || audio.paused) return;
 
     updateHighlight(audio.currentTime);
     animationId = requestAnimationFrame(animate);
   }
 
   /**
-   * Binary search to find current word index for given time.
+   * Binary search to find current word index.
    */
   function findWordIndex(time) {
     if (!wordData || wordData.length === 0) return -1;
@@ -191,12 +316,6 @@
       }
     }
 
-    // Verify the word is currently being spoken
-    const [start, end] = wordData[lo];
-    if (time >= start && time <= end + 0.1) { // Small tolerance
-      return lo;
-    }
-
     return lo;
   }
 
@@ -204,28 +323,29 @@
    * Update highlight for current playback position.
    */
   function updateHighlight(time, forceScroll = false) {
-    // Subtract introOffset to get raw transcript time
-    const transcriptTime = time - introOffset;
+    // Word timestamps are pre-calibrated to match final audio
+    const currentIndex = findWordIndex(time);
 
-    // Don't highlight during intro - all words stay hot
-    if (transcriptTime < 0) {
-      // Clear read states during intro (all words unread = hot)
+    // Don't highlight if before first word
+    if (wordData && wordData.length > 0 && time < wordData[0][0]) {
       if (lastWordIndex >= 0) {
         wordElements.forEach(el => {
           el.classList.remove('w-active', 'w-near', 'w-read');
         });
+        if (currentParagraph) {
+          currentParagraph.classList.remove('line-active');
+          currentParagraph = null;
+        }
         lastWordIndex = -1;
       }
       return;
     }
 
-    const currentIndex = findWordIndex(transcriptTime);
-
     if (currentIndex === lastWordIndex && !forceScroll) {
-      return; // No change
+      return;
     }
 
-    // Clear transition zone classes (but preserve w-read for already-read words)
+    // Clear transition zone classes
     wordElements.forEach(el => {
       el.classList.remove('w-active', 'w-near');
     });
@@ -235,20 +355,13 @@
       return;
     }
 
-    // Calculate progress within current word (0 to 1)
-    let progress = 0;
-    if (wordData[currentIndex]) {
-      const [start, end] = wordData[currentIndex];
-      const duration = end - start;
-      if (duration > 0) {
-        progress = Math.min(1, Math.max(0, (transcriptTime - start) / duration));
-      }
-    }
+    // Update line-level highlight (paragraph)
+    updateLineHighlight(currentIndex);
 
-    // Apply glow to current word and neighbors
-    applyGlow(currentIndex, progress);
+    // Apply word-level dimming
+    applyWordDimming(currentIndex);
 
-    // Auto-scroll if word is off-screen
+    // Gentle autoscroll
     if (forceScroll || currentIndex !== lastWordIndex) {
       scrollToWordIfNeeded(currentIndex);
     }
@@ -257,103 +370,112 @@
   }
 
   /**
-   * Apply cooling effect - mark read words and create transition gradient.
-   * Unread words glow hot (via CSS), read words cool to default.
+   * Update the line-level highlight (paragraph background).
    */
-  function applyGlow(centerIndex, progress) {
+  function updateLineHighlight(wordIndex) {
+    const el = wordElements[wordIndex];
+    const paragraph = el.closest('p');
+
+    if (paragraph !== currentParagraph) {
+      if (currentParagraph) {
+        currentParagraph.classList.remove('line-active');
+      }
+      if (paragraph) {
+        paragraph.classList.add('line-active');
+      }
+      currentParagraph = paragraph;
+    }
+  }
+
+  /**
+   * Apply word-level dimming effect.
+   */
+  function applyWordDimming(centerIndex) {
     const radius = CONFIG.glowRadius;
 
-    // Mark all words before the transition zone as read (cooled)
+    // Mark all words before transition zone as read (dimmed)
     for (let i = 0; i < centerIndex - radius; i++) {
       if (i >= 0 && i < wordElements.length) {
         wordElements[i].classList.add('w-read');
-        wordElements[i].classList.remove('w-active', 'w-near');
       }
     }
 
-    // Apply transition gradient around current word
+    // Transition zone
     for (let offset = -radius; offset <= radius; offset++) {
       const index = centerIndex + offset;
       if (index < 0 || index >= wordElements.length) continue;
 
       const el = wordElements[index];
-      el.classList.remove('w-read'); // Ensure transition zone isn't marked as read
+      el.classList.remove('w-read');
 
-      if (offset < 0) {
-        // Words behind current: cooling gradient (more read = less glow)
-        const distance = Math.abs(offset);
-        const glow = Math.max(0, 1 - (distance * CONFIG.glowDecay) - (progress * 0.2));
-        el.style.setProperty('--heat', glow.toFixed(2));
-        el.classList.add('w-near');
-        el.classList.remove('w-active');
-      } else if (offset === 0) {
-        // Current word: transition point, glow decreases with progress
-        const glow = 1 - (progress * 0.3); // 1.0 down to 0.7 as word completes
-        el.style.setProperty('--heat', glow.toFixed(2));
+      if (offset === 0) {
         el.classList.add('w-active');
-        el.classList.remove('w-near');
       } else {
-        // Words ahead: still hot (unread)
-        el.style.setProperty('--heat', '1');
         el.classList.add('w-near');
-        el.classList.remove('w-active');
       }
     }
   }
 
   /**
-   * Scroll to word if it's outside the viewport (hybrid scroll).
-   * Uses gentle eased animation with cooldown for natural feel.
+   * Scroll to word - gentle and hesitant.
    */
   function scrollToWordIfNeeded(index) {
     if (index < 0 || index >= wordElements.length) return;
 
-    // Respect cooldown to prevent scroll stacking
     const now = performance.now();
+
+    // Respect cooldown
     if (now - lastScrollTime < CONFIG.scrollCooldown) return;
+
+    // Extra hesitancy if user recently scrolled
+    if (now - userScrollTime < CONFIG.scrollHesitancy + CONFIG.scrollCooldown) return;
 
     const el = wordElements[index];
     const rect = el.getBoundingClientRect();
     const margin = CONFIG.scrollMargin;
 
-    // Check if word is outside viewport
     const isAbove = rect.top < margin;
     const isBelow = rect.bottom > window.innerHeight - margin;
 
     if (isAbove || isBelow) {
       lastScrollTime = now;
 
-      // Calculate target - place word in upper third for reading comfort
+      // Place word in upper third
       const targetY = window.scrollY + rect.top - (window.innerHeight * 0.35);
       smoothScrollTo(targetY, CONFIG.scrollDuration);
+
+      // Flash the line to draw attention
+      const paragraph = el.closest('p');
+      if (paragraph) {
+        paragraph.classList.add('line-scrolled-to');
+        setTimeout(() => paragraph.classList.remove('line-scrolled-to'), 1200);
+      }
     }
   }
 
   /**
-   * Smooth scroll with gentle easing - feels like natural inertia.
+   * Smooth scroll with gentle easing.
    */
   function smoothScrollTo(targetY, duration) {
     const startY = window.scrollY;
     const distance = targetY - startY;
 
-    // Skip tiny scrolls
     if (Math.abs(distance) < 20) return;
 
     const startTime = performance.now();
 
-    // Ease-out quart - very gentle deceleration, like a heavy object slowing
-    function easeOutQuart(t) {
-      return 1 - Math.pow(1 - t, 4);
+    function easeOutQuint(t) {
+      return 1 - Math.pow(1 - t, 5);
     }
 
     function step(currentTime) {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const eased = easeOutQuart(progress);
+      const eased = easeOutQuint(progress);
 
       window.scrollTo(0, startY + (distance * eased));
 
-      if (progress < 1) {
+      if (progress < 1 && isActive) {
         requestAnimationFrame(step);
       }
     }
@@ -362,36 +484,46 @@
   }
 
   /**
-   * Clean up event listeners and state.
+   * Clean up.
    */
   function destroy() {
-    stopHighlight();
+    disableFollow();
 
     if (audio) {
-      audio.removeEventListener('play', startHighlight);
-      audio.removeEventListener('pause', stopHighlight);
+      audio.removeEventListener('play', onPlay);
+      audio.removeEventListener('pause', onPause);
       audio.removeEventListener('seeked', onSeek);
-      audio.removeEventListener('ended', stopHighlight);
+      audio.removeEventListener('ended', onEnded);
     }
 
-    // Clear word element styles
     wordElements.forEach(el => {
-      el.style.removeProperty('--heat');
       el.classList.remove('w-active', 'w-near', 'w-read');
       el.style.cursor = '';
     });
+
+    if (currentParagraph) {
+      currentParagraph.classList.remove('line-active');
+    }
 
     wordData = null;
     wordElements = [];
     audio = null;
     lastWordIndex = -1;
+    currentParagraph = null;
   }
 
   /**
-   * Check if word highlight is available for current chapter.
+   * Check if available.
    */
   function isAvailable() {
     return wordData !== null && wordElements.length > 0;
+  }
+
+  /**
+   * Check if follow is currently active.
+   */
+  function isFollowActive() {
+    return isActive;
   }
 
   // Export API
@@ -399,8 +531,9 @@
     init,
     destroy,
     isAvailable,
-    startHighlight,
-    stopHighlight
+    isFollowActive,
+    enableFollow,
+    disableFollow
   };
 
 })();
