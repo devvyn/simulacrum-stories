@@ -14,6 +14,7 @@
   let playerElement = null;
   let readAlongMode = false;
   let sectionElements = [];
+  let wordHighlightAvailable = false;
 
   // Get chapter key from current page URL
   function getChapterKey() {
@@ -268,29 +269,74 @@
       });
     }
 
-    // Read-along mode
+    // Read-along mode with word-level highlight
     const readAlongBtn = player.querySelector('.read-along-btn');
     if (readAlongBtn) {
-      initReadAlong(chapterData);
+      // Try to initialize word-level highlight (requires word timing data)
+      initWordHighlight(chapterData).then(available => {
+        wordHighlightAvailable = available;
+        if (available) {
+          readAlongBtn.title = 'Word-by-word highlight follows audio';
+        } else {
+          // Fall back to section-level highlight
+          initReadAlong(chapterData);
+          readAlongBtn.title = 'Section-level highlight follows audio';
+        }
+      });
+
       readAlongBtn.addEventListener('click', () => {
         readAlongMode = !readAlongMode;
         readAlongBtn.textContent = readAlongMode ? 'Following ●' : 'Follow Text';
         readAlongBtn.classList.toggle('active', readAlongMode);
-        document.body.classList.toggle('read-along-active', readAlongMode);
-        if (readAlongMode) {
-          updateReadAlongHighlight();
+
+        if (wordHighlightAvailable) {
+          // Use word-level highlight
+          if (readAlongMode) {
+            window.WordHighlight.startHighlight();
+          } else {
+            window.WordHighlight.stopHighlight();
+          }
         } else {
-          clearReadAlongHighlight();
+          // Fall back to section-level highlight
+          document.body.classList.toggle('read-along-active', readAlongMode);
+          if (readAlongMode) {
+            updateReadAlongHighlight();
+          } else {
+            clearReadAlongHighlight();
+          }
+        }
+
+        // Track usage
+        if (window.saltmereTracker) {
+          window.saltmereTracker.trackAudio('follow-text-toggle', {
+            enabled: readAlongMode,
+            mode: wordHighlightAvailable ? 'word' : 'section'
+          });
         }
       });
 
-      // Update highlight during playback
+      // Update section highlight during playback (only if not using word-level)
       audio.addEventListener('timeupdate', () => {
-        if (readAlongMode) {
+        if (readAlongMode && !wordHighlightAvailable) {
           updateReadAlongHighlight();
         }
       });
     }
+  }
+
+  // Initialize word-level highlight engine
+  async function initWordHighlight(chapterData) {
+    if (!window.WordHighlight) {
+      console.log('[ChapterPlayer] WordHighlight not loaded');
+      return false;
+    }
+
+    // Extract chapter number from current page
+    const match = window.location.pathname.match(/chapter-(\d+)/);
+    if (!match) return false;
+
+    const chapterNum = parseInt(match[1]);
+    return await window.WordHighlight.init(chapterNum, audio);
   }
 
   // Initialize read-along by finding section elements in the page

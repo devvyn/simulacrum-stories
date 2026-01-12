@@ -11,9 +11,13 @@ READ_DIR = SITE_DIR / "read"
 # Links to add before </head>
 FAVICON_LINK = '    <link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
 CSS_LINK = '    <link rel="stylesheet" href="/css/chapter-player.css">\n'
+WORD_HIGHLIGHT_CSS = '    <link rel="stylesheet" href="/css/word-highlight.css">\n'
 
 # Error tracker script (load first to catch early errors)
 ERROR_TRACKER = '    <script src="/js/error-tracker.js"></script>\n'
+
+# Word highlight script (load before chapter-player.js)
+WORD_HIGHLIGHT_JS = '    <script src="/js/word-highlight.js"></script>\n'
 
 # JS script to add before </body>
 JS_SCRIPT = '''    <!-- Netlify Forms (for audio issue reports) -->
@@ -44,9 +48,19 @@ def update_chapter_file(filepath: Path) -> bool:
         content = content.replace('</head>', CSS_LINK + '</head>')
         modified = True
 
+    # Add word highlight CSS if not present
+    if '/css/word-highlight.css' not in content:
+        content = content.replace('</head>', WORD_HIGHLIGHT_CSS + '</head>')
+        modified = True
+
     # Add error tracker if not present (load first)
     if '/js/error-tracker.js' not in content:
         content = content.replace('</body>', ERROR_TRACKER + '</body>')
+        modified = True
+
+    # Add word highlight JS if not present (load before chapter-player.js)
+    if '/js/word-highlight.js' not in content:
+        content = content.replace('</body>', WORD_HIGHLIGHT_JS + '</body>')
         modified = True
 
     # Add JS script if not present
