@@ -12,6 +12,9 @@ READ_DIR = SITE_DIR / "read"
 FAVICON_LINK = '    <link rel="icon" href="/favicon.svg" type="image/svg+xml">\n'
 CSS_LINK = '    <link rel="stylesheet" href="/css/chapter-player.css">\n'
 
+# Error tracker script (load first to catch early errors)
+ERROR_TRACKER = '    <script src="/js/error-tracker.js"></script>\n'
+
 # JS script to add before </body>
 JS_SCRIPT = '''    <!-- Netlify Forms (for audio issue reports) -->
     <form name="audio-issue-report" netlify netlify-honeypot="bot-field" hidden>
@@ -39,6 +42,11 @@ def update_chapter_file(filepath: Path) -> bool:
     # Add CSS link if not present
     if '/css/chapter-player.css' not in content:
         content = content.replace('</head>', CSS_LINK + '</head>')
+        modified = True
+
+    # Add error tracker if not present (load first)
+    if '/js/error-tracker.js' not in content:
+        content = content.replace('</body>', ERROR_TRACKER + '</body>')
         modified = True
 
     # Add JS script if not present
