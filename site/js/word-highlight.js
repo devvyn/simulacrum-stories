@@ -41,6 +41,9 @@
   let lastWordIndex = -1;
   let currentParagraph = null;
 
+  // Calibration data from audio-structure.json
+  let calibration = null;  // { intro_duration, section_breaks }
+
   // Scroll state
   let lastScrollTime = 0;
   let userScrollTime = 0;
@@ -52,6 +55,63 @@
   let onFollowDisabled = null;
 
   /**
+   * Convert raw transcript time to final audio time.
+   * Adds intro_duration and cumulative section break durations.
+   */
+  function rawToFinal(rawTime) {
+    if (!calibration) return rawTime;
+
+    let finalTime = rawTime + calibration.intro_duration;
+
+    // Add durations of all section breaks that occur before this raw time
+    for (const brk of calibration.section_breaks) {
+      if (brk.raw_position <= rawTime) {
+        finalTime += brk.duration;
+      }
+    }
+
+    return finalTime;
+  }
+
+  /**
+   * Convert final audio time to raw transcript time.
+   * Subtracts intro_duration and cumulative section break durations.
+   */
+  function finalToRaw(finalTime) {
+    if (!calibration) return finalTime;
+
+    // Start by subtracting intro
+    let rawTime = finalTime - calibration.intro_duration;
+    if (rawTime < 0) return 0;
+
+    // Binary search-like: find which section breaks we've passed in final time
+    // and subtract their durations. This is tricky because break positions
+    // are in raw time but we're converting from final time.
+
+    // Approach: iteratively subtract breaks we've passed
+    let cumulativeBreakDuration = 0;
+    for (const brk of calibration.section_breaks) {
+      // The break occurs at raw_position in raw time
+      // In final time, the break starts at: raw_position + intro + breaks_before_this_one
+      const breakStartInFinal = brk.raw_position + calibration.intro_duration + cumulativeBreakDuration;
+
+      if (finalTime >= breakStartInFinal + brk.duration) {
+        // We're past this break entirely - subtract its duration
+        cumulativeBreakDuration += brk.duration;
+      } else if (finalTime >= breakStartInFinal) {
+        // We're in the middle of this break (silence) - clamp to break start
+        return brk.raw_position;
+      } else {
+        // We haven't reached this break yet
+        break;
+      }
+    }
+
+    rawTime = finalTime - calibration.intro_duration - cumulativeBreakDuration;
+    return Math.max(0, rawTime);
+  }
+
+  /**
    * Initialize the word highlight system.
    */
   async function init(chapterNum, audioElement, options = {}) {
@@ -59,16 +119,37 @@
     onFollowEnabled = options.onFollowEnabled || null;
     onFollowDisabled = options.onFollowDisabled || null;
 
-    // Load word timing data
+    // Load word timing data and calibration structure in parallel
     try {
-      const response = await fetch(`/js/words/chapter-${String(chapterNum).padStart(2, '0')}-words.json`);
-      if (!response.ok) {
+      const [wordsResponse, structureResponse] = await Promise.all([
+        fetch(`/js/words/chapter-${String(chapterNum).padStart(2, '0')}-words.json`),
+        fetch('/js/audio-structure.json')
+      ]);
+
+      if (!wordsResponse.ok) {
         console.log('[WordHighlight] No word timing data for chapter', chapterNum);
         return false;
       }
-      const data = await response.json();
-      wordData = data.words;
+
+      const wordsData = await wordsResponse.json();
+      wordData = wordsData.words;
       console.log(`[WordHighlight] Loaded ${wordData.length} words for chapter ${chapterNum}`);
+
+      // Load calibration data
+      if (structureResponse.ok) {
+        const structure = await structureResponse.json();
+        const chapterKey = String(chapterNum);
+        if (structure.chapters && structure.chapters[chapterKey]) {
+          calibration = structure.chapters[chapterKey];
+          console.log(`[WordHighlight] Calibration: intro=${calibration.intro_duration}s, ${calibration.section_breaks.length} breaks`);
+        } else {
+          console.log('[WordHighlight] No calibration data for chapter', chapterNum);
+          calibration = null;
+        }
+      } else {
+        console.log('[WordHighlight] No audio-structure.json found, using raw timestamps');
+        calibration = null;
+      }
     } catch (e) {
       console.log('[WordHighlight] Failed to load word timing:', e.message);
       return false;
@@ -107,8 +188,10 @@
         e.stopPropagation();
 
         if (wordData && index < wordData.length) {
-          const [start] = wordData[index];
-          audio.currentTime = start;
+          const [rawStart] = wordData[index];
+          // Convert raw timestamp to final audio time
+          const finalStart = rawToFinal(rawStart);
+          audio.currentTime = finalStart;
 
           // If paused, enable follow and start playing
           if (audio.paused) {
@@ -122,7 +205,7 @@
 
           // Track interaction
           if (window.saltmereTracker) {
-            window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: index, time: start });
+            window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: index, rawTime: rawStart, finalTime: finalStart });
           }
         }
       });
@@ -162,8 +245,9 @@
     scrollSeekTimeout = setTimeout(() => {
       const visibleWord = findWordInViewport();
       if (visibleWord !== null && wordData[visibleWord]) {
-        const [start] = wordData[visibleWord];
-        audio.currentTime = start;
+        const [rawStart] = wordData[visibleWord];
+        // Convert raw timestamp to final audio time
+        audio.currentTime = rawToFinal(rawStart);
         updateHighlight(audio.currentTime, false);
       }
     }, CONFIG.seekDebounce);
@@ -300,16 +384,20 @@
 
   /**
    * Binary search to find current word index.
+   * Input is final audio time; converts to raw for searching.
    */
-  function findWordIndex(time) {
+  function findWordIndex(finalTime) {
     if (!wordData || wordData.length === 0) return -1;
+
+    // Convert final audio time to raw transcript time
+    const rawTime = finalToRaw(finalTime);
 
     let lo = 0;
     let hi = wordData.length - 1;
 
     while (lo < hi) {
       const mid = (lo + hi + 1) >> 1;
-      if (wordData[mid][0] <= time) {
+      if (wordData[mid][0] <= rawTime) {
         lo = mid;
       } else {
         hi = mid - 1;
@@ -323,11 +411,12 @@
    * Update highlight for current playback position.
    */
   function updateHighlight(time, forceScroll = false) {
-    // Word timestamps are pre-calibrated to match final audio
     const currentIndex = findWordIndex(time);
 
     // Don't highlight if before first word
-    if (wordData && wordData.length > 0 && time < wordData[0][0]) {
+    // Convert first word's raw timestamp to final for comparison
+    const firstWordFinalTime = wordData && wordData.length > 0 ? rawToFinal(wordData[0][0]) : 0;
+    if (wordData && wordData.length > 0 && time < firstWordFinalTime) {
       if (lastWordIndex >= 0) {
         wordElements.forEach(el => {
           el.classList.remove('w-active', 'w-near', 'w-read');
@@ -508,6 +597,7 @@
     wordData = null;
     wordElements = [];
     audio = null;
+    calibration = null;
     lastWordIndex = -1;
     currentParagraph = null;
   }
