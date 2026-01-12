@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <rss xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:ns1="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0">
   <channel>
-    <title>The Saltmere Chronicles</title>
+    <title>The Saltmere Chronicles: The Bay Remembers</title>
     <description>A marine biologist returns to the town where her grandmother vanished fifty years ago. What she finds in the water is poison. What she finds in the town is silence. A 12-chapter literary mystery about generational secrets, environmental crime, and the weight of complicity.</description>
     <language>en-us</language>
     <link>https://saltmere-chronicles.netlify.app</link>
@@ -14,7 +14,7 @@
     <ns1:type>serial</ns1:type>
     <image>
       <url>https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/cover.jpg</url>
-      <title>The Saltmere Chronicles</title>
+      <title>The Saltmere Chronicles: The Bay Remembers</title>
       <link>https://saltmere-chronicles.netlify.app</link>
     </image>
     <ns1:image href="https://saltmere-chronicles.netlify.app/audio/saltmere-chronicles/cover.jpg"/>
