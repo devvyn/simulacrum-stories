@@ -67,3 +67,4 @@ archive/**/*.mp3
 
 # Local Netlify folder
 .netlify
+output/diagnostics/
