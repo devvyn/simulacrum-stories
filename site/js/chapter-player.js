@@ -336,7 +336,10 @@
     if (!match) return false;
 
     const chapterNum = parseInt(match[1]);
-    return await window.WordHighlight.init(chapterNum, audio);
+    const options = {
+      introOffset: chapterData.intro_offset || 0
+    };
+    return await window.WordHighlight.init(chapterNum, audio, options);
   }
 
   // Initialize read-along by finding section elements in the page

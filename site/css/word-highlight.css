@@ -1,59 +1,53 @@
 /**
  * Word-Level Highlight Styles
  *
- * Creates a warm amber diffuse glow that flows through text
- * in synchrony with audio playback.
+ * Subtle warmth that cools as text is read - like a sparkler's
+ * afterglow fading on the wire.
  */
 
-/* Base word span styling - invisible by default */
+/* Base word span styling */
 .w {
-  --glow: 0;
+  --heat: 0;
   position: relative;
   display: inline;
-  border-radius: 2px;
+  border-radius: 1px;
 
-  /* Warm amber glow using CSS custom property */
-  background: rgba(255, 200, 120, calc(var(--glow) * 0.35));
-  box-shadow: 0 0 calc(var(--glow) * 8px) rgba(255, 180, 100, calc(var(--glow) * 0.4));
+  /* Warm tint via background - visible but not distracting */
+  background-color: rgba(200, 160, 100, calc(var(--heat) * 0.12));
 
-  /* Smooth transitions */
-  transition:
-    background 0.12s ease-out,
-    box-shadow 0.12s ease-out;
+  /* Smooth cooling transition */
+  transition: background-color 0.3s ease-out;
 }
 
-/* Active word (currently being spoken) */
+/* When highlight is active, unread words have warmth */
+body.word-highlight-active .w {
+  --heat: 1;
+}
+
+/* Read words cool to default (transparent) */
+body.word-highlight-active .w.w-read {
+  --heat: 0;
+}
+
+/* Active word - the burn point */
 .w.w-active {
-  color: inherit;
-  z-index: 1;
+  --heat: 1.5;
 }
 
-/* Neighboring words (softer glow) */
+/* Transition zone - gradient cooling */
 .w.w-near {
-  color: inherit;
+  /* Heat set dynamically via JS */
 }
 
-/* When word highlight is active, slightly dim non-highlighted text */
-body.word-highlight-active .content p {
-  color: rgba(26, 26, 26, 0.85);
-  transition: color 0.3s ease;
-}
-
-/* Keep highlighted words at full opacity */
-body.word-highlight-active .w.w-active,
-body.word-highlight-active .w.w-near {
-  color: #1a1a1a;
-}
-
-/* Clickable words styling */
+/* Clickable words - subtle hover */
 .w:hover {
-  background: rgba(255, 200, 120, 0.25);
+  background: rgba(200, 180, 150, 0.1);
   cursor: pointer;
 }
 
 /* Focus state for accessibility */
 .w:focus {
-  outline: 2px solid rgba(255, 180, 100, 0.6);
+  outline: 2px solid rgba(180, 140, 100, 0.4);
   outline-offset: 1px;
 }
 
@@ -61,31 +55,14 @@ body.word-highlight-active .w.w-near {
 @media (prefers-reduced-motion: reduce) {
   .w {
     transition: none;
-    box-shadow: none;
-    /* Use simple background instead of glow */
-    background: rgba(255, 200, 120, calc(var(--glow) * 0.5));
-  }
-
-  body.word-highlight-active .content p {
-    transition: none;
   }
 }
 
-/* Dark mode support (if implemented later) */
+/* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  body.word-highlight-active .content p {
-    color: rgba(230, 230, 230, 0.85);
-  }
-
-  body.word-highlight-active .w.w-active,
-  body.word-highlight-active .w.w-near {
-    color: #f0f0f0;
-  }
-
-  .w.w-active,
-  .w.w-near {
-    background: rgba(255, 180, 100, calc(var(--glow) * 0.25));
-    box-shadow: 0 0 calc(var(--glow) * 12px) rgba(255, 160, 80, calc(var(--glow) * 0.5));
+  .w {
+    /* Warmer, slightly brighter tint for dark backgrounds */
+    background-color: rgba(220, 180, 120, calc(var(--heat) * 0.15));
   }
 }
 
@@ -97,12 +74,10 @@ body.word-highlight-active .w.w-near {
   }
 
   .w:hover {
-    /* Don't show hover state on touch devices */
-    background: rgba(255, 200, 120, calc(var(--glow) * 0.35));
+    background: transparent;
   }
 
-  /* Use tap highlight instead */
   .w:active {
-    background: rgba(255, 200, 120, 0.4);
+    background: rgba(200, 180, 150, 0.15);
   }
 }
