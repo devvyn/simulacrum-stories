@@ -35,6 +35,7 @@
   // State
   let wordData = null;
   let wordElements = [];
+  let wordIndexToElement = {};  // Map transcript index (data-i) to DOM element
   let audio = null;
   let isActive = false;
   let animationId = null;
@@ -155,13 +156,23 @@
       return false;
     }
 
-    // Collect word span elements
+    // Collect word span elements and build index mapping
     wordElements = Array.from(document.querySelectorAll('.w[data-i]'));
     if (wordElements.length === 0) {
       console.log('[WordHighlight] No word spans found in DOM');
       return false;
     }
-    console.log(`[WordHighlight] Found ${wordElements.length} word spans`);
+
+    // Build mapping from transcript index (data-i) to DOM element
+    wordIndexToElement = {};
+    wordElements.forEach(el => {
+      const idx = parseInt(el.getAttribute('data-i'), 10);
+      if (!isNaN(idx)) {
+        wordIndexToElement[idx] = el;
+      }
+    });
+
+    console.log(`[WordHighlight] Found ${wordElements.length} word spans, ${Object.keys(wordIndexToElement).length} indexed`);
 
     // Set up interactions
     setupClickToSeek();
@@ -181,16 +192,19 @@
    * When paused, clicking enables follow mode.
    */
   function setupClickToSeek() {
-    wordElements.forEach((el, index) => {
+    wordElements.forEach((el) => {
       el.style.cursor = 'pointer';
       el.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        if (wordData && index < wordData.length) {
-          const [rawStart] = wordData[index];
+        // Use data-i attribute for correct transcript index
+        const dataIndex = parseInt(el.getAttribute('data-i'), 10);
+        if (wordData && !isNaN(dataIndex) && dataIndex < wordData.length) {
+          const [rawStart] = wordData[dataIndex];
           // Convert raw timestamp to final audio time
           const finalStart = rawToFinal(rawStart);
+          const word = wordData[dataIndex][2] || el.textContent;
           audio.currentTime = finalStart;
 
           // If paused, enable follow and start playing
@@ -205,7 +219,7 @@
 
           // Track interaction
           if (window.saltmereTracker) {
-            window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: index, rawTime: rawStart, finalTime: finalStart });
+            window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: dataIndex, rawTime: rawStart, finalTime: finalStart });
           }
         }
       });
@@ -255,27 +269,30 @@
 
   /**
    * Find the word closest to the viewport center.
+   * Returns transcript index (data-i value), not DOM array index.
    */
   function findWordInViewport() {
     const viewportCenter = window.innerHeight * 0.4;
-    let closestWord = null;
+    let closestWordIndex = null;
     let closestDistance = Infinity;
 
-    for (let i = 0; i < wordElements.length; i++) {
-      const rect = wordElements[i].getBoundingClientRect();
+    for (const el of wordElements) {
+      const rect = el.getBoundingClientRect();
       const wordCenter = rect.top + rect.height / 2;
       const distance = Math.abs(wordCenter - viewportCenter);
 
       if (distance < closestDistance) {
         closestDistance = distance;
-        closestWord = i;
+        // Get transcript index from data-i attribute
+        const dataI = el.getAttribute('data-i');
+        closestWordIndex = dataI !== null ? parseInt(dataI, 10) : null;
       }
 
       // Stop searching if we're past the viewport
       if (rect.top > window.innerHeight) break;
     }
 
-    return closestWord;
+    return closestWordIndex;
   }
 
   /**
@@ -439,7 +456,8 @@
       el.classList.remove('w-active', 'w-near');
     });
 
-    if (currentIndex < 0 || currentIndex >= wordElements.length) {
+    // Check if this transcript index has a corresponding DOM element
+    if (currentIndex < 0 || !wordIndexToElement[currentIndex]) {
       lastWordIndex = currentIndex;
       return;
     }
@@ -462,7 +480,8 @@
    * Update the line-level highlight (paragraph background).
    */
   function updateLineHighlight(wordIndex) {
-    const el = wordElements[wordIndex];
+    const el = wordIndexToElement[wordIndex];
+    if (!el) return;
     const paragraph = el.closest('p');
 
     if (paragraph !== currentParagraph) {
@@ -483,18 +502,20 @@
     const radius = CONFIG.glowRadius;
 
     // Mark all words before transition zone as read (dimmed)
-    for (let i = 0; i < centerIndex - radius; i++) {
-      if (i >= 0 && i < wordElements.length) {
-        wordElements[i].classList.add('w-read');
+    // Iterate through all indexed elements and mark those before current
+    for (const [idx, el] of Object.entries(wordIndexToElement)) {
+      const i = parseInt(idx, 10);
+      if (i < centerIndex - radius) {
+        el.classList.add('w-read');
       }
     }
 
     // Transition zone
     for (let offset = -radius; offset <= radius; offset++) {
       const index = centerIndex + offset;
-      if (index < 0 || index >= wordElements.length) continue;
+      const el = wordIndexToElement[index];
+      if (!el) continue;
 
-      const el = wordElements[index];
       el.classList.remove('w-read');
 
       if (offset === 0) {
@@ -509,7 +530,8 @@
    * Scroll to word - gentle and hesitant.
    */
   function scrollToWordIfNeeded(index) {
-    if (index < 0 || index >= wordElements.length) return;
+    const el = wordIndexToElement[index];
+    if (!el) return;
 
     const now = performance.now();
 
@@ -519,7 +541,6 @@
     // Extra hesitancy if user recently scrolled
     if (now - userScrollTime < CONFIG.scrollHesitancy + CONFIG.scrollCooldown) return;
 
-    const el = wordElements[index];
     const rect = el.getBoundingClientRect();
     const margin = CONFIG.scrollMargin;
 
@@ -596,6 +617,7 @@
 
     wordData = null;
     wordElements = [];
+    wordIndexToElement = {};
     audio = null;
     calibration = null;
     lastWordIndex = -1;
@@ -623,7 +645,8 @@
     isAvailable,
     isFollowActive,
     enableFollow,
-    disableFollow
+    disableFollow,
+    getCalibration: () => calibration
   };
 
 })();

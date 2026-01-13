@@ -1,10 +1,11 @@
 {
   "description": "Audio timing structure for runtime calibration. Raw word timestamps + this = final audio time.",
+  "note": "intro_duration = 24s (12s title bumper + 12s ambient intro from hybrid mix)",
   "chapters": {
     "1": {
-      "intro_duration": 12,
+      "intro_duration": 24,
       "raw_duration": 598.6,
-      "final_duration": 630,
+      "final_duration": 650,
       "section_breaks": [
         {"raw_position": 185, "duration": 6.5},
         {"raw_position": 348, "duration": 6.5},
@@ -12,9 +13,9 @@
       ]
     },
     "2": {
-      "intro_duration": 15,
+      "intro_duration": 24,
       "raw_duration": 604.7,
-      "final_duration": 638,
+      "final_duration": 659,
       "section_breaks": [
         {"raw_position": 322, "duration": 6.1},
         {"raw_position": 398, "duration": 6.1},
@@ -22,18 +23,18 @@
       ]
     },
     "3": {
-      "intro_duration": 15,
+      "intro_duration": 24,
       "raw_duration": 689.4,
-      "final_duration": 717,
+      "final_duration": 738,
       "section_breaks": [
         {"raw_position": 34, "duration": 6.3},
         {"raw_position": 531, "duration": 6.3}
       ]
     },
     "4": {
-      "intro_duration": 15,
+      "intro_duration": 24,
       "raw_duration": 712.0,
-      "final_duration": 746,
+      "final_duration": 766,
       "section_breaks": [
         {"raw_position": 179, "duration": 6.3},
         {"raw_position": 181, "duration": 6.3},
@@ -41,9 +42,9 @@
       ]
     },
     "5": {
-      "intro_duration": 15,
+      "intro_duration": 24,
       "raw_duration": 622.6,
-      "final_duration": 656,
+      "final_duration": 677,
       "section_breaks": [
         {"raw_position": 142, "duration": 6.1},
         {"raw_position": 154, "duration": 6.1},
@@ -51,9 +52,9 @@
       ]
     },
     "6": {
-      "intro_duration": 15,
+      "intro_duration": 24,
       "raw_duration": 667.8,
-      "final_duration": 701,
+      "final_duration": 722,
       "section_breaks": [
         {"raw_position": 199, "duration": 6.1},
         {"raw_position": 329, "duration": 6.1},
@@ -61,9 +62,9 @@
       ]
     },
     "7": {
-      "intro_duration": 15,
+      "intro_duration": 24,
       "raw_duration": 714.6,
-      "final_duration": 748,
+      "final_duration": 768,
       "section_breaks": [
         {"raw_position": 43, "duration": 6.1},
         {"raw_position": 95, "duration": 6.1},
