@@ -493,16 +493,28 @@
       document.body.appendChild(modal);
 
       // Single delegated event handler (doesn't accumulate)
+      // Helper to close modal
+      const closeModal = () => {
+        modal.hidden = true;
+        modal.style.display = 'none';
+      };
+
+      // Helper to show modal
+      const openModal = () => {
+        modal.hidden = false;
+        modal.style.display = 'flex';
+      };
+
       modal.addEventListener('click', (e) => {
         // Close on overlay click
         if (e.target === modal) {
-          modal.hidden = true;
+          closeModal();
           return;
         }
 
-        // Cancel/Close button
-        if (e.target.matches('.cancel-btn')) {
-          modal.hidden = true;
+        // Cancel/Close button (use closest for robustness)
+        if (e.target.closest('.cancel-btn')) {
+          closeModal();
           return;
         }
 
@@ -551,6 +563,7 @@
     modal.querySelector('.report-chapter').textContent = chapterTitle;
     modal.querySelector('.report-timestamp').textContent = formatTime(timestamp);
     modal.hidden = false;
+    modal.style.display = 'flex';
 
     // Store data for submission
     modal.dataset.timestamp = timestamp;

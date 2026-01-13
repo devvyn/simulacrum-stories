@@ -2,143 +2,123 @@
   "chapter-01-the-research-station": {
     "audio": "/audio/saltmere-chronicles/01---The-Research-Station.mp3",
     "title": "The Research Station",
-    "duration": 650,
-    "duration_display": "10:50",
+    "duration": 640,
+    "duration_display": "10:40",
     "intro_offset": 24,
     "sections": [
       {
-        "timestamp": 216,
-        "label": "Sarah settles in"
+        "timestamp": 198,
+        "label": "First scene"
       },
       {
-        "timestamp": 385,
-        "label": "Town exploration"
+        "timestamp": 368,
+        "label": "Second scene"
       },
       {
-        "timestamp": 513,
-        "label": "Evening encounter"
+        "timestamp": 499,
+        "label": "Third scene"
       }
     ]
   },
   "chapter-02-the-harbor-master": {
     "audio": "/audio/saltmere-chronicles/02---The-Harbor-Master.mp3",
     "title": "The Harbor Master",
-    "duration": 659,
-    "duration_display": "10:59",
+    "duration": 641,
+    "duration_display": "10:41",
     "intro_offset": 24,
     "sections": [
       {
-        "timestamp": 355,
-        "label": "Harbor office"
+        "timestamp": 336,
+        "label": "First scene"
       },
       {
-        "timestamp": 437,
-        "label": "Margaret's warning"
-      },
-      {
-        "timestamp": 475,
-        "label": "Departure"
+        "timestamp": 422,
+        "label": "Second scene"
       }
     ]
   },
   "chapter-03-first-samples": {
     "audio": "/audio/saltmere-chronicles/03---First-Samples.mp3",
     "title": "First Samples",
-    "duration": 738,
-    "duration_display": "12:18",
+    "duration": 726,
+    "duration_display": "12:06",
     "intro_offset": 24,
     "sections": [
       {
-        "timestamp": 67,
-        "label": "Morning routine"
+        "timestamp": 256,
+        "label": "First scene"
       },
       {
-        "timestamp": 570,
-        "label": "Sample analysis"
+        "timestamp": 552,
+        "label": "Second scene"
       }
     ]
   },
   "chapter-04-the-librarians-archive": {
     "audio": "/audio/saltmere-chronicles/04---The-Librarian's-Archive.mp3",
     "title": "The Librarian's Archive",
-    "duration": 766,
-    "duration_display": "12:46",
+    "duration": 748,
+    "duration_display": "12:28",
     "intro_offset": 24,
     "sections": [
       {
-        "timestamp": 212,
-        "label": "Archive search"
+        "timestamp": 335,
+        "label": "First scene"
       },
       {
-        "timestamp": 220,
-        "label": "Edith appears"
-      },
-      {
-        "timestamp": 755,
-        "label": "The files"
+        "timestamp": 559,
+        "label": "Second scene"
       }
     ]
   },
   "chapter-05-the-waterfront-discovery": {
     "audio": "/audio/saltmere-chronicles/05---The-Waterfront-Discovery.mp3",
     "title": "The Waterfront Discovery",
-    "duration": 677,
-    "duration_display": "11:17",
+    "duration": 667,
+    "duration_display": "11:07",
     "intro_offset": 24,
     "sections": [
       {
-        "timestamp": 175,
-        "label": "Waterfront walk"
+        "timestamp": 155,
+        "label": "First scene"
       },
       {
-        "timestamp": 193,
-        "label": "Discovery"
+        "timestamp": 450,
+        "label": "Second scene"
       },
       {
-        "timestamp": 590,
-        "label": "Return"
+        "timestamp": 566,
+        "label": "Third scene"
       }
     ]
   },
   "chapter-06-the-weight-of-truth": {
     "audio": "/audio/saltmere-chronicles/06---The-Weight-of-Truth.mp3",
     "title": "The Weight of Truth",
-    "duration": 722,
-    "duration_display": "12:02",
+    "duration": 704,
+    "duration_display": "11:44",
     "intro_offset": 24,
     "sections": [
       {
-        "timestamp": 232,
-        "label": "Thomas speaks"
+        "timestamp": 203,
+        "label": "First scene"
       },
       {
-        "timestamp": 368,
-        "label": "The weight"
-      },
-      {
-        "timestamp": 728,
-        "label": "Decision"
+        "timestamp": 554,
+        "label": "Second scene"
       }
     ]
   },
   "chapter-07-eleanors-warning": {
     "audio": "/audio/saltmere-chronicles/07---Eleanor's-Warning.mp3",
     "title": "Eleanor's Warning",
-    "duration": 768,
-    "duration_display": "12:48",
+    "duration": 743,
+    "duration_display": "12:23",
     "intro_offset": 24,
     "sections": [
       {
-        "timestamp": 76,
-        "label": "Morning tension"
-      },
-      {
-        "timestamp": 134,
-        "label": "Town drive"
-      },
-      {
-        "timestamp": 755,
-        "label": "Eleanor's words"
+        "timestamp": 110,
+        "label": "Scene break"
       }
     ]
   },

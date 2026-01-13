@@ -267,6 +267,10 @@
   z-index: 2000;
 }
 
+.report-modal-overlay[hidden] {
+  display: none !important;
+}
+
 .report-modal {
   background: #1a2a3a;
   border: 2px solid #8b7355;

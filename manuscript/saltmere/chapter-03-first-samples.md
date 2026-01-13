@@ -2,7 +2,7 @@
 
 Thomas Breck's boat was called *Nothing Personal*, which Sarah suspected was either a joke or a warning. It was a working vessel, not a charter—scarred wood, diesel exhaust, nets coiled in the stern like sleeping snakes—and it sat low in the water as if it had grown tired of floating and was considering other options.
 
-"Watch your step," Thomas said, not offering a hand as she climbed aboard. "The deck's slick."
+"What's your step," Thomas said, not offering a hand as she climbed aboard. "The deck's slick."
 
 The deck was slick. Sarah had worn the wrong shoes—field boots meant for marshland, not a pitching boat—and she grabbed the gunwale harder than dignity would have preferred. Thomas pretended not to notice, which she appreciated more than help.
 
