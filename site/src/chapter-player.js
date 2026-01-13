@@ -106,6 +106,25 @@ function createPlayerHTML(chapterData) {
         <button class="report-issue-btn" aria-label="Report audio issue">
           Report Issue
         </button>
+        <div class="sync-controls">
+          <button class="sync-toggle" aria-label="Sync settings" title="Adjust text sync">⚙</button>
+          <div class="sync-panel">
+            <div class="sync-panel-header">Text Sync Offset</div>
+            <div class="sync-offset-display">
+              <div class="sync-adjust-buttons">
+                <button class="sync-btn fine" data-delta="-0.1">−.1</button>
+                <button class="sync-btn" data-delta="-0.5">−</button>
+              </div>
+              <span class="sync-offset-value">0.0<span class="sync-offset-unit">s</span></span>
+              <div class="sync-adjust-buttons">
+                <button class="sync-btn" data-delta="0.5">+</button>
+                <button class="sync-btn fine" data-delta="0.1">+.1</button>
+              </div>
+            </div>
+            <button class="sync-reset">Reset to Default</button>
+            <p class="sync-hint">If words highlight too early, use + to delay.<br>If too late, use − to advance.</p>
+          </div>
+        </div>
       </div>
       <button class="player-minimize" aria-label="Minimize player">−</button>
     </div>
@@ -218,6 +237,55 @@ function initPlayer(chapterData) {
     minimizeBtn.setAttribute('aria-label',
       player.classList.contains('minimized') ? 'Expand player' : 'Minimize player');
   });
+
+  // Sync offset controls
+  const syncToggle = player.querySelector('.sync-toggle');
+  const syncPanel = player.querySelector('.sync-panel');
+  const syncOffsetValue = player.querySelector('.sync-offset-value');
+  const syncResetBtn = player.querySelector('.sync-reset');
+  const syncAdjustBtns = player.querySelectorAll('.sync-btn[data-delta]');
+
+  function updateSyncDisplay() {
+    const offset = WordHighlight.getOffset();
+    const sign = offset >= 0 ? '+' : '';
+    syncOffsetValue.innerHTML = `${sign}${offset.toFixed(1)}<span class="sync-offset-unit">s</span>`;
+    syncToggle.classList.toggle('active', offset !== 0);
+  }
+
+  // Initialize display
+  updateSyncDisplay();
+
+  // Toggle panel
+  if (syncToggle && syncPanel) {
+    syncToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      syncPanel.classList.toggle('open');
+    });
+
+    // Close panel when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!syncPanel.contains(e.target) && e.target !== syncToggle) {
+        syncPanel.classList.remove('open');
+      }
+    });
+  }
+
+  // Adjust buttons
+  syncAdjustBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const delta = parseFloat(btn.dataset.delta);
+      WordHighlight.adjustOffset(delta);
+      updateSyncDisplay();
+    });
+  });
+
+  // Reset button
+  if (syncResetBtn) {
+    syncResetBtn.addEventListener('click', () => {
+      WordHighlight.resetOffset();
+      updateSyncDisplay();
+    });
+  }
 
   // Sections toggle
   if (sectionsToggle && sectionsList) {

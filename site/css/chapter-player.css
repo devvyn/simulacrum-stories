@@ -617,3 +617,139 @@ body.read-along-active article p:not(.read-along-highlight) {
   margin: 0;
   padding: 0.5rem 0;
 }
+
+/* Sync Offset Controls */
+.sync-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.sync-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #a0a0a0;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sync-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #f5f5f5;
+}
+
+.sync-toggle.active {
+  background: rgba(139, 115, 85, 0.3);
+  border-color: rgba(139, 115, 85, 0.5);
+  color: #d4c4a8;
+}
+
+.sync-panel {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 8px;
+  background: #2a3a4a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 12px;
+  min-width: 180px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.sync-panel.open {
+  display: block;
+}
+
+.sync-panel-header {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #808080;
+  margin-bottom: 10px;
+}
+
+.sync-offset-display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.sync-offset-value {
+  font-family: system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #f5f5f5;
+  min-width: 60px;
+  text-align: center;
+}
+
+.sync-offset-unit {
+  font-size: 12px;
+  color: #808080;
+  margin-left: 4px;
+}
+
+.sync-adjust-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.sync-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
+  width: 36px;
+  height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.sync-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.sync-btn:active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.sync-btn.fine {
+  font-size: 11px;
+  width: 32px;
+}
+
+.sync-reset {
+  width: 100%;
+  margin-top: 10px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #808080;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sync-reset:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #a0a0a0;
+}
+
+.sync-hint {
+  margin-top: 10px;
+  font-size: 10px;
+  color: #606060;
+  line-height: 1.4;
+}

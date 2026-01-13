@@ -42,6 +42,34 @@ let currentParagraph = null;
 // Calibration data from audio-structure.json
 let calibration = null;  // { intro_duration, section_breaks }
 
+// User offset for fine-tuning sync (stored in localStorage)
+let userOffset = 0;  // seconds, positive = audio ahead of text
+const OFFSET_STORAGE_KEY = 'saltmere_sync_offset';
+
+// Load user offset from localStorage
+function loadUserOffset() {
+  try {
+    const stored = localStorage.getItem(OFFSET_STORAGE_KEY);
+    if (stored !== null) {
+      userOffset = parseFloat(stored) || 0;
+    }
+  } catch (e) {
+    // localStorage not available
+  }
+}
+
+// Save user offset to localStorage
+function saveUserOffset() {
+  try {
+    localStorage.setItem(OFFSET_STORAGE_KEY, String(userOffset));
+  } catch (e) {
+    // localStorage not available
+  }
+}
+
+// Initialize offset on load
+loadUserOffset();
+
 // Scroll state
 let lastScrollTime = 0;
 let userScrollTime = 0;
@@ -57,10 +85,10 @@ let hmrState = null;
 
 /**
  * Convert raw transcript time to final audio time.
- * Adds intro_duration and cumulative section break durations.
+ * Adds intro_duration, section break durations, and user offset.
  */
 function rawToFinal(rawTime) {
-  if (!calibration) return rawTime;
+  if (!calibration) return rawTime + userOffset;
 
   let finalTime = rawTime + calibration.intro_duration;
 
@@ -71,7 +99,8 @@ function rawToFinal(rawTime) {
     }
   }
 
-  return finalTime;
+  // Apply user offset (positive = audio plays ahead of highlight)
+  return finalTime + userOffset;
 }
 
 /**
@@ -641,6 +670,39 @@ function isFollowActive() {
   return isActive;
 }
 
+/**
+ * Get current user offset in seconds.
+ */
+function getOffset() {
+  return userOffset;
+}
+
+/**
+ * Set user offset in seconds and save to localStorage.
+ * @param {number} offset - Offset in seconds (positive = audio ahead of text)
+ */
+function setOffset(offset) {
+  userOffset = offset;
+  saveUserOffset();
+  console.log(`[WordHighlight] Offset set to ${offset.toFixed(2)}s`);
+}
+
+/**
+ * Adjust offset by delta seconds.
+ * @param {number} delta - Amount to add to offset
+ */
+function adjustOffset(delta) {
+  setOffset(userOffset + delta);
+  return userOffset;
+}
+
+/**
+ * Reset offset to zero.
+ */
+function resetOffset() {
+  setOffset(0);
+}
+
 // Export API
 export const WordHighlight = {
   init,
@@ -649,7 +711,12 @@ export const WordHighlight = {
   isFollowActive,
   enableFollow,
   disableFollow,
-  getCalibration: () => calibration
+  getCalibration: () => calibration,
+  // Offset controls
+  getOffset,
+  setOffset,
+  adjustOffset,
+  resetOffset
 };
 
 // Expose globally for backward compatibility
