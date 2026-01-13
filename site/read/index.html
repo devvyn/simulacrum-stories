@@ -124,9 +124,29 @@
             opacity: 0.5;
             font-size: 0.8rem;
         }
+
+        /* Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            padding: 12px 24px;
+            background: var(--salt-white);
+            color: var(--deep-water);
+            font-size: 14px;
+            z-index: 10000;
+            text-decoration: none;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <header>
         <a href="/" class="site-title">Saltmere</a>
         <nav>
@@ -136,7 +156,7 @@
         </nav>
     </header>
 
-    <main>
+    <main id="main-content">
         <h1>Read the Chronicles</h1>
         <p class="intro">
             A marine biologist returns to the town where her grandmother vanished fifty years ago.

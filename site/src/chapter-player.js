@@ -526,11 +526,17 @@ function clearReadAlongHighlight() {
   });
 }
 
+// Track the element that triggered the modal for focus return
+let reportModalTrigger = null;
+
 // Show report issue modal
 function showReportModal(chapterTitle, timestamp) {
+  // Store trigger element for focus return on close
+  reportModalTrigger = document.activeElement;
+
   // Modal HTML template (reset each time to handle post-submission state)
   const modalHTML = `
-    <div class="report-modal" role="dialog" aria-labelledby="report-modal-title">
+    <div class="report-modal" role="dialog" aria-modal="true" aria-labelledby="report-modal-title">
       <h3 id="report-modal-title">Report Audio Issue</h3>
       <p>Help us improve the audio quality by reporting any issues you notice.</p>
       <div class="timestamp-display">
@@ -546,7 +552,8 @@ function showReportModal(chapterTitle, timestamp) {
         <option value="audio-quality">Audio quality problem</option>
         <option value="other">Other</option>
       </select>
-      <textarea placeholder="Describe the issue (e.g., 'The word Sarah is clipped at the beginning')"></textarea>
+      <label for="report-description" class="sr-only">Describe the issue</label>
+      <textarea id="report-description" placeholder="Describe the issue (e.g., 'The word Sarah is clipped at the beginning')"></textarea>
       <div class="report-modal-buttons">
         <button class="cancel-btn">Cancel</button>
         <button class="submit-btn">Submit Report</button>
@@ -562,10 +569,14 @@ function showReportModal(chapterTitle, timestamp) {
     document.body.appendChild(modal);
 
     // Single delegated event handler (doesn't accumulate)
-    // Helper to close modal
+    // Helper to close modal and return focus
     const closeModal = () => {
       modal.hidden = true;
       modal.style.display = 'none';
+      // Return focus to the element that triggered the modal
+      if (reportModalTrigger && reportModalTrigger.focus) {
+        reportModalTrigger.focus();
+      }
     };
 
     // Helper to show modal
@@ -573,6 +584,34 @@ function showReportModal(chapterTitle, timestamp) {
       modal.hidden = false;
       modal.style.display = 'flex';
     };
+
+    // Focus trap: keep focus within modal
+    const trapFocus = (e) => {
+      if (modal.hidden) return;
+
+      const focusableElements = modal.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstFocusable) {
+        lastFocusable.focus();
+        e.preventDefault();
+      } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+        firstFocusable.focus();
+        e.preventDefault();
+      }
+    };
+
+    // Keyboard handler for Escape and Tab
+    modal.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'Tab') {
+        trapFocus(e);
+      }
+    });
 
     modal.addEventListener('click', (e) => {
       // Close on overlay click

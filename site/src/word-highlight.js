@@ -220,39 +220,74 @@ async function init(chapterNum, audioElement, options = {}) {
 }
 
 /**
+ * Seek to a word and optionally start playing.
+ */
+function seekToWord(el) {
+  const dataIndex = parseInt(el.getAttribute('data-i'), 10);
+  if (wordData && !isNaN(dataIndex) && dataIndex < wordData.length) {
+    const [rawStart] = wordData[dataIndex];
+    // Convert raw timestamp to final audio time
+    const finalStart = rawToFinal(rawStart);
+    audio.currentTime = finalStart;
+
+    // If paused, enable follow and start playing
+    if (audio.paused) {
+      enableFollow();
+      audio.play();
+    }
+
+    // Visual feedback
+    el.classList.add('w-clicked');
+    setTimeout(() => el.classList.remove('w-clicked'), 300);
+
+    // Track interaction
+    if (window.saltmereTracker) {
+      window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: dataIndex, rawTime: rawStart, finalTime: finalStart });
+    }
+  }
+}
+
+/**
  * Set up click-to-seek on all word elements.
  * When paused, clicking enables follow mode.
+ * Accessible: keyboard support (Enter/Space), role="button", limited tab stops.
  */
 function setupClickToSeek() {
+  // Track first word of each paragraph for tab navigation
+  const firstWordsInParagraphs = new Set();
+  document.querySelectorAll('p').forEach(p => {
+    const firstWord = p.querySelector('.w[data-i]');
+    if (firstWord) firstWordsInParagraphs.add(firstWord);
+  });
+
   wordElements.forEach((el) => {
     el.style.cursor = 'pointer';
+
+    // Accessibility: add role and make programmatically focusable
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', `${el.textContent}: click to seek`);
+
+    // First word of each paragraph gets tabindex="0" for keyboard nav
+    // Other words get tabindex="-1" (focusable but not in tab order)
+    if (firstWordsInParagraphs.has(el)) {
+      el.setAttribute('tabindex', '0');
+    } else {
+      el.setAttribute('tabindex', '-1');
+    }
+
+    // Click handler
     el.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
+      seekToWord(el);
+    });
 
-      // Use data-i attribute for correct transcript index
-      const dataIndex = parseInt(el.getAttribute('data-i'), 10);
-      if (wordData && !isNaN(dataIndex) && dataIndex < wordData.length) {
-        const [rawStart] = wordData[dataIndex];
-        // Convert raw timestamp to final audio time
-        const finalStart = rawToFinal(rawStart);
-        const word = wordData[dataIndex][2] || el.textContent;
-        audio.currentTime = finalStart;
-
-        // If paused, enable follow and start playing
-        if (audio.paused) {
-          enableFollow();
-          audio.play();
-        }
-
-        // Visual feedback
-        el.classList.add('w-clicked');
-        setTimeout(() => el.classList.remove('w-clicked'), 300);
-
-        // Track interaction
-        if (window.saltmereTracker) {
-          window.saltmereTracker.trackAudio('click-to-seek', { wordIndex: dataIndex, rawTime: rawStart, finalTime: finalStart });
-        }
+    // Keyboard handler for Enter and Space
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        seekToWord(el);
       }
     });
   });
