@@ -52,6 +52,9 @@ let scrollSeekTimeout = null;
 let onFollowEnabled = null;
 let onFollowDisabled = null;
 
+// HMR state preservation
+let hmrState = null;
+
 /**
  * Convert raw transcript time to final audio time.
  * Adds intro_duration and cumulative section break durations.
@@ -113,6 +116,9 @@ function finalToRaw(finalTime) {
  * Initialize the word highlight system.
  */
 async function init(chapterNum, audioElement, options = {}) {
+  // Save state for HMR
+  hmrState = { chapterNum, audioElement, options, wasActive: isActive };
+
   audio = audioElement;
   onFollowEnabled = options.onFollowEnabled || null;
   onFollowDisabled = options.onFollowDisabled || null;
@@ -648,3 +654,25 @@ export const WordHighlight = {
 
 // Expose globally for backward compatibility
 window.WordHighlight = WordHighlight;
+
+// HMR support - re-initialize without losing audio position
+if (import.meta.hot) {
+  import.meta.hot.accept((newModule) => {
+    if (hmrState && hmrState.audioElement) {
+      const { chapterNum, audioElement, options, wasActive } = hmrState;
+      console.log('[WordHighlight HMR] Re-initializing, wasActive:', wasActive);
+
+      // Clean up old state
+      destroy();
+
+      // Re-initialize with same params
+      init(chapterNum, audioElement, options).then(() => {
+        // Restore follow state if it was active
+        if (wasActive) {
+          enableFollow();
+        }
+        console.log('[WordHighlight HMR] Reload complete, audio at:', audioElement.currentTime.toFixed(1) + 's');
+      });
+    }
+  });
+}
