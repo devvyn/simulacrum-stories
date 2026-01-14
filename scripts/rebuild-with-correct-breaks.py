@@ -85,13 +85,19 @@ def rebuild_chapter(chapter_num: int, dry_run: bool = False) -> dict:
 
     result = {"chapter": chapter_num, "title": title}
 
-    # Load section break data
+    # Load section data (section-centric model: transitions occur BETWEEN sections)
     audio_struct = load_audio_structure()
     chapter_data = audio_struct.get("chapters", {}).get(str(chapter_num), {})
-    section_breaks = chapter_data.get("section_breaks", [])
+    sections = chapter_data.get("sections", [])
+
+    # Extract breaks from sections that have transitions (all but last section)
+    section_breaks = [
+        {"raw_position": s["end"], "duration": s["transition"]}
+        for s in sections if "transition" in s
+    ]
 
     if not section_breaks:
-        result["error"] = "No section breaks defined"
+        result["error"] = "No section transitions defined"
         return result
 
     # Find source files

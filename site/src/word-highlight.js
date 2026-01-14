@@ -40,7 +40,7 @@ let lastWordIndex = -1;
 let currentParagraph = null;
 
 // Calibration data from audio-structure.json
-let calibration = null;  // { intro_duration, section_breaks }
+let calibration = null;  // { intro_duration, sections: [{end, transition?}] }
 
 // User offset for fine-tuning sync (stored in localStorage)
 let userOffset = 0;  // seconds, positive = audio ahead of text
@@ -85,17 +85,20 @@ let hmrState = null;
 
 /**
  * Convert raw transcript time to final audio time.
- * Adds intro_duration, section break durations, and user offset.
+ * Adds intro_duration, section transitions, and user offset.
+ *
+ * Section-centric model: transitions occur BETWEEN sections.
+ * A section's transition is added when rawTime passes that section's end.
  */
 function rawToFinal(rawTime) {
   if (!calibration) return rawTime + userOffset;
 
   let finalTime = rawTime + calibration.intro_duration;
 
-  // Add durations of all section breaks that occur before this raw time
-  for (const brk of calibration.section_breaks) {
-    if (brk.raw_position <= rawTime) {
-      finalTime += brk.duration;
+  // Add transition durations for all sections whose end we've passed
+  for (const section of calibration.sections) {
+    if (section.end <= rawTime && section.transition) {
+      finalTime += section.transition;
     }
   }
 
@@ -105,7 +108,10 @@ function rawToFinal(rawTime) {
 
 /**
  * Convert final audio time to raw transcript time.
- * Subtracts intro_duration and cumulative section break durations.
+ * Subtracts intro_duration and cumulative section transitions.
+ *
+ * Section-centric model: transitions occur BETWEEN sections.
+ * Must account for being inside a transition (silence).
  */
 function finalToRaw(finalTime) {
   if (!calibration) return finalTime;
@@ -114,30 +120,28 @@ function finalToRaw(finalTime) {
   let rawTime = finalTime - calibration.intro_duration;
   if (rawTime < 0) return 0;
 
-  // Binary search-like: find which section breaks we've passed in final time
-  // and subtract their durations. This is tricky because break positions
-  // are in raw time but we're converting from final time.
+  // Iteratively subtract transitions we've passed
+  let cumulativeTransitions = 0;
+  for (const section of calibration.sections) {
+    if (!section.transition) continue;  // Last section has no transition
 
-  // Approach: iteratively subtract breaks we've passed
-  let cumulativeBreakDuration = 0;
-  for (const brk of calibration.section_breaks) {
-    // The break occurs at raw_position in raw time
-    // In final time, the break starts at: raw_position + intro + breaks_before_this_one
-    const breakStartInFinal = brk.raw_position + calibration.intro_duration + cumulativeBreakDuration;
+    // The transition starts at section.end in raw time
+    // In final time: section.end + intro + transitions_before_this_one
+    const transitionStartFinal = section.end + calibration.intro_duration + cumulativeTransitions;
 
-    if (finalTime >= breakStartInFinal + brk.duration) {
-      // We're past this break entirely - subtract its duration
-      cumulativeBreakDuration += brk.duration;
-    } else if (finalTime >= breakStartInFinal) {
-      // We're in the middle of this break (silence) - clamp to break start
-      return brk.raw_position;
+    if (finalTime >= transitionStartFinal + section.transition) {
+      // Past this transition entirely - subtract its duration
+      cumulativeTransitions += section.transition;
+    } else if (finalTime >= transitionStartFinal) {
+      // Inside this transition (silence) - clamp to section end
+      return section.end;
     } else {
-      // We haven't reached this break yet
+      // Haven't reached this transition yet
       break;
     }
   }
 
-  rawTime = finalTime - calibration.intro_duration - cumulativeBreakDuration;
+  rawTime = finalTime - calibration.intro_duration - cumulativeTransitions;
   return Math.max(0, rawTime);
 }
 
@@ -174,7 +178,7 @@ async function init(chapterNum, audioElement, options = {}) {
       const chapterKey = String(chapterNum);
       if (structure.chapters && structure.chapters[chapterKey]) {
         calibration = structure.chapters[chapterKey];
-        console.log(`[WordHighlight] Calibration: intro=${calibration.intro_duration}s, ${calibration.section_breaks.length} breaks`);
+        console.log(`[WordHighlight] Calibration: intro=${calibration.intro_duration}s, ${calibration.sections.length} sections`);
       } else {
         console.log('[WordHighlight] No calibration data for chapter', chapterNum);
         calibration = null;
